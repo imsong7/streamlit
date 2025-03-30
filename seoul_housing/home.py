@@ -18,6 +18,15 @@ def run_home():
     selected_month = st.sidebar.radio("확인하고 싶은 월을 선택하세요", ["1월", "2월", "3월"])
     month_dict = {'1월': 1, '2월': 2, '3월': 3}
     st.markdown("<hr>", unsafe_allow_html=True)
+
+    filtered_month = total_df[total_df['month'] == month_dict[selected_month]]
+    st.markdown(f"### 🏠 {selected_month} 아파트 가격 상위 3")
+    st.dataframe(sorted_df.sort_values(by='THING_AMT', ascending=False).head(3).reset_index(drop=True))
+    st.markdown(f"### 🏠 {selected_month} 아파트 가격 하위 3")
+    sorted_df = filtered_month[["CGG_NM", "STDG_NM", "BLDG_NM", "ARCH_AREA", "THING_AMT"]]
+    st.dataframe(sorted_df.sort_values(by='THING_AMT', ascending=True).head(3).reset_index(drop=True))
+
+    st.markdown("<hr>", unsafe_allow_html=True)
     st.subheader(f'📍 {cgg_nm} {selected_month} 아파트 가격 개요')
 
     st.markdown("자치구와 월을 클릭하면 자동으로 각 지역구의 거래된 **최소가격**, **최대가격**을 확인할 수 있습니다.")
@@ -54,11 +63,11 @@ def run_home():
 
 
     st.markdown("<hr>", unsafe_allow_html=True)
-    st.markdown("### 🏠 아파트 가격 상위 3 자치구")
+    st.markdown(f"#### 🏠 {cgg_nm} 아파트 가격 상위 3")
     sorted_df = filtered_month[["CGG_NM", "STDG_NM", "BLDG_NM", "ARCH_AREA", "THING_AMT"]]
     st.dataframe(sorted_df.sort_values(by='THING_AMT', ascending=False).head(3).reset_index(drop=True))
     st.markdown("<hr>", unsafe_allow_html=True)
-    st.markdown("### 🏠 아파트 가격 하위 3 자치구")
+    st.markdown(f"#### 🏠 {cgg_nm} 아파트 가격 하위 3")
     sorted_df = filtered_month[["CGG_NM", "STDG_NM", "BLDG_NM", "ARCH_AREA", "THING_AMT"]]
     st.dataframe(sorted_df.sort_values(by='THING_AMT', ascending=True).head(3).reset_index(drop=True))
     st.markdown("<hr>", unsafe_allow_html=True)
