@@ -4,6 +4,8 @@ import pandas as pd
 from utils import load_data
 import streamlit as st
 from millify import prettify # 숫자 더 읽기 쉽게 간결한 형식으로 변환
+from eda.map import showMap
+
 
 st.set_page_config(
     page_title="서울시 부동산 대시보드",  # 페이지 제목
@@ -24,7 +26,6 @@ def run_home():
 
     selected_month = st.sidebar.radio("확인하고 싶은 월을 선택하세요", ["1월", "2월", "3월"])
     month_dict = {'1월': 1, '2월': 2, '3월': 3}
-    st.markdown("<hr>", unsafe_allow_html=True)
 
     filtered_month = total_df[total_df['month'] == month_dict[selected_month]]
     sorted_df = filtered_month[["CGG_NM", "STDG_NM", "BLDG_NM", "ARCH_AREA", "THING_AMT"]]
@@ -35,8 +36,9 @@ def run_home():
         st.markdown(f"### 🏠 {selected_month} 아파트 가격 하위 5개")
         sorted_df = filtered_month[["CGG_NM", "STDG_NM", "BLDG_NM", "ARCH_AREA", "THING_AMT"]]
         st.dataframe(sorted_df.sort_values(by='THING_AMT', ascending=True).head(5).reset_index(drop=True))
+        showMap(total_df)
 
-    st.markdown("<hr>", unsafe_allow_html=True)
+
     with col[1]:
         cgg_nm = st.sidebar.selectbox("자치구", sorted(total_df["CGG_NM"].unique()))
         st.subheader(f'📍 {cgg_nm} {selected_month} 아파트 가격 개요')
