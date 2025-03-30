@@ -34,7 +34,7 @@ def predict_plot(total_df, types, periods):
         model.plot(forecast, ax=ax[row, col], uncertainty=True)
 
         # 타이틀, 라벨에 한글 폰트 적용
-        ax[row, col].set_title(f"서울시 {types[i]} 평균가격 예측 시나리오 {periods}일간", fontproperties=font_prop)
+        ax[row, col].set_title(f"{types[i]}", fontproperties=font_prop)
         ax[row, col].set_ylabel("평균가격(만원)", fontproperties=font_prop)
         ax[row, col].set_xlabel('')
         for tick in ax[row, col].get_xticklabels():
