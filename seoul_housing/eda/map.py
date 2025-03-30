@@ -51,10 +51,9 @@ def mapPlotly(merge_df):
     
     month = st.sidebar.radio("월", [2, 3])  
     result = merge_df[merge_df['month'] == month].reset_index(drop=True)  # Fix: Correct variable name
-    mapbox_style = st.sidebar.selectbox('지도스타일', ['white-bg', 'open-street-map', 'carto-positron', 'carto-darkmatter', 
-                                                    'stamen-terrain', 'stamen-toner', 'stamen-watercolor'])
-    
-    st.markdown(f"#### 2023년 {month}월 아파트 평균(만원)")
+    mapbox_style = st.sidebar.selectbox('지도스타일', ['white-bg', 'open-street-map', 'carto-positron', 'carto-darkmatter'])
+
+    st.markdown(f"##### 2023년 {month}월 아파트 평균(만원)")
     fig = px.choropleth_mapbox(result,
                            geojson=seouls,
                            locations='SIG_KOR_NM', color='mean',
@@ -73,8 +72,8 @@ def mapPlotly(merge_df):
     st.plotly_chart(fig)
 
 def showMap(total_df):
-    st.markdown("### 병합 데이터 확인 \n"
-                "- 컬럼명 확인")
+    # st.markdown("### 병합 데이터 확인 \n"
+    #             "- 컬럼명 확인")
     shapefile_path = "seoul_housing/sig_20230729/sig.shp"
 
     seoul_gpd  = gpd.read_file(shapefile_path, encoding='cp949')
@@ -96,16 +95,16 @@ def showMap(total_df):
 
     merge_df = seoul_gpd.merge(summary_df, on='SIG_CD')
 
-    st.write(merge_df.info()) 
+    # st.write(merge_df.info()) 
 
-    buffer = io.StringIO()
-    merge_df.info(buf=buffer)  
-    df_info = buffer.getvalue()
-    st.text(df_info)
+    # buffer = io.StringIO()
+    # merge_df.info(buf=buffer)  
+    # df_info = buffer.getvalue()
+    # st.text(df_info)
 
-    st.markdown("- 일부 데이터만 확인")
-    st.write(merge_df[['SIG_KOR_NM', 'geometry', 'mean']].head(3))
-    st.markdown("<hr>", unsafe_allow_html=True)
+    # st.markdown("- 일부 데이터만 확인")
+    # st.write(merge_df[['SIG_KOR_NM', 'geometry', 'mean']].head(3))
+    # st.markdown("<hr>", unsafe_allow_html=True)
     selected_lib = st.sidebar.radio("라이브러리 종류", ['Matplotlib', 'Plotly'])
 
     if selected_lib == "Matplotlib":
