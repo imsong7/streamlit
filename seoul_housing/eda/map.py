@@ -59,7 +59,7 @@ def mapPlotly(merge_df):
                            color_continuous_scale='Viridis',
                            featureidkey='properties.SIG_KOR_NM',
                            mapbox_style=mapbox_style,
-                           zoom=5,
+                           zoom=8,
                            center={'lat': 37.563383, 'lon': 126.996039},  # Fix: Correct lat value
                            opacity=0.5,
                            labels={'mean':'아파트 평균가격(만원)'})
