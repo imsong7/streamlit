@@ -22,7 +22,7 @@ def predict_plot(total_df, types, periods):
     # 한글 폰트 설정 적용
     font_prop = set_korean_font()
     
-    fig, ax = plt.subplots(figsize=(6,8), ncols=1, nrows=4)
+    fig, ax = plt.subplots(figsize=(6,9), ncols=1, nrows=4)
     ax = ax.flatten()  # Ensure ax is a flat list for indexing
     
     for i in range(len(types)):
