@@ -26,7 +26,6 @@ def run_home():
     selected_month = st.sidebar.radio("확인하고 싶은 월을 선택하세요", ["1월", "2월", "3월"])
     month_dict = {'1월': 1, '2월': 2, '3월': 3}
     
-    # Filter the dataset based on selected type and month
     filtered_df = total_df[total_df['BLDG_USG'] == selected_type]
     filtered_month = filtered_df[filtered_df['month'] == month_dict[selected_month]]
 
