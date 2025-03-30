@@ -34,13 +34,9 @@ def predict_plot(total_df, types, periods):
         forecast = model.predict(future)
 
         model.plot(forecast, ax=ax[i], uncertainty=True)
-
         ax[i].set_title(f"{types[i]}", fontproperties=font_prop)
         ax[i].set_ylabel("평균가격(만원)", fontproperties=font_prop)
         ax[i].set_xlabel('')
-        for tick in ax[i].get_xticklabels():
-            tick.set_rotation(30)
-        
         ax[i].xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%m-%d'))
         ax[i].xaxis.set_major_locator(plt.matplotlib.dates.DayLocator(interval=7))
         plt.setp(ax[i].get_xticklabels(), rotation=45, ha='right', fontproperties=font_prop)        
@@ -119,4 +115,3 @@ def predict(total_df):
         predictType(total_df, periods)
     with cols[1]:
         predictDistrict(total_df, periods)
-    st.markdown("<hr>", unsafe_allow_html=True)
