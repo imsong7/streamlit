@@ -79,13 +79,17 @@ def twoMeans(total_df):
 
         st.markdown("<hr>", unsafe_allow_html=True)
         st.markdown(f"#### {selected_cgg_nm} {month1}월 vs {month2}월 시각화", unsafe_allow_html=True)
-        fig, ax = plt.subplots(figsize=(10,3))
-        sns.pointplot(x='month', y='THING_AMT', data=cgg_df)
-        sns.despine()
-        ax.set_xlabel("월", fontproperties=font_prop, fontsize=12)
-        ax.set_ylabel("아파트 거래가격(만원)", fontproperties=font_prop, fontsize=12)
-        st.pyplot(fig)
-        st.dataframe(round(cgg_df.groupby('month')['THING_AMT'].agg(['mean', 'std', 'size']), 1), use_container_width=True)
+        
+        cols = st.columns((2, 2), gap='medium')
+        with cols[0]:
+            fig, ax = plt.subplots(figsize=(10,3))
+            sns.pointplot(x='month', y='THING_AMT', data=cgg_df)
+            sns.despine()
+            ax.set_xlabel("월", fontproperties=font_prop, fontsize=12)
+            ax.set_ylabel("아파트 거래가격(만원)", fontproperties=font_prop, fontsize=12)
+            st.pyplot(fig)
+        with cols[1]:
+            st.dataframe(round(cgg_df.groupby('month')['THING_AMT'].agg(['mean', 'std', 'size']), 1), use_container_width=True)
     else:
         st.warning("두 개의 월을 선택해주세요.")
 
