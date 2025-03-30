@@ -36,7 +36,7 @@ def predictDistrict(total_df):
     periods = int(st.number_input("향후 예측기간을 지정하세요(1일~30일)", min_value=1, max_value=30, step=1))
 
     models = load_models(cgg_nms)
-    fig, ax = plt.subplots(figsize=(20,10), sharex=True, sharey=False, ncols=5, nrows=5)
+    fig, ax = plt.subplots(figsize=(20,10) sharey=False, ncols=5, nrows=5)
     for i in range(len(cgg_nms)):  
         future = models[i].make_future_dataframe(periods=periods)
         forecast = models[i].predict(future)
@@ -48,17 +48,21 @@ def predictDistrict(total_df):
         ax[row, col].set_xlabel("날짜", fontproperties=font_prop)
         ax[row, col].set_ylabel("평균가격(만원)", fontproperties=font_prop)
         
-        ax[row, col].xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%b, %d'))  # Format as 'Feb, 23'
+        # 날짜 형식 설정 - '2025-02-11' 형식으로 표시
+        ax[row, col].xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%Y-%m-%d'))
         
-        # Rotate x-tick labels for readability
-        for tick in ax[row, col].get_xticklabels():
-            tick.set_rotation(45)  # Rotate x-tick labels for readability
-            tick.set_fontproperties(font_prop)  # Apply Korean font
-
-        # Ensure the x-ticks are applied for every subplot
-        ax[row, col].tick_params(axis='x', rotation=45)
+        # x축 레이블 설정
+        plt.setp(ax[row, col].get_xticklabels(), rotation=45, ha='right', fontproperties=font_prop)
+        
+        # x축 틱 개수 조정 (너무 많으면 겹칠 수 있으므로)
+        ax[row, col].xaxis.set_major_locator(plt.matplotlib.dates.MonthLocator())
+        
+        # 그리드 추가하여 가독성 향상
+        ax[row, col].grid(True, alpha=0.3)
     
-    # Adjust layout to prevent overlap and make space for titles
-    fig.tight_layout()
+    # 서브플롯 간격 조정으로 레이블이 잘리지 않도록 함
+    plt.subplots_adjust(bottom=0.15, hspace=0.5, wspace=0.3)
+    
+    # 중복 tight_layout 호출 제거
     fig.tight_layout()
     st.pyplot(fig)
