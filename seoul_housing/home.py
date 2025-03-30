@@ -21,12 +21,12 @@ def run_home():
 
     filtered_month = total_df[total_df['month'] == month_dict[selected_month]]
     sorted_df = filtered_month[["CGG_NM", "STDG_NM", "BLDG_NM", "ARCH_AREA", "THING_AMT"]]
-    
-    st.markdown(f"### 🏠 {selected_month} 아파트 가격 상위 3")
-    st.dataframe(sorted_df.sort_values(by='THING_AMT', ascending=False).head(3).reset_index(drop=True))
-    st.markdown(f"### 🏠 {selected_month} 아파트 가격 하위 3")
+
+    st.markdown(f"### 🏠 {selected_month} 아파트 가격 상위 5")
+    st.dataframe(sorted_df.sort_values(by='THING_AMT', ascending=False).head(5).reset_index(drop=True))
+    st.markdown(f"### 🏠 {selected_month} 아파트 가격 하위 5")
     sorted_df = filtered_month[["CGG_NM", "STDG_NM", "BLDG_NM", "ARCH_AREA", "THING_AMT"]]
-    st.dataframe(sorted_df.sort_values(by='THING_AMT', ascending=True).head(3).reset_index(drop=True))
+    st.dataframe(sorted_df.sort_values(by='THING_AMT', ascending=True).head(5).reset_index(drop=True))
 
     st.markdown("<hr>", unsafe_allow_html=True)
     st.subheader(f'📍 {cgg_nm} {selected_month} 아파트 가격 개요')
