@@ -64,7 +64,6 @@ def twoMeans(total_df):
     fig, ax = plt.subplots(figsize=(10,3))
     sns.pointplot(x='month', y='THING_AMT', data=cgg_df)
     sns.despine()
-    ax.grid(True, alpha=0.3)
     st.pyplot(fig)
     st.dataframe(round(cgg_df.groupby('month')['THING_AMT'].agg(['mean', 'std', 'size']), 1), use_container_width=True)
 
@@ -162,7 +161,6 @@ def regRession(total_df):
     
     # Histogram with custom font
     fig = px.histogram(res, x='Residuals')
-    ax.grid(True, alpha=0.3)
     st.plotly_chart(fig)
     
     sw = pg.normality(res, method='shapiro')
