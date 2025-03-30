@@ -5,6 +5,12 @@ from utils import load_data
 import streamlit as st
 from millify import prettify # 숫자 더 읽기 쉽게 간결한 형식으로 변환
 
+st.set_page_config(
+    page_title="서울시 부동산 대시보드",  # 페이지 제목
+    layout="wide",  # 💡 넓은 레이아웃 적용
+    initial_sidebar_state="expanded"  # 사이드바 기본 확장
+)
+
 def run_home():
     total_df = load_data()
     st.markdown("## 대시보드 개요 \n"
