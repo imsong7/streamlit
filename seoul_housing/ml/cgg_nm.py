@@ -71,7 +71,7 @@ def predictDistrict(total_df):
     # Update layout for the subplots and titles
     fig.update_layout(
         title=f"서울시 평균가격 예측 ({periods}일간)",
-        title_font=dict(size=2),
+        title_font=dict(size=20),
         autosize=False,
         width=1200,
         height=1200,
@@ -87,6 +87,11 @@ def predictDistrict(total_df):
         for j in range(1, 6):
             fig.update_yaxes(title_text="평균가격 (만원)", row=i, col=j, title_font=dict(size=8), tickfont=dict(size=8))
             fig.update_xaxes(title_text="날짜", row=i, col=j, title_font=dict(size=8), tickfont=dict(size=8))
+    
+    for i in range(len(cgg_nms)):
+        row, col = divmod(i, 5)
+        fig.layout.annotations[i].update(font=dict(size=8))  # Set font size for subplot titles
+    
 
     # Show the plot in Streamlit
     st.plotly_chart(fig)
