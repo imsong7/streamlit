@@ -19,13 +19,13 @@ def set_korean_font():
 
 def mapMatplotlib(merge_df):
     font_prop = set_korean_font()
-    fig, ax = plt.subplots(ncols=3, sharey=True, figsize=(25, 12))
+    fig, ax = plt.subplots(ncols=3, sharey=True, figsize=(30, 12))
     merge_df[merge_df['month'] == 1].plot(ax=ax[0], column='mean', cmap='Pastel1', legend=False, alpha=0.9, edgecolor='gray')
     merge_df[merge_df['month'] == 2].plot(ax=ax[1], column='mean', cmap='Pastel1', legend=False, alpha=0.9, edgecolor='gray')
     merge_df[merge_df['month'] == 3].plot(ax=ax[2], column='mean', cmap='Pastel1', legend=False, alpha=0.9, edgecolor='gray')
 
     patch_col = ax[0].collections[0]
-    cb = fig.colorbar(patch_col, ax=ax, orientation='horizontal', shrink=0.5, pad=0.1)
+    cb = fig.colorbar(patch_col, ax=ax, orientation='horizontal', shrink=0.5, aspect=50, pad=0.1)
     
     for i, row in merge_df[merge_df['month'] == 1].iterrows():
         ax[0].annotate(row['SIG_KOR_NM'], xy=(row['lon'], row['lat']), xytext=(-7,2), textcoords='offset points', fontproperties=font_prop, fontsize=8, color='black')
