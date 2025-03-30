@@ -30,7 +30,10 @@ def predictDistrict(total_df):
         rows=5, cols=5, 
         subplot_titles=[f"{cgg_nms[i]} 평균가격 예측 시나리오" for i in range(len(cgg_nms))],
         vertical_spacing=0.05,  horizontal_spacing=0.03
-        )
+    )
+    
+    # To calculate the global Y-axis range
+    all_yhat = []
     
     for i in range(len(cgg_nms)):  
         future = models[i].make_future_dataframe(periods=periods)
@@ -38,6 +41,9 @@ def predictDistrict(total_df):
 
         row, col = divmod(i, 5)
 
+        # Collect all yhat values for determining the Y-axis range
+        all_yhat.extend(forecast['yhat'])
+        
         # Add trace for the forecast (yhat) to the appropriate subplot
         fig.add_trace(go.Scatter(
             x=forecast['ds'],
@@ -68,6 +74,10 @@ def predictDistrict(total_df):
             fillcolor='rgba(0,100,80,0.2)'
         ), row=row+1, col=col+1)
     
+    # Get the global min and max of yhat values to set the Y-axis range
+    yhat_min = min(all_yhat)
+    yhat_max = max(all_yhat)
+
     # Update layout for the subplots and titles
     fig.update_layout(
         title=f"서울시 평균가격 예측 ({periods}일간)",
@@ -94,13 +104,18 @@ def predictDistrict(total_df):
             if j != 1:
                 fig.update_yaxes(showticklabels=False, row=i, col=j)  # Hide y-axis labels for other columns
             else:
-                fig.update_yaxes(title_text="평균가격 (만원)", title_font=dict(size=8), tickfont=dict(size=8), row=i, col=j)
+                fig.update_yaxes(
+                    title_text="평균가격 (만원)", 
+                    title_font=dict(size=8), 
+                    tickfont=dict(size=8), 
+                    row=i, col=j,
+                    range=[yhat_min, yhat_max]  # Set the consistent Y-axis range
+                )
     
     # Update font size for subplot titles
     for i in range(len(cgg_nms)):
         row, col = divmod(i, 5)
         fig.layout.annotations[i].update(font=dict(size=8))  # Set font size for subplot titles
     
-
     # Show the plot in Streamlit
     st.plotly_chart(fig)
