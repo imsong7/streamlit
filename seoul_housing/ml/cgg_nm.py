@@ -29,7 +29,8 @@ def predictDistrict(total_df):
     fig = make_subplots(
         rows=5, cols=5, 
         subplot_titles=[f"{cgg_nms[i]} 평균가격 예측 시나리오" for i in range(len(cgg_nms))],
-        vertical_spacing=0.05, horizontal_spacing=0.05
+        vertical_spacing=0.05,  # Reduced vertical spacing
+        horizontal_spacing=0.05  # Reduced horizontal spacing
     )
     
     for i in range(len(cgg_nms)):  
@@ -73,21 +74,24 @@ def predictDistrict(total_df):
         title=f"서울시 평균가격 예측 ({periods}일간)",
         title_font=dict(size=20),
         autosize=False,
-        width=1500,
-        height=1200,
+        width=1500,  # Increased width
+        height=1500,  # Increased height
         showlegend=False
     )
 
-    # Rotate x-axis labels for readability
-    fig.update_xaxes(tickangle=45, tickfont=dict(size=8))
-
-    # Update y-axis labels for each subplot with smaller font size
-    fig.update_yaxes(title_text="평균가격 (만원)", row=1, col=1, title_font=dict(size=8), tickfont=dict(size=8))
+    # Rotate x-axis labels for readability and set consistent x-axis ticks
+    fig.update_xaxes(tickangle=45, tickfont=dict(size=8), row=1, col=1)
+    fig.update_xaxes(title_text="날짜", title_font=dict(size=8), tickfont=dict(size=8))
     for i in range(1, 6):
         for j in range(1, 6):
-            fig.update_yaxes(title_text="평균가격 (만원)", row=i, col=j, title_font=dict(size=8), tickfont=dict(size=8))
             fig.update_xaxes(title_text="날짜", row=i, col=j, title_font=dict(size=8), tickfont=dict(size=8))
+            # Only show y-axis labels on the first column (column 1)
+            if j != 1:
+                fig.update_yaxes(showticklabels=False, row=i, col=j)  # Hide y-axis labels for other columns
+            else:
+                fig.update_yaxes(title_text="평균가격 (만원)", title_font=dict(size=8), tickfont=dict(size=8), row=i, col=j)
     
+    # Update font size for subplot titles
     for i in range(len(cgg_nms)):
         row, col = divmod(i, 5)
         fig.layout.annotations[i].update(font=dict(size=8))  # Set font size for subplot titles
