@@ -15,7 +15,7 @@ st.set_page_config(
 def run_home():
     total_df = load_data()
     st.markdown("## 대시보드 개요 \n"
-    "본 프로젝트는 2025년 서울시 부동산 실거래가를 알려주는 대시보드입니다.")
+                "본 프로젝트는 2025년 서울시 부동산 실거래가를 알려주는 대시보드입니다.")
 
     col = st.columns((2, 2), gap='medium')
 
