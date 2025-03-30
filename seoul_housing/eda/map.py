@@ -45,7 +45,7 @@ def mapMatplotlib(merge_df):
 
     st.pyplot(fig)
 
-def mapPlotly(merge_df):
+def mapPlotly(merge_df, month):
     font_prop = set_korean_font()
     with open('seoul_housing/sig_20230729/seoul.geojson') as f:
         seouls = json.load(f)
@@ -77,7 +77,7 @@ def mapPlotly(merge_df):
     
     st.plotly_chart(fig)
 
-def showMap(total_df):
+def showMap(total_df, month):
     # st.markdown("### 병합 데이터 확인 \n"
     #             "- 컬럼명 확인")
     shapefile_path = "seoul_housing/sig_20230729/sig.shp"
@@ -111,11 +111,12 @@ def showMap(total_df):
     # st.markdown("- 일부 데이터만 확인")
     # st.write(merge_df[['SIG_KOR_NM', 'geometry', 'mean']].head(3))
     # st.markdown("<hr>", unsafe_allow_html=True)
-    selected_lib = st.sidebar.radio("라이브러리 종류", ['Matplotlib', 'Plotly'])
+    # selected_lib = st.sidebar.radio("라이브러리 종류", ['Matplotlib', 'Plotly'])
+    mapPlotly(merge_df, month)
 
-    if selected_lib == "Matplotlib":
-        mapMatplotlib(merge_df)
-    elif selected_lib == "Plotly":
-        mapPlotly(merge_df)
-    else:
-        pass
+    # if selected_lib == "Matplotlib":
+    #     mapMatplotlib(merge_df)
+    # elif selected_lib == "Plotly":
+    #     mapPlotly(merge_df)
+    # else:
+    #     pass

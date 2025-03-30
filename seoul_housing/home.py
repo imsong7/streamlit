@@ -31,7 +31,7 @@ def run_home():
     sorted_df = filtered_month[["CGG_NM", "STDG_NM", "BLDG_NM", "ARCH_AREA", "THING_AMT"]]
 
     with col[0]:
-        showMap(total_df)
+        showMap(total_df, selected_month)
         st.markdown(f"### 🏠 {selected_month} 아파트 가격 상위 5개")
         st.dataframe(sorted_df.sort_values(by='THING_AMT', ascending=False).head(5).reset_index(drop=True))
         st.markdown(f"### 🏠 {selected_month} 아파트 가격 하위 5개")
