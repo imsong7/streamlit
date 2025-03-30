@@ -36,9 +36,9 @@ def mapMatplotlib(merge_df):
     for i, row in merge_df[merge_df['month'] == 3].iterrows():
         ax[2].annotate(row['SIG_KOR_NM'], xy=(row['lon'], row['lat']), xytext=(-7,2), textcoords='offset points', fontproperties=font_prop, fontsize=8, color='black')
 
-    ax[0].set_title('2023년 1월 아파트 평균(만원)', fontproperties=font_prop, fontsize=23, weight='heavy')
-    ax[1].set_title('2023년 2월 아파트 평균(만원)', fontproperties=font_prop, fontsize=23, weight='heavy')
-    ax[2].set_title('2023년 3월 아파트 평균(만원)', fontproperties=font_prop, fontsize=23, weight='heavy')
+    ax[0].set_title('2025년 1월 아파트 평균(만원)', fontproperties=font_prop, fontsize=23, weight='heavy')
+    ax[1].set_title('2025년 2월 아파트 평균(만원)', fontproperties=font_prop, fontsize=23, weight='heavy')
+    ax[2].set_title('2025년 3월 아파트 평균(만원)', fontproperties=font_prop, fontsize=23, weight='heavy')
     ax[0].set_axis_off()
     ax[1].set_axis_off()
     ax[2].set_axis_off()
@@ -68,7 +68,7 @@ def mapPlotly(merge_df):
     fig.update_layout(
         margin={"r":0, "t":50, "l":0, "b":0},
         font=dict(family=font_prop.get_name()),
-        title=f"  2023년 {month}월 서울시 아파트 평균가격(만원)",
+        title=f"  2025년 {month}월 서울시 아파트 평균가격(만원)",
         title_font=dict(family=font_prop.get_name(), size=18)  # Title settings
     )
     
@@ -114,10 +114,8 @@ def showMap(total_df):
     selected_lib = st.sidebar.radio("라이브러리 종류", ['Matplotlib', 'Plotly'])
 
     if selected_lib == "Matplotlib":
-        st.markdown("### Matplotlib Style")
         mapMatplotlib(merge_df)
     elif selected_lib == "Plotly":
-        st.markdown("### Plotly Style")
         mapPlotly(merge_df)
     else:
         pass
