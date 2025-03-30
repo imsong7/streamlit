@@ -29,12 +29,11 @@ def load_models(cgg_nms):
     models
     return models
 
-def predictDistrict(total_df):
+def predictDistrict(total_df, periods):
     font_prop = set_korean_font()
 
     total_df['CTRT_DAY'] = pd.to_datetime(total_df['CTRT_DAY'], format='%Y-%m-%d')
     cgg_nms = sorted(list(total_df['CGG_NM'].unique()))
-    periods = int(st.number_input("향후 예측기간을 지정하세요(1일~30일)", min_value=1, max_value=30, step=1))
     st.markdown(f"### 2025년 서울시 자치구역별 평균가격 예측 {periods}일간 ")
 
     models = load_models(cgg_nms)

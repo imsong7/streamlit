@@ -6,6 +6,7 @@ import pandas as pd
 from prophet import Prophet
 import matplotlib.font_manager as fm
 import matplotlib.ticker as ticker
+from ml.cgg_nm import predictDistrict
 import os
 
 # 한글 폰트 설정
@@ -51,9 +52,14 @@ def predictType(total_df):
     total_df['CTRT_DAY'] = pd.to_datetime(total_df['CTRT_DAY'], format='%Y-%m-%d')
     types = list(total_df['BLDG_USG'].unique())
     periods = int(st.number_input("향후 예측기간을 지정하세요(1일~30일)", min_value=1, max_value=30, step=1))
-    st.markdown(f"### 2025년 서울시 주거형태별 평균가격 예측 {periods}일간 ")
 
-    fig = predict_plot(total_df, types, periods)
-    fig.tight_layout()
-    st.pyplot(fig)
-    st.markdown("<hr>", unsafe_allow_html=True)
+    col = st.columns((2, 2), gap='medium')
+    with col[0]:
+        st.markdown(f"### 2025년 서울시 주거형태별 평균가격 예측 {periods}일간 ")
+
+        fig = predict_plot(total_df, types, periods)
+        fig.tight_layout()
+        st.pyplot(fig)
+        st.markdown("<hr>", unsafe_allow_html=True)
+    with col[1]:
+        predictDistrict(total_df, periods)
