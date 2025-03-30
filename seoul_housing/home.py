@@ -71,7 +71,7 @@ def run_home():
             st.metric(
                 label=f"{cgg_nm} 최대가격 (만원)", 
                 value=f"{max_price:,.0f}", 
-                delta=f"{max_delta:,.0f} 만원"
+                delta=f"{max_delta:,.0f} 만원\n (서울 {selected_month} 평균최소가격 대비)"
             )
 
 
