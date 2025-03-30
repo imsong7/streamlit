@@ -6,6 +6,7 @@ import os
 
 import pingouin as pg
 from pingouin import ttest
+from scipy.stats import ttest_ind
 from millify import prettify
 
 import seaborn as sns

@@ -26,14 +26,14 @@ def run_home():
 
     # NaN 값 제외하고 최소가격과 최대가격 계산
     filtered_month = filtered_month.dropna(subset=['THING_AMT'])  
-    march_min_price = filtered_month['THING_AMT'].min()
-    march_max_price = filtered_month['THING_AMT'].max()
+    min_price = filtered_month['THING_AMT'].min()
+    max_price = filtered_month['THING_AMT'].max()
 
     with col1:
-        st.metric(label=f"{cgg_nm} 최소가격(만원)", value=prettify(int(march_min_price)))
+        st.metric(label=f"{cgg_nm} 최소가격(만원)", value=prettify(int(min_price)))
 
     with col2:
-        st.metric(label=f"{cgg_nm} 최대가격(만원)", value=prettify(int(march_max_price)))
+        st.metric(label=f"{cgg_nm} 최대가격(만원)", value=prettify(int(max_price)))
 
     st.markdown("<hr>", unsafe_allow_html=True)
     st.markdown("### 아파트 가격 상위 3 자치구")
