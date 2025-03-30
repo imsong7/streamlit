@@ -19,6 +19,26 @@ def load_models(cgg_nms):
     models
     return models
 
+# -*- coding:utf-8 -*-
+
+import matplotlib.pyplot as plt
+import streamlit as st
+import pandas as pd
+import json
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+from prophet.serialize import model_from_json
+
+@st.cache_resource  # 모델 불러오는 것
+def load_models(cgg_nms):
+    models = []
+    for cgg_nm in cgg_nms:
+        print(cgg_nm)
+        with open(f'seoul_housing/ml/model/{cgg_nm}.model.json', 'r') as fin:
+            model = model_from_json(json.load(fin))
+        models.append(model)
+    return models
+
 def predictDistrict(total_df):
     total_df['CTRT_DAY'] = pd.to_datetime(total_df['CTRT_DAY'], format='%Y-%m-%d')
     cgg_nms = sorted(list(total_df['CGG_NM'].unique()))
@@ -91,14 +111,14 @@ def predictDistrict(total_df):
     # Rotate x-axis labels for readability and set consistent x-axis ticks
     fig.update_xaxes(tickfont=dict(size=8), row=1, col=1)
 
-    # Update x-axis format to '%y-%m-%d' for all subplots
+    # Update x-axis format to '%m월 %d일' for all subplots
     for i in range(1, 6):
         for j in range(1, 6):
             fig.update_xaxes(
                 row=i, col=j, 
                 title_font=dict(size=8), 
                 tickfont=dict(size=8),
-                tickformat='%m-%d'  # Ensure the date format is '%y-%m-%d'
+                tickformat='%m월 %d일'  # Ensure the date format is '%m월 %d일'
             )
             # Only show y-axis labels on the first column (column 1)
             if j != 1:
