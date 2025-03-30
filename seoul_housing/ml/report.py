@@ -50,6 +50,7 @@ def reportMain(total_df):
     mean_yhat = future_data['yhat'].mean()
 
     start_date = start_date.strftime('%m월 %d일')
+    end_date = end_date.strftime('%m월 %d일')
     st.markdown(f"### 📍 {cgg_nm} 향후 {periods}일간({start_date} ~ {end_date}) 아파트 가격 예측")
     st.markdown(f"#### 평균 가격은 {mean_yhat:,.0f}만원")
     st.markdown(f"#### 예측기간 중 {max_date}이 {max_row['yhat']:,.0f}만원으로 가장 높아")
