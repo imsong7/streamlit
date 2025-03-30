@@ -36,10 +36,6 @@ def run_home():
         st.markdown(f"### 🏠 {selected_month} 아파트 가격 하위 5개")
         sorted_df = filtered_month[["CGG_NM", "STDG_NM", "BLDG_NM", "ARCH_AREA", "THING_AMT"]]
         st.dataframe(sorted_df.sort_values(by='THING_AMT', ascending=True).head(5).reset_index(drop=True))
-        showMap(total_df)
-
-
-    with col[1]:
         cgg_nm = st.sidebar.selectbox("자치구", sorted(total_df["CGG_NM"].unique()))
         st.subheader(f'📍 {cgg_nm} {selected_month} 아파트 가격 개요')
 
@@ -86,3 +82,8 @@ def run_home():
         st.dataframe(sorted_df.sort_values(by='THING_AMT', ascending=True).head(3).reset_index(drop=True))
         st.markdown("<hr>", unsafe_allow_html=True)
         st.caption("출처 : [서울시 부동산 실거래가 정보](https://data.seoul.go.kr/dataList/OA-21275/S/1/datasetView.do)")
+
+
+    with col[1]:
+        showMap(total_df)
+       
