@@ -19,8 +19,7 @@ def home():
 
 def run_ml(total_df):
     total_df['CTRT_DAY'] = pd.to_datetime(total_df['CTRT_DAY'], format='%Y-%m-%d')
-    st.markdown("## 머신러닝 예측 개요 \n"
-                "머신러닝 에측 페이지입니다.")
+    st.markdown("## 머신러닝 예측 개요 \n")
 
     selected = option_menu(None, ["Home", "주거형태별", "자치구역별", "보고서"],
                                 icons=['house','bar-chart','map'],
