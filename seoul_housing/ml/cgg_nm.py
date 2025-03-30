@@ -29,7 +29,7 @@ def predictDistrict(total_df):
     fig = make_subplots(
         rows=5, cols=5, 
         subplot_titles=[f"{cgg_nms[i]} 평균가격 예측 시나리오" for i in range(len(cgg_nms))],
-        vertical_spacing=0.03,  horizontal_spacing=0.05
+        vertical_spacing=0.1,  horizontal_spacing=0.02
     )
     
     # To calculate the global Y-axis range
