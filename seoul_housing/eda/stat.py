@@ -108,7 +108,7 @@ def corrRelation(total_df):
     sns.scatterplot(x='ARCH_AREA', y='THING_AMT', data=corr_df, ax=ax)
     ax.set_title('건물 면적과 아파트 거래가격의 상관관계', fontproperties=font_prop, fontsize=15)
     ax.set_xlabel('건물 면적', fontproperties=font_prop)
-    ax.set_title('아파트 거래가격(만원)', fontproperties=font_prop)
+    ax.set_ylabel('아파트 거래가격(만원)', fontproperties=font_prop)
     ax.grid(True, alpha=0.3)
     st.pyplot(fig)
 
