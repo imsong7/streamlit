@@ -89,7 +89,6 @@ def predictDistrict(total_df, periods):
         max_date = forecast['ds'].max()
         ax[row, col].set_xlim([min_date, max_date])
 
-        # Apply the same y-axis range to all subplots
         ax[row, col].set_ylim([y_min, y_max])
 
         ax[row, col].yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos: '{:,.0f}'.format(x)))
@@ -98,7 +97,6 @@ def predictDistrict(total_df, periods):
     plt.subplots_adjust(bottom=0.15, hspace=0.15, wspace=0.3)
     fig.tight_layout()
     st.pyplot(fig)
-
 
 def predictType(total_df, periods):
     st.markdown(f"#### 📍 주거형태별 평균가격 예측 ({periods}일간)")
