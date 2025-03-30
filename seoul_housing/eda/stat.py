@@ -68,7 +68,7 @@ def twoMeans(total_df):
     st.dataframe(round(cgg_df.groupby('month')['THING_AMT'].agg(['mean', 'std', 'size']), 1), use_container_width=True)
 
 def corrRelation(total_df):
-    font_prop = set_korean_font()  # Add font property here
+    font_prop = set_korean_font() 
     
     total_df['month'] = total_df['CTRT_DAY'].dt.month
     apt_df = total_df[(total_df['BLDG_USG'] == '아파트') & (total_df['month'].isin([2, 3]))]
@@ -89,24 +89,23 @@ def corrRelation(total_df):
     st.pyplot(fig)
 
     st.markdown("<hr>", unsafe_allow_html=True)
-    st.markdown("### 상관관계 계수 및 검정 \n"
-                "- 계수를 확인한다. \n")
+    st.markdown("### 상관관계 계수 및 검정 \n")
     seoul_coef = pg.corr(corr_df['ARCH_AREA'], corr_df['THING_AMT'])["r"].values[0] 
     st.dataframe(pg.corr(corr_df['ARCH_AREA'],  corr_df['THING_AMT']).round(3), use_container_width=True)
-    st.markdown(f"- 상관계수는 {seoul_coef:.2f} 이며 건물면적이 증가할 때마다, 물건금액도 같이 증가하는 경향성을 나타나는 것을 확인하라 수 있다. \n"
+    st.markdown(f"상관계수는 **{seoul_coef:.2f}** 이며 건물면적이 증가할 때마다, 물건금액도 같이 증가하는 경향성을 나타나는 것을 확인하라 수 있다. \n"
                 "그렇다면, 각 자치구별로 상관관계 시각화 및 상관계수는 어떻게 다른지 확인해본다. \n")
     
     selected_cgg_nm = st.sidebar.selectbox("자치구명", sorted(corr_df['CGG_NM'].unique()))
     selected_month = st.sidebar.selectbox("월", sorted(corr_df['month'].unique()))
     st.markdown("<hr>", unsafe_allow_html=True)
-    st.markdown(f"### 서울시 {selected_cgg_nm} {selected_month}월 아파트 가격 ~ 건물면적 상관관계 분석 \n"
-                "- 각 자치구 및 월별 시각화 및 상관계수를 표시할 수 있다.")
+    st.markdown("### 각 자치구별 및 월별 상관관계 시각화 및 상관계수 어떻게 다른지 확인\n"
+                f"#### 서울시 {selected_cgg_nm} {selected_month}월 아파트 가격 ~ 건물면적 상관관계 분석 \n"
+                )
     
     cgg_df = corr_df[(corr_df['CGG_NM']==selected_cgg_nm) & (corr_df['month']==selected_month)]
     corr_coef = pg.corr(cgg_df['ARCH_AREA'], cgg_df['THING_AMT'])
     st.dataframe(corr_coef, use_container_width=True)
 
-    # Scatter plot with custom font for selected region and month
     fig, ax = plt.subplots(figsize=(10,6))
     sns.scatterplot(x='ARCH_AREA', y='THING_AMT', data=cgg_df)
     ax.text(0.95, 0.05, f'Pearson Correlation: {corr_coef["r"].values[0]:.2f}',
