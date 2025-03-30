@@ -6,8 +6,9 @@ import pandas as pd
 from prophet import Prophet
 import matplotlib.font_manager as fm
 import matplotlib.ticker as ticker
-from ml.cgg_nm import predictDistrict
 import os
+import json
+from prophet.serialize import model_from_json
 
 # 한글 폰트 설정
 def set_korean_font():
@@ -47,6 +48,61 @@ def predict_plot(total_df, types, periods):
         ax[row, col].yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos: '{:,.0f}'.format(x)))
 
     return fig
+
+
+@st.cache_resource ## 모델 불러오는 것
+def load_models(cgg_nms):
+    models = []
+    for cgg_nm in cgg_nms:
+        print(cgg_nm)
+        with open(f'seoul_housing/ml/model/{cgg_nm}.model.json', 'r') as fin:
+            model = model_from_json(json.load(fin))
+        models.append(model)
+    models
+    return models
+
+def predictDistrict(total_df, periods):
+    font_prop = set_korean_font()
+
+    total_df['CTRT_DAY'] = pd.to_datetime(total_df['CTRT_DAY'], format='%Y-%m-%d')
+    cgg_nms = sorted(list(total_df['CGG_NM'].unique()))
+    st.markdown(f"### 2025년 서울시 자치구역별 평균가격 예측 {periods}일간 ")
+
+    models = load_models(cgg_nms)
+    fig, ax = plt.subplots(figsize=(30,20), sharey=False, ncols=5, nrows=5)
+    for i in range(len(cgg_nms)):  
+        future = models[i].make_future_dataframe(periods=periods)
+        forecast = models[i].predict(future)
+
+        row, col = divmod(i, 5) 
+        models[i].plot(forecast, ax=ax[row, col], uncertainty=True)
+
+        ax[row, col].set_title(f"{cgg_nms[i]}", fontproperties=font_prop, fontsize=18)
+        ax[row, col].set_ylabel("평균가격(만원)", fontproperties=font_prop)
+        ax[row, col].set_xlabel('')
+        ax[row, col].set_xticklabels([])
+        
+        ax[row, col].xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%m-%d'))
+        ax[row, col].xaxis.set_major_locator(plt.matplotlib.dates.DayLocator(interval=7))
+        plt.setp(ax[row, col].get_xticklabels(), rotation=45, ha='right', fontproperties=font_prop)
+        
+        min_date = forecast['ds'].min()
+        max_date = forecast['ds'].max()
+        ax[row, col].set_xlim([min_date, max_date])
+
+        ax[row, col].yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos: '{:,.0f}'.format(x)))
+        
+        if col == 0:
+            ax[row, col].set_ylabel("평균가격(만원)", fontproperties=font_prop, fontsize=15)
+        else:
+            ax[row, col].set_ylabel('')
+
+        ax[row, col].grid(True, alpha=0.3)
+    
+    plt.subplots_adjust(bottom=0.15, hspace=0.5, wspace=0.3)
+    
+    fig.tight_layout()
+    st.pyplot(fig)
 
 def predictType(total_df):
     total_df['CTRT_DAY'] = pd.to_datetime(total_df['CTRT_DAY'], format='%Y-%m-%d')

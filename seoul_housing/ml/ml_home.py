@@ -4,8 +4,8 @@ import streamlit as st
 import pandas as pd
 from streamlit_option_menu import option_menu
 
-from ml.houseType import predictType
-from ml.cgg_nm import predictDistrict
+from ml.predict import predictType
+from ml.predict import predictDistrict
 from ml.report import reportMain
 
 def home():
@@ -21,7 +21,7 @@ def run_ml(total_df):
     total_df['CTRT_DAY'] = pd.to_datetime(total_df['CTRT_DAY'], format='%Y-%m-%d')
     st.markdown("## 머신러닝 예측 개요 \n")
 
-    selected = option_menu(None, ["Home", "주거형태별", "자치구역별", "보고서"],
+    selected = option_menu(None, ["Home", "예측", "보고서"],
                                 icons=['house','bar-chart','map'],
                                 menu_icon='cast', default_index=0, orientation='horizontal',
                                 styles = {
@@ -34,11 +34,9 @@ def run_ml(total_df):
     
     if selected == 'Home':
         home()
-    elif selected == '주거형태별':
+    elif selected == '예측':
         predictType(total_df)
-        pass
-    elif selected == '자치구역별':
-        predictDistrict(total_df)
+        predictDistrict(total_df)      
         pass
     elif selected == '보고서':
         reportMain(total_df)
