@@ -73,8 +73,6 @@ def predictDistrict(total_df, periods):
         ax[row, col].set_title(f"{cgg_nms[i]}", fontproperties=font_prop, fontsize=18)
         ax[row, col].set_ylabel("평균가격(만원)", fontproperties=font_prop)
         ax[row, col].set_xlabel('')
-        ax[row, col].set_xticklabels([])
-        
         ax[row, col].xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%m-%d'))
         ax[row, col].xaxis.set_major_locator(plt.matplotlib.dates.DayLocator(interval=7))
         plt.setp(ax[row, col].get_xticklabels(), rotation=45, ha='right', fontproperties=font_prop)
@@ -84,16 +82,9 @@ def predictDistrict(total_df, periods):
         ax[row, col].set_xlim([min_date, max_date])
 
         ax[row, col].yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos: '{:,.0f}'.format(x)))
-        
-        if col == 0:
-            ax[row, col].set_ylabel("평균가격(만원)", fontproperties=font_prop, fontsize=15)
-        else:
-            ax[row, col].set_ylabel('')
-
         ax[row, col].grid(True, alpha=0.3)
-    
+
     plt.subplots_adjust(bottom=0.15, hspace=0.15, wspace=0.3)
-    
     fig.tight_layout()
     st.pyplot(fig)
 
