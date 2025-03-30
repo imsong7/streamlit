@@ -15,8 +15,10 @@ import os
 font_path = "seoul_housing/Nanum_Gothic/NanumGothic-Regular.ttf"
 
 if os.path.exists(font_path):
-    plt.rcParams["font.family"] = fm.FontProperties(fname=font_path).get_name()
-    print(f"✅ Loaded: {plt.rcParams['font.family']}")
+    nanum_font = fm.FontProperties(fname=font_path)
+    plt.rcParams["font.family"] = nanum_font.get_name()
+    fm._rebuild()
+    print(f"✅ Loaded font: {nanum_font.get_name()}")
 else:
     print("❌ Font not found!")
 
