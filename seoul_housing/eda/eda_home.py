@@ -8,15 +8,15 @@ from eda.stat import showStat
 from eda.map import showMap
 
 def home():
-    st.markdown("### Visualization 개요 \n"
+    st.markdown("### 📈 Visualization 개요 \n"
     "- 가구당 평균 가격 추세 \n"
     "- 가구당 거래 건수 추세 \n"
     "- 지역별 평균 가격 막대 그래프 \n")
-    st.markdown("### Statistics 개요 \n"
+    st.markdown("### 🔢 Statistics 개요 \n"
                 "- 두 집단간 차이 검정 \n"
                 "- 상관분석 \n"
                 "- 회귀분석 \n")
-    st.markdown("### Map 개요 \n"
+    st.markdown("### 🗾 Map 개요 \n"
                 "- Matplotlib을 통해 월에 따른 지역별 평균 가격 확인\n"
                 "- Plotly 통해 지역별 평균 가격 확인\n")
 

@@ -9,7 +9,7 @@ from ml.cgg_nm import predictDistrict
 from ml.report import reportMain
 
 def home():
-    st.markdown("### 머신러닝 예측 개요 \n"
+    st.markdown("### ⚙️ 머신러닝 예측 개요 \n"
             "- 가구당 예측 그래프 추세: 가구당 예측 결과를 시간에 따라 시각화하여 예측된 변화 추이를 확인합니다. \n"
             "- 자치구역별 예측 그래프 추세: 각 자치구별 예측 결과를 시각화하여 지역별 변화를 분석합니다. \n"
             "- 사용된 알고리즘 소개: \n"
