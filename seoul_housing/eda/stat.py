@@ -29,7 +29,7 @@ def twoMeans(total_df):
     apt_df = total_df[(total_df['BLDG_USG'] == '아파트') & (total_df['month'].isin([1, 2, 3]))]
     
     st.markdown("<hr>", unsafe_allow_html=True)
-    st.markdown("### 집계 \n"
+    st.markdown("### 📍 집계 \n"
                 "2개의 월을 선택하여 아파트 가격을 비교한다.")
     
     # 두 개의 월을 선택하도록 함
@@ -41,7 +41,7 @@ def twoMeans(total_df):
 
     if len(selected_months) == 2:
         month1, month2 = selected_months
-        st.markdown(f"### {month1}월과 {month2}월 아파트 가격 비교")
+        st.markdown(f"#### {month1}월과 {month2}월 아파트 가격 비교")
 
         apt_df = total_df[(total_df['BLDG_USG'] == '아파트') & (total_df['month'].isin(selected_months))]
         month1_df = apt_df[apt_df['month'] == month1]
@@ -51,7 +51,7 @@ def twoMeans(total_df):
         st.dataframe(ttest_df, use_container_width=True)
     
         st.markdown("<hr>", unsafe_allow_html=True)
-        st.markdown(f"### 서울시 통합 {month1}월 vs {month2}월 차이 검정 \n"
+        st.markdown(f"#### 서울시 통합 {month1}월 vs {month2}월 차이 검정 \n"
                     f"- {month1}월과 {month2}월의 아파트 평균 가격의 차이를 검정한다. \n"
                     "- 가설설정 \n"
                     f"  + 귀무가설 : $H_{0}$: {month1}월과 {month2}월의 아파트 평균 차이는 없다. \n"
@@ -63,7 +63,7 @@ def twoMeans(total_df):
 
         st.markdown("<hr>", unsafe_allow_html=True)
         selected_cgg_nm = st.sidebar.selectbox("자치구명", sorted(total_df["CGG_NM"].unique()))
-        st.markdown(f"### 서울시 {selected_cgg_nm} {month1}월 vs {month2}월 차이 검정 \n"
+        st.markdown(f"#### {selected_cgg_nm} {month1}월 vs {month2}월 차이 검정 \n"
                     f"- 자치구를 선택하여 {month1}월과 {month2}월의 아파트 평균 차이가 있는지 확인하도록 한다.")
 
         cgg_df = apt_df[apt_df['CGG_NM']==selected_cgg_nm]
@@ -78,7 +78,7 @@ def twoMeans(total_df):
             st.markdown(f"확인결과 p-value 값이 **{cgg_result['p-val'].values[0]}** 이므로 $H_{1}$을 채택하여, {month1}월과 {month2}월의 아파트 평균 차이는 있다.") # 대립가설
 
         st.markdown("<hr>", unsafe_allow_html=True)
-        st.markdown(f"### 서울시 {selected_cgg_nm} {month1}월 vs {month2}월 시각화", unsafe_allow_html=True)
+        st.markdown(f"#### {selected_cgg_nm} {month1}월 vs {month2}월 시각화", unsafe_allow_html=True)
         fig, ax = plt.subplots(figsize=(10,3))
         sns.pointplot(x='month', y='THING_AMT', data=cgg_df)
         sns.despine()
@@ -222,23 +222,22 @@ def showStat(total_df):
     total_df['CTRT_DAY'] = pd.to_datetime(total_df['CTRT_DAY'], format='%Y-%m-%d')
     selected = st.sidebar.selectbox("분석 메뉴", ['두 집단간 차이 검정', '상관분석', '회귀분석'])
     if selected == '두 집단간 차이 검정':
-        st.markdown("### 두 집단간 차이 검정 이론 설명 \n"
+        st.markdown("### 📍 두 집단간 차이 검정 이론 설명 \n"
                     "- t-검정은 두 개의 독립적인 데이터 샘플의 평균 간에 유의미한 차이가 있는지 확인하는데 사용할 수 있는 통계 테스트입니다. \n")
-        st.markdown("- t-통계량을 구하는 것은 아래와 같습니다.")
+        st.markdown("- t-통계량을 구하는 것은 아래와 같습니다. ($\={X}$ : 표본의 평균을 말합니다.)")
         st.latex(r'''
         t = \frac{{\bar{X} - \mu}}{{s/\sqrt{n}}}
         ''')
-        st.markdown("- $\={X}$ : 표본의 평균을 말합니다. \n")
         twoMeans(total_df)
     elif selected == "상관분석":
-        st.markdown("### 상관분석 이론 설명 \n"
+        st.markdown("### 📍 상관분석 이론 설명 \n"
             "- 피어슨 상관계수: 두 변수 간의 선형 관계 강도를 측정합니다. \n"
             "- 스피어만 상관계수: 두 변수 간의 순위 관계를 측정합니다. \n"
             "- 두 방법 모두 -1에서 1 사이의 값을 가지며, 0은 상관관계가 없음을 의미합니다.")
 
         corrRelation(total_df)
     elif selected == "회귀분석":
-        st.markdown("### 회귀분석 이론 설명 \n"
+        st.markdown("### 📍 회귀분석 이론 설명 \n"
             "- 회귀분석은 두 변수 간의 관계를 모델링하는 기법입니다. \n"
             "- 독립 변수와 종속 변수 간의 관계를 수학적 식으로 표현하며, 이를 통해 예측할 수 있습니다. \n"
             "- 주요 가정: 독립성, 선형성, 잔차의 정규성, 등분산성 등이 있습니다.")
