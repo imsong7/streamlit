@@ -4,6 +4,7 @@ import streamlit as st
 import json
 import os
 import pandas as pd
+
 from prophet.serialize import model_from_json
 from prophet.plot import plot_plotly
 
@@ -17,7 +18,6 @@ def reportMain(total_df):
 
     model_path = f'seoul_housing/ml/model/{cgg_nm}.model.json'
     
-    # ✅ Handle missing model file
     if not os.path.exists(model_path):
         st.error(f"🚨 오류: {cgg_nm} 모델 파일을 찾을 수 없습니다.")
         return

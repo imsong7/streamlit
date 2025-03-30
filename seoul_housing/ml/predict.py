@@ -19,11 +19,10 @@ def set_korean_font():
     return font_prop
 
 def predict_plot(total_df, types, periods):
-    # 한글 폰트 설정 적용
     font_prop = set_korean_font()
     
     fig, ax = plt.subplots(figsize=(6,9), ncols=1, nrows=4)
-    ax = ax.flatten()  # Ensure ax is a flat list for indexing
+    ax = ax.flatten()  
     
     for i in range(len(types)):
         model = Prophet()
@@ -36,7 +35,6 @@ def predict_plot(total_df, types, periods):
 
         model.plot(forecast, ax=ax[i], uncertainty=True)
 
-        # 타이틀, 라벨에 한글 폰트 적용
         ax[i].set_title(f"{types[i]}", fontproperties=font_prop)
         ax[i].set_ylabel("평균가격(만원)", fontproperties=font_prop)
         ax[i].set_xlabel('')

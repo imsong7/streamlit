@@ -1,10 +1,10 @@
 # -*- coding:utf-8 -*-
 
 import pandas as pd
-from utils import load_data
 import streamlit as st
-from millify import prettify  # 숫자 더 읽기 쉽게 간결한 형식으로 변환
-from eda.map import showMap
+from utils import load_data
+from millify import prettify
+from map import showMap
 
 st.set_page_config(
     page_title="서울시 부동산 대시보드",  
@@ -37,7 +37,7 @@ def run_home():
         st.subheader(f"2025년 {month_dict[selected_month]}월 서울시 {selected_type} 평균가격")
         showMap(filtered_month, month_dict[selected_month])
 
-        # Show top 3 and bottom 3 prices
+        # Rename columns for display
         sorted_df_renamed = sorted_df.rename(columns={
             'CGG_NM': '자치구',
             'STDG_NM': '동',
@@ -45,6 +45,8 @@ def run_home():
             'ARCH_AREA': '면적 (㎡)',
             'THING_AMT': '가격 (만원)'
         })
+
+        # Show top 3 and bottom 3 prices
         st.markdown(f"#### 🏠 {selected_month} {selected_type} 가격 상위 3개")
         st.dataframe(sorted_df_renamed.sort_values(by='가격 (만원)', ascending=False).head(3).reset_index(drop=True))
 
