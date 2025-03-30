@@ -6,6 +6,7 @@ import os
 
 import pingouin as pg
 from pingouin import ttest
+from millify import prettify
 
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -23,65 +24,56 @@ def set_korean_font():
     return font_prop
 
 def twoMeans(total_df):
-    font_prop = set_korean_font() 
+    font_prop = set_korean_font()
 
+    # 월 정보 추가
     total_df['month'] = total_df['CTRT_DAY'].dt.month
+    
+    # 아파트만 필터링하고 1, 2, 3월만 필터링
     apt_df = total_df[(total_df['BLDG_USG'] == '아파트') & (total_df['month'].isin([1, 2, 3]))]
     
     st.markdown("<hr>", unsafe_allow_html=True)
     st.markdown("### 집계 \n"
-                "1월, 2월, 3월의 아파트 가격을 비교한다.")
+                "2개의 월을 선택하여 아파트 가격을 비교한다.")
     
-    ttest_df = round(apt_df.groupby('month')['THING_AMT'].agg(['mean', 'std', 'size']), 1)
-    st.dataframe(ttest_df, use_container_width=True)
+    # 두 개의 월을 선택하도록 함
+    selected_months = st.sidebar.multiselect(
+        "비교하고 싶은 두 개의 월을 선택하세요", 
+        options=[1, 2, 3], 
+        default=[1, 2]
+    )
     
-    st.markdown("<hr>", unsafe_allow_html=True)
-    st.markdown("### 서울시 통합 1월 vs 2월 vs 3월 차이 검정 \n"
-                "- 1월, 2월, 3월의 아파트 평균 가격의 차이를 검정한다. \n"
-                "- 가설설정 \n"
-                "  + 귀무가설 : $H_{0}$: 1월, 2월, 3월의 아파트 평균 차이는 없다. \n"
-                "  + 대립가설 : $H_{1}$: 1월, 2월, 3월의 아파트 평균 차이는 있다. \n")
-    
-    jan_df = apt_df[apt_df['month'] == 1]
-    feb_df = apt_df[apt_df['month'] == 2]
-    mar_df = apt_df[apt_df['month'] == 3]
-    
-    # Perform ANOVA test for multiple groups
-    from scipy.stats import f_oneway
-    result = f_oneway(jan_df['THING_AMT'], feb_df['THING_AMT'], mar_df['THING_AMT'])
-    
-    st.dataframe(result, use_container_width=True)
-    st.markdown(f"확인결과 p-value 값이 **{result.pvalue}** 이므로, 1월, 2월, 3월의 아파트 평균 차이는 **{'있다' if result.pvalue < 0.05 else '없다'}**.")
+    if len(selected_months) == 2:
+        month1, month2 = selected_months
+        st.markdown(f"### {month1}월과 {month2}월 아파트 가격 비교")
 
-    st.markdown("<hr>", unsafe_allow_html=True)
-    selected_cgg_nm = st.sidebar.selectbox("자치구명", sorted(total_df["CGG_NM"].unique()))
-    st.markdown(f"### 서울시 {selected_cgg_nm} 1월, 2월, 3월 차이 검정 \n"
-                "- 자치구를 선택하여 1월, 2월, 3월의 아파트 평균 차이가 있는지 확인하도록 한다.")
+        # 선택된 두 개의 월에 대한 데이터 필터링
+        month1_df = apt_df[apt_df['month'] == month1]
+        month2_df = apt_df[apt_df['month'] == month2]
 
-    cgg_df = apt_df[apt_df['CGG_NM'] == selected_cgg_nm]
-    cgg_jan_df = cgg_df[cgg_df['month'] == 1]
-    cgg_feb_df = cgg_df[cgg_df['month'] == 2]
-    cgg_mar_df = cgg_df[cgg_df['month'] == 3]
-    
-    # Perform ANOVA test for multiple groups for selected region
-    cgg_result = f_oneway(cgg_jan_df['THING_AMT'], cgg_feb_df['THING_AMT'], cgg_mar_df['THING_AMT'])
-    
-    st.dataframe(cgg_result, use_container_width=True)
-    if cgg_result.pvalue > 0.05:
-        st.markdown(f"확인결과 p-value 값이 **{cgg_result.pvalue}** 이므로 $H_{0}$을 채택하여, 1월, 2월, 3월의 아파트 평균 차이는 없다.")  # 귀무가설
+        # 두 월 간의 평균 가격 차이를 t-test로 비교
+        t_stat, p_value = ttest_ind(month1_df['THING_AMT'], month2_df['THING_AMT'], nan_policy='omit')
+        
+        # 통계 결과 출력
+        st.markdown(f"t-검정 결과: t-statistic = {t_stat:.2f}, p-value = {p_value:.5f}")
+        if p_value < 0.05:
+            st.markdown(f"**결과**: p-value가 0.05보다 작으므로, {month1}월과 {month2}월의 아파트 가격 차이는 **유의미하다**.")
+        else:
+            st.markdown(f"**결과**: p-value가 0.05보다 크므로, {month1}월과 {month2}월의 아파트 가격 차이는 **유의미하지 않다**.")
+        
+        # 시각화 (월별 아파트 가격 비교)
+        fig, ax = plt.subplots(figsize=(10, 3))
+        sns.boxplot(x='month', y='THING_AMT', data=apt_df[apt_df['month'].isin([month1, month2])])
+        sns.despine()
+        ax.set_xlabel("월", fontproperties=font_prop, fontsize=12)
+        ax.set_ylabel("아파트 거래가격(만원)", fontproperties=font_prop, fontsize=12)
+        st.pyplot(fig)
+
+        # 결과 데이터 출력
+        comparison_df = apt_df[apt_df['month'].isin([month1, month2])]
+        st.dataframe(round(comparison_df.groupby('month')['THING_AMT'].agg(['mean', 'std', 'size']), 1), use_container_width=True)
     else:
-        st.markdown(f"확인결과 p-value 값이 **{cgg_result.pvalue}** 이므로 $H_{1}$을 채택하여, 1월, 2월, 3월의 아파트 평균 차이는 있다.")  # 대립가설
-
-    st.markdown("<hr>", unsafe_allow_html=True)
-    st.markdown(f"### 서울시 :[{selected_cgg_nm}] 1월, 2월, 3월 시각화", unsafe_allow_html=True)
-    fig, ax = plt.subplots(figsize=(10, 3))
-    sns.pointplot(x='month', y='THING_AMT', data=cgg_df)
-    sns.despine()
-    ax.set_xlabel("월", fontproperties=font_prop, fontsize=12)
-    ax.set_ylabel("아파트 거래가격(만원)", fontproperties=font_prop, fontsize=12)
-    st.pyplot(fig)
-    st.dataframe(round(cgg_df.groupby('month')['THING_AMT'].agg(['mean', 'std', 'size']), 1), use_container_width=True)
-
+        st.warning("두 개의 월을 선택해주세요.")
 def corrRelation(total_df):
     font_prop = set_korean_font() 
     
