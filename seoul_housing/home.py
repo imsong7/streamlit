@@ -40,10 +40,10 @@ def run_home():
         st.dataframe(sorted_df.sort_values(by='THING_AMT', ascending=True).head(5).reset_index(drop=True))
 
     with col[1]:
-        cgg_nm = st.selectbox("자치구", sorted(total_df["CGG_NM"].unique()))
-        st.subheader(f'📍 {cgg_nm} {selected_month} 아파트 가격 개요')
-
         st.markdown("자치구와 월을 클릭하면 자동으로 각 지역구의 거래된 **최소가격**, **최대가격**을 확인할 수 있습니다.")
+        cgg_nm = st.selectbox("자치구", sorted(total_df["CGG_NM"].unique()))
+        st.markdown(f'"#### 📍 {cgg_nm} {selected_month} 아파트 가격 개요')
+
         col1, col2 = st.columns(2)
         filtered_month = total_df[total_df['month'] == month_dict[selected_month]]
 
