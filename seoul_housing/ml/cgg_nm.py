@@ -26,7 +26,6 @@ def predictDistrict(total_df):
 
     models = load_models(cgg_nms)
     
-    # Create a 5x5 subplot grid with shared axes
     fig = make_subplots(
         rows=5, cols=5, 
         subplot_titles=[f"서울시 {cgg_nms[i]} 평균가격 예측 시나리오 {periods}일간" for i in range(len(cgg_nms))],
@@ -72,7 +71,7 @@ def predictDistrict(total_df):
     # Update layout for the subplots and titles
     fig.update_layout(
         title=f"서울시 평균가격 예측 ({periods}일간)",
-        title_font=dict(size=20),
+        title_font=dict(size=10),
         autosize=False,
         width=1200,
         height=1200,
