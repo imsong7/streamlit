@@ -63,32 +63,32 @@ def twoMeans(total_df):
 
         st.markdown("<hr>", unsafe_allow_html=True)
         selected_cgg_nm = st.sidebar.selectbox("자치구명", sorted(total_df["CGG_NM"].unique()))
-        st.markdown(f"#### {selected_cgg_nm} {month1}월 vs {month2}월 차이 검정 \n"
-                    f"- 자치구를 선택하여 {month1}월과 {month2}월의 아파트 평균 차이가 있는지 확인하도록 한다.")
-
-        cgg_df = apt_df[apt_df['CGG_NM']==selected_cgg_nm]
-        cgg_month1 = cgg_df[cgg_df['month']==month1]
-        cgg_month2 = cgg_df[cgg_df['month']==month2]
-
-        cgg_result = ttest(cgg_month1['THING_AMT'], cgg_month2['THING_AMT'], paired=False)
-        st.dataframe(cgg_result, use_container_width=True)
-        if cgg_result['p-val'].values[0] > 0.05:
-            st.markdown(f"확인결과 p-value 값이 **{cgg_result['p-val'].values[0]}** 이므로 $H_{0}$을 채택하여, {month1}월과 {month2}월의 아파트 평균 차이는 없다.") # 귀무가설
-        else:
-            st.markdown(f"확인결과 p-value 값이 **{cgg_result['p-val'].values[0]}** 이므로 $H_{1}$을 채택하여, {month1}월과 {month2}월의 아파트 평균 차이는 있다.") # 대립가설
-
-        st.markdown("<hr>", unsafe_allow_html=True)
-        st.markdown(f"#### {selected_cgg_nm} {month1}월 vs {month2}월 시각화", unsafe_allow_html=True)
-        
         cols = st.columns((2, 2), gap='medium')
         with cols[0]:
+            st.markdown(f"#### {selected_cgg_nm} {month1}월 vs {month2}월 차이 검정 \n"
+                        f"- 자치구를 선택하여 {month1}월과 {month2}월의 아파트 평균 차이가 있는지 확인하도록 한다.")
+
+            cgg_df = apt_df[apt_df['CGG_NM']==selected_cgg_nm]
+            cgg_month1 = cgg_df[cgg_df['month']==month1]
+            cgg_month2 = cgg_df[cgg_df['month']==month2]
+
+            cgg_result = ttest(cgg_month1['THING_AMT'], cgg_month2['THING_AMT'], paired=False)
+            st.dataframe(cgg_result, use_container_width=True)
+            if cgg_result['p-val'].values[0] > 0.05:
+                st.markdown(f"확인결과 p-value 값이 **{cgg_result['p-val'].values[0]}** 이므로 $H_{0}$을 채택하여, {month1}월과 {month2}월의 아파트 평균 차이는 없다.") # 귀무가설
+            else:
+                st.markdown(f"확인결과 p-value 값이 **{cgg_result['p-val'].values[0]}** 이므로 $H_{1}$을 채택하여, {month1}월과 {month2}월의 아파트 평균 차이는 있다.") # 대립가설
+
+            st.markdown("<hr>", unsafe_allow_html=True)
+            st.markdown(f"#### {selected_cgg_nm} {month1}월 vs {month2}월 시각화", unsafe_allow_html=True)
+            
+        with cols[1]:
             fig, ax = plt.subplots(figsize=(10,3))
             sns.pointplot(x='month', y='THING_AMT', data=cgg_df)
             sns.despine()
             ax.set_xlabel("월", fontproperties=font_prop, fontsize=12)
             ax.set_ylabel("아파트 거래가격(만원)", fontproperties=font_prop, fontsize=12)
             st.pyplot(fig)
-        with cols[1]:
             st.dataframe(round(cgg_df.groupby('month')['THING_AMT'].agg(['mean', 'std', 'size']), 1), use_container_width=True)
     else:
         st.warning("두 개의 월을 선택해주세요.")
