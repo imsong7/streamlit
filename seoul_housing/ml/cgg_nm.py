@@ -35,6 +35,7 @@ def predictDistrict(total_df):
     total_df['CTRT_DAY'] = pd.to_datetime(total_df['CTRT_DAY'], format='%Y-%m-%d')
     cgg_nms = sorted(list(total_df['CGG_NM'].unique()))
     periods = int(st.number_input("향후 예측기간을 지정하세요(1일~30일)", min_value=1, max_value=30, step=1))
+    st.markdown("## 서울시 자치구역별 평균가격 예측 {periods}일간 ")
 
     models = load_models(cgg_nms)
     fig, ax = plt.subplots(figsize=(20,20), sharey=False, ncols=5, nrows=5)
@@ -45,8 +46,9 @@ def predictDistrict(total_df):
         row, col = divmod(i, 5) 
         models[i].plot(forecast, ax=ax[row, col], uncertainty=True)
 
-        ax[row, col].set_title(f"{cgg_nms[i]} 평균가격 예측", fontproperties=font_prop)
+        ax[row, col].set_title(f"{cgg_nms[i]}", fontproperties=font_prop)
         ax[row, col].set_ylabel("평균가격(만원)", fontproperties=font_prop)
+        ax[row, col].set_xticklabels([])
         
         ax[row, col].xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%Y-%m-%d'))
         ax[row, col].xaxis.set_major_locator(plt.matplotlib.dates.DayLocator(interval=7))
