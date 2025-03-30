@@ -40,7 +40,7 @@ def run_home():
         st.dataframe(sorted_df.sort_values(by='THING_AMT', ascending=True).head(5).reset_index(drop=True))
 
     with col[1]:
-        st.markdown('\n\n\n\n\n')
+        st.subheader('')
         cgg_nm = st.selectbox("자치구", sorted(total_df["CGG_NM"].unique()))
         st.markdown(f'#### 📍 {cgg_nm} {selected_month} 아파트 가격 개요')
 
