@@ -96,13 +96,13 @@ def corrRelation(total_df):
     apt_df = total_df[(total_df['BLDG_USG'] == '아파트') & (total_df['month'].isin([1, 2, 3]))]
     
     st.markdown("<hr>", unsafe_allow_html=True)
-    st.markdown("### 상관관계 분석을 위한 데이터 확인 \n"
+    st.markdown("### 📍 데이터 확인 \n"
                 "먼저 추출된 데이터에서 건물면적과 물건금액의 상관관계를 확인해보도록 한다. \n")
     corr_df = apt_df[['CTRT_DAY', 'THING_AMT', 'ARCH_AREA', 'CGG_NM', 'month']].reset_index(drop=True)
     st.dataframe(corr_df.head())
 
     st.markdown("<hr>", unsafe_allow_html=True)
-    st.markdown("### 상관관계 분석 시각화")
+    st.markdown("### 📍 상관관계 분석 시각화")
     
     fig, ax = plt.subplots(figsize=(10, 6))
     sns.scatterplot(x='ARCH_AREA', y='THING_AMT', data=corr_df, ax=ax)
@@ -111,7 +111,7 @@ def corrRelation(total_df):
     st.pyplot(fig)
 
     st.markdown("<hr>", unsafe_allow_html=True)
-    st.markdown("### 상관관계 계수 및 검정 \n")
+    st.markdown("### 📍 상관관계 계수 및 검정 \n")
     seoul_coef = pg.corr(corr_df['ARCH_AREA'], corr_df['THING_AMT'])["r"].values[0] 
     st.dataframe(pg.corr(corr_df['ARCH_AREA'],  corr_df['THING_AMT']).round(3), use_container_width=True)
     st.markdown(f"상관계수는 **{seoul_coef:.2f}** 이며 건물면적이 증가할 때마다, 물건금액도 같이 증가하는 경향성을 보인다. \n"
@@ -120,7 +120,7 @@ def corrRelation(total_df):
     selected_cgg_nm = st.sidebar.selectbox("자치구명", sorted(corr_df['CGG_NM'].unique()))
     selected_month = st.sidebar.selectbox("월", sorted(corr_df['month'].unique()))
     st.markdown("<hr>", unsafe_allow_html=True)
-    st.markdown(f"### 서울시 {selected_cgg_nm} {selected_month}월 아파트 가격 ~ 건물면적 상관관계 분석 \n")
+    st.markdown(f"### 📍 서울시 {selected_cgg_nm} {selected_month}월 아파트 가격 ~ 건물면적 상관관계 분석 \n")
     
     cgg_df = corr_df[(corr_df['CGG_NM']==selected_cgg_nm) & (corr_df['month']==selected_month)]
     corr_coef = pg.corr(cgg_df['ARCH_AREA'], cgg_df['THING_AMT'])
@@ -137,7 +137,7 @@ def corrRelation(total_df):
     st.pyplot(fig)
 
     st.markdown("<hr>", unsafe_allow_html=True)
-    st.markdown("### 거래건수 및 아파트 가격 상관관계")
+    st.markdown("### 📍 거래건수 및 아파트 가격 상관관계")
     mean_size = cgg_df.groupby("CTRT_DAY")['THING_AMT'].agg(['mean', 'size'])
     corr_coef_df = pg.corr(mean_size['size'], mean_size['mean'])
     st.dataframe(corr_coef_df, use_container_width=True)
@@ -165,12 +165,12 @@ def regRession(total_df):
     reg_df = corr_df[(corr_df['CGG_NM'] == selected_cgg_nm) & (corr_df['month'] == selected_month)]
     
     st.markdown("<hr>", unsafe_allow_html=True)
-    st.markdown("### 데이터 확인")
+    st.markdown("### 📍 데이터 확인")
     st.dataframe(reg_df, use_container_width=True)
 
     # 회귀식
     st.markdown("<hr>", unsafe_allow_html=True)
-    st.markdown("### 건물면적과 아파트가격 회귀분석 \n"
+    st.markdown("### 📍 건물면적과 아파트가격 회귀분석 \n"
                 "통계의 가정들이 맞는지 확인해보도록 한다. \n"
                 "#### 1) 정규성 검정 \n"
                 "먼저 시각적으로 잔차의 정규성 검정한다.")
@@ -224,7 +224,7 @@ def showStat(total_df):
     if selected == '두 집단간 차이 검정':
         st.markdown("### 📍 두 집단간 차이 검정 이론 설명 \n"
                     "- t-검정은 두 개의 독립적인 데이터 샘플의 평균 간에 유의미한 차이가 있는지 확인하는데 사용할 수 있는 통계 테스트입니다. \n")
-        st.markdown("- t-통계량을 구하는 것은 아래와 같습니다. ($\bar{X}$ : 표본의 평균을 말합니다.)")
+        st.markdown("- t-통계량을 구하는 것은 아래와 같습니다. ($\\bar{X}$ : 표본의 평균을 말합니다.)")
         st.latex(r'''
         t = \frac{{\bar{X} - \mu}}{{s/\sqrt{n}}}
         ''')
