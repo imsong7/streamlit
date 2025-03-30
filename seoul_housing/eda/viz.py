@@ -92,7 +92,7 @@ def cntChart(total_df, cgg_nm):
 
 def barChart(total_df):
     st.markdown("## 지역별 평균 가격 막대 그래프")
-    month_selected = st.selectbox("월을 선택하세요.", [2, 3])
+    month_selected = st.selectbox("월을 선택하세요.", [1, 2, 3])
     house_selected = st.selectbox("가구 유형을 선택하세요", total_df['BLDG_USG'].unique())
     total_df['month'] = total_df['CTRT_DAY'].dt.month
     result = total_df[(total_df['month']==month_selected) & (total_df['BLDG_USG']==house_selected)]
@@ -116,8 +116,8 @@ def showViz(total_df):
     total_df["CTRT_DAY"] = pd.to_datetime(total_df["CTRT_DAY"], format="%Y-%m-%d")
     barChart(total_df)
 
-    cgg_nm = st.selectbox("자치구명", sorted(total_df["CGG_NM"].unique()))
     st.markdown("<hr>", unsafe_allow_html=True)
+    cgg_nm = st.selectbox("자치구명", sorted(total_df["CGG_NM"].unique()))
     col = st.columns((2, 2), gap='medium')
     with col[0]:
         meanChart(total_df, cgg_nm)
