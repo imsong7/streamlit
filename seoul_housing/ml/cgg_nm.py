@@ -38,7 +38,7 @@ def predictDistrict(total_df):
     st.markdown(f"### 2025년 서울시 자치구역별 평균가격 예측 {periods}일간 ")
 
     models = load_models(cgg_nms)
-    fig, ax = plt.subplots(figsize=(20,20), sharey=False, ncols=5, nrows=5)
+    fig, ax = plt.subplots(figsize=(25,20), sharey=False, ncols=5, nrows=5)
     for i in range(len(cgg_nms)):  
         future = models[i].make_future_dataframe(periods=periods)
         forecast = models[i].predict(future)
@@ -48,6 +48,7 @@ def predictDistrict(total_df):
 
         ax[row, col].set_title(f"{cgg_nms[i]}", fontproperties=font_prop)
         ax[row, col].set_ylabel("평균가격(만원)", fontproperties=font_prop)
+        ax[row, col].set_xlabel('')
         ax[row, col].set_xticklabels([])
         
         ax[row, col].xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%m-%d'))
