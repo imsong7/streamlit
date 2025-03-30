@@ -12,15 +12,14 @@ import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
 import os
 
-font_path = "seoul_housing/Nanum_Gothic/NanumGothic-Regular.ttf"
+import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
+import os
 
-if os.path.exists(font_path):
-    nanum_font = fm.FontProperties(fname=font_path)
-    plt.rcParams["font.family"] = nanum_font.get_name()
-    fm._rebuild()
-    print(f"✅ Loaded font: {nanum_font.get_name()}")
-else:
-    print("❌ Font not found!")
+font_path = "seoul_housing/Nanum_Gothic/NanumGothic-Regular.ttf"
+nanum_font = fm.FontProperties(fname=font_path)
+plt.rcParams["font.family"] = nanum_font.get_name()
+
 
 
 def mapMatplotlib(merge_df):
