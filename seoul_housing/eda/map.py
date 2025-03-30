@@ -85,8 +85,8 @@ def showMap(total_df, month):
     seoul_gpd['lon'] = seoul_gpd['center_point'].map(lambda x: x.xy[0][0])
     seoul_gpd['lat'] = seoul_gpd['center_point'].map(lambda x: x.xy[1][0])
 
-    total_df['month'] = total_df['CTRT_DAY'].dt.month
-    total_df = total_df[(total_df['BLDG_USG'] == '아파트') & (total_df['month'].isin([1, 2, 3]))]
+    # total_df['month'] = total_df['CTRT_DAY'].dt.month
+    # total_df = total_df[(total_df['BLDG_USG'] == '아파트') & (total_df['month'].isin([1, 2, 3]))]
     total_df = total_df[['CTRT_DAY', 'month', 'CGG_CD', 'CGG_NM', 'THING_AMT','BLDG_USG']].reset_index(drop=True)
     
     summary_df = total_df.groupby(['CGG_CD', 'month'])['THING_AMT'].agg(['mean', 'std', 'size']).reset_index()
