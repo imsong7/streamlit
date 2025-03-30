@@ -30,7 +30,7 @@ def load_models(cgg_nms):
 
 def predictDistrict(total_df):
     font_prop = set_korean_font()
-    
+
     total_df['CTRT_DAY'] = pd.to_datetime(total_df['CTRT_DAY'], format='%Y-%m-%d')
     cgg_nms = sorted(list(total_df['CGG_NM'].unique()))
     periods = int(st.number_input("향후 예측기간을 지정하세요(1일~30일)", min_value=1, max_value=30, step=1))
@@ -44,7 +44,7 @@ def predictDistrict(total_df):
         row, col = divmod(i, 5) 
         models[i].plot(forecast, ax=ax[row, col], uncertainty=True)
 
-        ax[row, col].set_title(f"서울시 {types[i]} 평균가격 예측 시나리오 {periods}일간", fontproperties=font_prop)
+        ax[row, col].set_title(f"서울시 {cgg_nms[i]} 평균가격 예측 시나리오 {periods}일간", fontproperties=font_prop)
         ax[row, col].set_xlabel("날짜", fontproperties=font_prop)
         ax[row, col].set_ylabel("평균가격(만원)", fontproperties=font_prop)
         
