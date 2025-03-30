@@ -64,6 +64,7 @@ def twoMeans(total_df):
     fig, ax = plt.subplots(figsize=(10,3))
     sns.pointplot(x='month', y='THING_AMT', data=cgg_df)
     sns.despine()
+    ax.grid(True, alpha=0.3)
     st.pyplot(fig)
     st.dataframe(round(cgg_df.groupby('month')['THING_AMT'].agg(['mean', 'std', 'size']), 1), use_container_width=True)
 
@@ -113,6 +114,7 @@ def corrRelation(total_df):
     ax.set_title('상관 계수', fontproperties=font_prop, fontsize=15, weight='bold')
     ax.set_xlabel("건물면적", fontproperties=font_prop, fontsize=12)
     ax.set_ylabel("아파트 거래가격(만원)", fontproperties=font_prop, fontsize=12)
+    ax.grid(True, alpha=0.3)
     st.pyplot(fig)
 
     st.markdown("<hr>", unsafe_allow_html=True)
@@ -128,6 +130,7 @@ def corrRelation(total_df):
     ax.set_title('상관계수', fontproperties=font_prop, fontsize=15, weight='bold')
     ax.set_xlabel("거래건수", fontproperties=font_prop, fontsize=12)
     ax.set_ylabel("아파트 평균 거래가격(만원)", fontproperties=font_prop, fontsize=12)
+    ax.grid(True, alpha=0.3)
     st.pyplot(fig)
 
 
@@ -159,6 +162,7 @@ def regRession(total_df):
     
     # Histogram with custom font
     fig = px.histogram(res, x='Residuals')
+    ax.grid(True, alpha=0.3)
     st.plotly_chart(fig)
     
     sw = pg.normality(res, method='shapiro')
@@ -184,6 +188,7 @@ def regRession(total_df):
     ax.set_xlabel("건물면적", fontproperties=font_prop, fontsize=12)
     ax.set_ylabel("아파트 거래가격(만원)", fontproperties=font_prop, fontsize=12)
     ax.plot(x, slope*x + intercept)
+    ax.grid(True, alpha=0.3)
 
     if intercept < 0:
         equation_line = f'$Y={slope:.1f}X{intercept:.1f}, R^2={np.round(mod1["adj_r2"].values[0], 3)}$'
