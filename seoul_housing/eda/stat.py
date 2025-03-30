@@ -73,21 +73,22 @@ def corrRelation(total_df):
     total_df['month'] = total_df['CTRT_DAY'].dt.month
     apt_df = total_df[(total_df['BLDG_USG'] == '아파트') & (total_df['month'].isin([2, 3]))]
     
+    st.markdown("<hr>", unsafe_allow_html=True)
     st.markdown("### 상관관계 분석을 위한 데이터 확인 \n"
                 "- 건물면적과 물건금액의 상관관계를 확인해보도록 한다. \n"
                 "- 먼저 추출된 데이터를 확인한다.")
     corr_df = apt_df[['CTRT_DAY', 'THING_AMT', 'ARCH_AREA', 'CGG_NM', 'month']].reset_index(drop=True)
     st.dataframe(corr_df.head())
 
-    st.markdown("### 상관관계 분석 시각화 \n"
-                "- 상관관계 데이터 시각화를 진행한다. \n")
+    st.markdown("<hr>", unsafe_allow_html=True)
+    st.markdown("### 상관관계 분석 시각화")
     
-    # Scatter plot with custom font
     fig, ax = plt.subplots(figsize=(10, 6))
     sns.scatterplot(x='ARCH_AREA', y='THING_AMT', data=corr_df, ax=ax)
     ax.set_title('건물면적과 물건금액의 상관관계', fontproperties=font_prop, fontsize=15, weight='bold')
     st.pyplot(fig)
 
+    st.markdown("<hr>", unsafe_allow_html=True)
     st.markdown("### 상관관계 계수 및 검정 \n"
                 "- 계수를 확인한다. \n")
     seoul_coef = pg.corr(corr_df['ARCH_AREA'], corr_df['THING_AMT'])["r"].values[0] 
@@ -97,6 +98,7 @@ def corrRelation(total_df):
     
     selected_cgg_nm = st.sidebar.selectbox("자치구명", sorted(corr_df['CGG_NM'].unique()))
     selected_month = st.sidebar.selectbox("월", sorted(corr_df['month'].unique()))
+    st.markdown("<hr>", unsafe_allow_html=True)
     st.markdown(f"### 서울시 {selected_cgg_nm} {selected_month}월 아파트 가격 ~ 건물면적 상관관계 분석 \n"
                 "- 각 자치구 및 월별 시각화 및 상관계수를 표시할 수 있다.")
     
@@ -109,9 +111,12 @@ def corrRelation(total_df):
     sns.scatterplot(x='ARCH_AREA', y='THING_AMT', data=cgg_df)
     ax.text(0.95, 0.05, f'Pearson Correlation: {corr_coef["r"].values[0]:.2f}',
             transform=ax.transAxes, ha='right', fontsize=12)
-    ax.set_title(f'{selected_cgg_nm} 상관계수', fontproperties=font_prop, fontsize=15, weight='bold')
+    ax.set_title('상관 계수', fontproperties=font_prop, fontsize=15, weight='bold')
+    ax.set_xlabel("건물면적", fontproperties=font_prop, fontsize=12)
+    ax.set_ylabel("아파트 거래가격(만원)", fontproperties=font_prop, fontsize=12)
     st.pyplot(fig)
 
+    st.markdown("<hr>", unsafe_allow_html=True)
     st.markdown("### 거래건수 및 아파트 가격 상관관계")
     mean_size = cgg_df.groupby("CTRT_DAY")['THING_AMT'].agg(['mean', 'size'])
     corr_coef_df = pg.corr(mean_size['size'], mean_size['mean'])
@@ -122,9 +127,9 @@ def corrRelation(total_df):
     sns.scatterplot(x='size', y='mean', data=mean_size)
     ax.text(0.95, 0.05, f'Pearson Correlation: {corr_coef["r"].values[0]:.2f}',
             transform=ax.transAxes, ha='right', fontsize=12)
-    ax.set_title(f'{selected_cgg_nm} 상관계수', fontproperties=font_prop, fontsize=15, weight='bold')
+    ax.set_title('상관계수', fontproperties=font_prop, fontsize=15, weight='bold')
     ax.set_xlabel("거래건수", fontproperties=font_prop, fontsize=12)
-    ax.set_ylabel("아파트 평균 가격", fontproperties=font_prop, fontsize=12)
+    ax.set_ylabel("아파트 평균 거래가격(만원)", fontproperties=font_prop, fontsize=12)
     st.pyplot(fig)
 
 
@@ -139,10 +144,12 @@ def regRession(total_df):
     selected_month = st.sidebar.selectbox("월", sorted(corr_df['month'].unique()))
     reg_df = corr_df[(corr_df['CGG_NM'] == selected_cgg_nm) & (corr_df['month'] == selected_month)]
     
+    st.markdown("<hr>", unsafe_allow_html=True)
     st.markdown("### 데이터 확인")
     st.dataframe(reg_df, use_container_width=True)
 
     # 회귀식
+    st.markdown("<hr>", unsafe_allow_html=True)
     st.markdown("### 건물면적과 아파트가격 회귀분석 \n"
                 "- 통계의 가정들이 맞는지 확인해보도록 한다. \n"
                 "#### 정규성 검정 \n"
@@ -177,7 +184,7 @@ def regRession(total_df):
     sns.scatterplot(data=reg_df, x='ARCH_AREA', y='THING_AMT', ax=ax)
     ax.set_title("회귀선", fontproperties=font_prop, fontsize=15, weight='bold')
     ax.set_xlabel("건물면적", fontproperties=font_prop, fontsize=12)
-    ax.set_ylabel("아파트거래가격(만원)", fontproperties=font_prop, fontsize=12)
+    ax.set_ylabel("아파트 거래가격(만원)", fontproperties=font_prop, fontsize=12)
     ax.plot(x, slope*x + intercept)
 
     if intercept < 0:
