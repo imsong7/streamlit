@@ -20,6 +20,8 @@ def run_home():
     st.markdown("<hr>", unsafe_allow_html=True)
 
     filtered_month = total_df[total_df['month'] == month_dict[selected_month]]
+    sorted_df = filtered_month[["CGG_NM", "STDG_NM", "BLDG_NM", "ARCH_AREA", "THING_AMT"]]
+    
     st.markdown(f"### 🏠 {selected_month} 아파트 가격 상위 3")
     st.dataframe(sorted_df.sort_values(by='THING_AMT', ascending=False).head(3).reset_index(drop=True))
     st.markdown(f"### 🏠 {selected_month} 아파트 가격 하위 3")
