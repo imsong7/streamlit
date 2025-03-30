@@ -90,6 +90,7 @@ def run_home():
 
         st.markdown("<hr>", unsafe_allow_html=True)
         
+        filtered_cgg_nm = filtered_cgg_nm[columns]
         filtered_cgg_nm_renamed = filtered_cgg_nm.rename(columns={
             'CGG_NM': '자치구',
             'STDG_NM': '동',
