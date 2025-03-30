@@ -35,15 +35,16 @@ def reportMain(total_df):
         mime="text/csv"
     )
 
-    max_row = forecast.loc[forecast['yhat'].idxmax(), ['ds', 'yhat']]
-    min_row = forecast.loc[forecast['yhat'].idxmin(), ['ds', 'yhat']]
+    future_data = forecast[forecast['ds'] > total_df['ds'].max()]
+    max_row = future_data.loc[future_data['yhat'].idxmax(), ['ds', 'yhat']]
+    min_row = future_data.loc[future_data['yhat'].idxmin(), ['ds', 'yhat']]
 
-    max_date = forecast.loc[forecast['yhat'].idxmax(), 'ds'].strftime('%m월 %d일')
-    min_date = forecast.loc[forecast['yhat'].idxmin(), 'ds'].strftime('%m월 %d일')
-    mean_yhat = forecast['yhat'].mean()
+    max_date = future_data.loc[future_data['yhat'].idxmax(), 'ds'].strftime('%m월 %d일')
+    min_date = future_data.loc[future_data['yhat'].idxmin(), 'ds'].strftime('%m월 %d일')
+    mean_yhat = future_data['yhat'].mean()
 
-    start_date = forecast[forecast['ds'] > total_df['ds'].max()]['ds'].min().strftime('%m월 %d일')
-    end_date = forecast[forecast['ds'] > total_df['ds'].max()]['ds'].max().strftime('%m월 %d일')
+    start_date = future_data['ds'].min().strftime('%m월 %d일')
+    end_date = future_data['ds'].max().strftime('%m월 %d일')
 
     st.markdown(f"### 📍 {cgg_nm} 향후 {periods}일간(start_date ~ end_date) 아파트 가격 예측")
     st.markdown(f"#### 평균 가격은 {mean_yhat:,.0f}만원")
