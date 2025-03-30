@@ -35,8 +35,9 @@ def reportMain(total_df):
         file_name=f"{cgg_nm}_아파트 평균값 예측_{periods}일간.csv",
         mime="text/csv"
     )
-    total_df["CTRT_DAY"] = pd.to_datetime(total_df["CTRT_DAY"], format="%Y-%m-%d")
-    future_data = forecast[forecast['ds'] > total_df['CTRT_DAY'].max()]
+    # 예측된 날짜가 포함된 future 데이터에서 예측 기간만 추출
+    future_data = forecast[forecast['ds'] > forecast['ds'].max()]
+
     
     # Find max and min values for forecast
     max_row = future_data.loc[future_data['yhat'].idxmax(), ['ds', 'yhat']]
