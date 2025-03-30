@@ -8,9 +8,9 @@ from eda.map import showMap
 
 
 st.set_page_config(
-    page_title="서울시 부동산 대시보드",  # 페이지 제목
-    layout="wide",  # 💡 넓은 레이아웃 적용
-    initial_sidebar_state="expanded"  # 사이드바 기본 확장
+    page_title="서울시 부동산 대시보드",  
+    layout="wide", 
+    initial_sidebar_state="expanded" 
 )
 
 def run_home():
