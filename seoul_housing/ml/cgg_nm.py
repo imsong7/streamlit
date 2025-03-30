@@ -6,8 +6,6 @@ import pandas as pd
 import json
 from prophet.serialize import model_from_json
 
-plt.rcParams['font.family'] = "NanumGothic"
-
 @st.cache_resource ## 모델 불러오는 것
 def load_models(cgg_nms):
     models = []
