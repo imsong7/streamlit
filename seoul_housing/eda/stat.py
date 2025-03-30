@@ -78,11 +78,9 @@ def twoMeans(total_df):
                 st.markdown(f"확인결과 p-value 값이 **{cgg_result['p-val'].values[0]}** 이므로 $H_{0}$을 채택하여, {month1}월과 {month2}월의 아파트 평균 차이는 없다.") # 귀무가설
             else:
                 st.markdown(f"확인결과 p-value 값이 **{cgg_result['p-val'].values[0]}** 이므로 $H_{1}$을 채택하여, {month1}월과 {month2}월의 아파트 평균 차이는 있다.") # 대립가설
-
-            st.markdown("<hr>", unsafe_allow_html=True)
-            st.markdown(f"#### {selected_cgg_nm} {month1}월 vs {month2}월 시각화", unsafe_allow_html=True)
             
         with cols[1]:
+            st.markdown(f"#### {selected_cgg_nm} {month1}월 vs {month2}월 시각화", unsafe_allow_html=True)
             fig, ax = plt.subplots(figsize=(10,3))
             sns.pointplot(x='month', y='THING_AMT', data=cgg_df)
             sns.despine()
