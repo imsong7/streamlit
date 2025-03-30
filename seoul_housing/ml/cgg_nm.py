@@ -46,7 +46,7 @@ def predictDistrict(total_df):
         row, col = divmod(i, 5) 
         models[i].plot(forecast, ax=ax[row, col], uncertainty=True)
 
-        ax[row, col].set_title(f"{cgg_nms[i]}", fontproperties=font_prop, fontsize=5)
+        ax[row, col].set_title(f"{cgg_nms[i]}", fontproperties=font_prop, fontsize=15)
         ax[row, col].set_ylabel("평균가격(만원)", fontproperties=font_prop)
         ax[row, col].set_xlabel('')
         ax[row, col].set_xticklabels([])
@@ -61,7 +61,11 @@ def predictDistrict(total_df):
 
         ax[row, col].yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos: '{:,.0f}'.format(x)))
         
-        # 그리드 추가하여 가독성 향상
+        if col == 0:
+            ax[row, col].set_ylabel("평균가격(만원)", fontproperties=font_prop)
+        else:
+            ax[row, col].set_ylabel('')
+
         ax[row, col].grid(True, alpha=0.3)
     
     # 서브플롯 간격 조정으로 레이블이 잘리지 않도록 함
