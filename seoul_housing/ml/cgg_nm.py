@@ -48,7 +48,7 @@ def predictDistrict(total_df):
     
     fig = make_subplots(
         rows=5, cols=5, 
-        subplot_titles=[f"{cgg_nms[i]} 평균가격 예측 시나리오" for i in range(len(cgg_nms))],
+        subplot_titles=[f"{cgg_nms[i]}" for i in range(len(cgg_nms))],
         vertical_spacing=0.1,  horizontal_spacing=0.02
     )
     
@@ -118,7 +118,7 @@ def predictDistrict(total_df):
                 row=i, col=j, 
                 title_font=dict(size=8), 
                 tickfont=dict(size=8),
-                tickformat='%b, %d'  # Ensure the date format is 'Feb, 23'
+                tickformat='%m월 %d일'  # Ensure the date format is '%m월 %d일'
             )
             # Only show y-axis labels on the first column (column 1)
             if j != 1:
