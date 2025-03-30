@@ -44,12 +44,12 @@ def predictDistrict(total_df):
         row, col = divmod(i, 5) 
         models[i].plot(forecast, ax=ax[row, col], uncertainty=True)
 
-        ax[row, col].set_title(f"서울시 {cgg_nms[i]} 평균가격 예측 시나리오 {periods}일간", fontproperties=font_prop)
+        ax[row, col].set_title(f"{cgg_nms[i]} 평균가격 예측", fontproperties=font_prop)
         ax[row, col].set_xlabel("날짜", fontproperties=font_prop)
         ax[row, col].set_ylabel("평균가격(만원)", fontproperties=font_prop)
         
+        ax[row, col].xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%b, %d'))  # Format as 'Feb, 23'
         for tick in ax[row, col].get_xticklabels():
-            tick.set_rotation(30)
-
+            tick.set_rotation(45)  # Rotate x-tick labels for readability
     fig.tight_layout()
     st.pyplot(fig)
