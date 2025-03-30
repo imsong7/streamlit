@@ -49,7 +49,16 @@ def predictDistrict(total_df):
         ax[row, col].set_ylabel("평균가격(만원)", fontproperties=font_prop)
         
         ax[row, col].xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%b, %d'))  # Format as 'Feb, 23'
+        
+        # Rotate x-tick labels for readability
         for tick in ax[row, col].get_xticklabels():
             tick.set_rotation(45)  # Rotate x-tick labels for readability
+            tick.set_fontproperties(font_prop)  # Apply Korean font
+
+        # Ensure the x-ticks are applied for every subplot
+        ax[row, col].tick_params(axis='x', rotation=45)
+    
+    # Adjust layout to prevent overlap and make space for titles
+    fig.tight_layout()
     fig.tight_layout()
     st.pyplot(fig)
