@@ -5,7 +5,12 @@ import streamlit as st
 import geopandas as gpd 
 
 import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
 import plotly.express as px
+
+font_path = "seoul_housing/Nanum_Gothic/NanumGothic.ttf"
+nanum_font = fm.FontProperties(fname=font_path, size=14)
+plt.rcParams["font.family"] = nanum_font.get_name()
 
 def mapMatplotlib(merge_df):
     fig, ax = plt.subplots(ncols=2, sharey=True, figsize=(15, 10))
