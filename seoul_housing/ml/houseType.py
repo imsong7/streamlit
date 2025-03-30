@@ -35,15 +35,14 @@ def predict_plot(total_df, types, periods):
 
         # 타이틀, 라벨에 한글 폰트 적용
         ax[row, col].set_title(f"서울시 {types[i]} 평균가격 예측 시나리오 {periods}일간", fontproperties=font_prop)
-        ax[row, col].set_xlabel("날짜", fontproperties=font_prop)
         ax[row, col].set_ylabel("평균가격(만원)", fontproperties=font_prop)
+        ax[row, col].set_xlabel('')
         for tick in ax[row, col].get_xticklabels():
             tick.set_rotation(30)
         
-        ax[row, col].xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%Y-%m-%d'))
+        ax[row, col].xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%m-%d'))
         ax[row, col].xaxis.set_major_locator(plt.matplotlib.dates.DayLocator(interval=7))
-        plt.setp(ax[row, col].get_xticklabels(), rotation=45, ha='right', fontproperties=font_prop)
-        
+        plt.setp(ax[row, col].get_xticklabels(), rotation=45, ha='right', fontproperties=font_prop)        
         ax[row, col].yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos: '{:,.0f}'.format(x)))
 
     return fig
@@ -52,6 +51,7 @@ def predictType(total_df):
     total_df['CTRT_DAY'] = pd.to_datetime(total_df['CTRT_DAY'], format='%Y-%m-%d')
     types = list(total_df['BLDG_USG'].unique())
     periods = int(st.number_input("향후 예측기간을 지정하세요(1일~30일)", min_value=1, max_value=30, step=1))
+    st.markdown(f"### 2025년 서울시 주거형태별 평균가격 예측 {periods}일간 ")
 
     fig = predict_plot(total_df, types, periods)
     fig.tight_layout()
