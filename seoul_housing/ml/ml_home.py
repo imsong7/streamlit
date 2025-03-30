@@ -8,11 +8,18 @@ from ml.houseType import predictType
 from ml.cgg_nm import predictDistrict
 from ml.report import reportMain
 
+st.set_page_config(
+    page_title="ML 분석 페이지",  
+    layout="wide",  # 전체 너비 설정되지만, CSS로 제한
+    initial_sidebar_state="expanded" 
+)
+
+# 🔽 본문 너비 제한 (1000px 이하로 조정)
 st.markdown(
     """
     <style>
     .main {
-        max-width: 1000px;  /* 최대 너비 지정 */
+        max-width: 1000px;  /* 최대 너비 제한 */
         margin: 0 auto;  /* 가운데 정렬 */
     }
     </style>
