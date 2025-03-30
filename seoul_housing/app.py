@@ -10,14 +10,14 @@ from ml.ml_home import run_ml
 def main():
     total_df = load_data()
     with st.sidebar:
-        selected = option_menu("대시보드 메뉴", ['홈', '탐색적 자료분석', '부동산 예측'],
+        selected = option_menu("대시보드 메뉴", ['홈', '탐색적 분석', '부동산 예측'],
                                 icons=['house', 'file-bar-graph', 'graph-up-arrow'], 
                                 menu_icon="cast", 
                                 default_index=0)
     
     if selected == "홈":
         run_home()
-    elif selected == "탐색적 자료분석":
+    elif selected == "탐색적 분석":
         run_eda(total_df)
     elif selected == "부동산 예측":
         run_ml(total_df)
