@@ -38,11 +38,18 @@ def run_home():
         showMap(filtered_month, month_dict[selected_month])
 
         # Show top 3 and bottom 3 prices
+        sorted_df_renamed = sorted_df.rename(columns={
+            'CGG_NM': '자치구',
+            'STDG_NM': '동',
+            'BLDG_NM': '건물명',
+            'ARCH_AREA': '면적 (㎡)',
+            'THING_AMT': '가격 (만원)'
+        })
         st.markdown(f"#### 🏠 {selected_month} {selected_type} 가격 상위 3개")
-        st.dataframe(sorted_df.sort_values(by='THING_AMT', ascending=False).head(3).reset_index(drop=True))
+        st.dataframe(sorted_df_renamed.sort_values(by='가격 (만원)', ascending=False).head(3).reset_index(drop=True))
 
         st.markdown(f"#### 🏠 {selected_month} {selected_type} 가격 하위 3개")
-        st.dataframe(sorted_df.sort_values(by='THING_AMT', ascending=True).head(3).reset_index(drop=True))
+        st.dataframe(sorted_df_renamed.sort_values(by='가격 (만원)', ascending=True).head(3).reset_index(drop=True))
 
     with col[1]:
         st.subheader('')
@@ -83,12 +90,20 @@ def run_home():
 
         st.markdown("<hr>", unsafe_allow_html=True)
         
+        filtered_cgg_nm_renamed = filtered_cgg_nm.rename(columns={
+            'CGG_NM': '자치구',
+            'STDG_NM': '표준명',
+            'BLDG_NM': '건물명',
+            'ARCH_AREA': '면적 (㎡)',
+            'THING_AMT': '가격 (만원)'
+        })
+
         # Show top 5 and bottom 5 prices for selected district
         st.markdown(f"#### 🏠 {cgg_nm} {selected_type} 가격 상위 5개")
-        st.dataframe(filtered_cgg_nm[columns].sort_values(by='THING_AMT', ascending=False).head(5).reset_index(drop=True))
+        st.dataframe(filtered_cgg_nm_renamed[columns].sort_values(by='가격 (만원)', ascending=False).head(5).reset_index(drop=True))
 
         st.markdown(f"#### 🏠 {cgg_nm} {selected_type} 가격 하위 5개")
-        st.dataframe(filtered_cgg_nm[columns].sort_values(by='THING_AMT', ascending=True).head(5).reset_index(drop=True))
+        st.dataframe(filtered_cgg_nm_renamed[columns].sort_values(by='가격 (만원)', ascending=True).head(5).reset_index(drop=True))
         
     st.markdown("<hr>", unsafe_allow_html=True)
     st.caption("출처 : [서울시 부동산 실거래가 정보](https://data.seoul.go.kr/dataList/OA-21275/S/1/datasetView.do)")
