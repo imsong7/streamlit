@@ -7,6 +7,19 @@ from eda.viz import showViz
 from eda.stat import showStat
 from eda.map import showMap
 
+st.markdown(
+    """
+    <style>
+    .main {
+        max-width: 1000px;  /* 최대 너비 지정 */
+        margin: 0 auto;  /* 가운데 정렬 */
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+
 def home():
     st.markdown("### 📈 Visualization 개요 \n"
     "- 가구당 평균 가격 추세 \n"
