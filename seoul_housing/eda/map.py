@@ -53,7 +53,6 @@ def mapPlotly(merge_df):
     result = merge_df[merge_df['month'] == month].reset_index(drop=True)  # Fix: Correct variable name
     mapbox_style = st.sidebar.selectbox('지도스타일', ['white-bg', 'open-street-map', 'carto-positron', 'carto-darkmatter'])
 
-    st.markdown(f"##### 2023년 {month}월 아파트 평균(만원)")
     fig = px.choropleth_mapbox(result,
                            geojson=seouls,
                            locations='SIG_KOR_NM', color='mean',
@@ -65,7 +64,13 @@ def mapPlotly(merge_df):
                            opacity=0.5,
                            labels={'mean':'아파트 평균가격(만원)'})
 
-    fig.update_layout(margin={"r":0, "t":0, "l":0, "b":0}, font=dict(family=font_prop.get_name()))
+    fig.update_layout(
+        margin={"r":0, "t":0, "l":0, "b":0},
+        font=dict(family=font_prop.get_name()),
+        title=f"2023년 {month}월 서울시 아파트 평균가격",
+        title_font=dict(family=font_prop.get_name(), size=20, weight='bold')  # Title settings
+    )
+    
     fig.update_traces(hovertemplate='<b>%{location}</b><br>아파트평균가격: %{z:,.0f}(만원)')
     fig.update_coloraxes(colorbar_tickformat='000')
     
