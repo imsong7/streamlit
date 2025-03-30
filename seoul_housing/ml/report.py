@@ -52,7 +52,7 @@ def reportMain(total_df):
     start_date = start_date.strftime('%m월 %d일')
     end_date = end_date.strftime('%m월 %d일')
     st.markdown(f"### 📍 {cgg_nm} 향후 {periods}일간({start_date} ~ {end_date}) 아파트 가격 예측")
-    st.markdown(f"#### 평균 가격은 {mean_yhat:,.0f}만원")
+    st.markdown(f"#### 평균 가격은 <span style='color:green'>{mean_yhat:,.0f}만원/span>")
     st.markdown(f"#### 예측기간 중 {max_date}이 <span style='color:red'>{max_row['yhat']:,.0f}만원</span>으로 가장 높아", unsafe_allow_html=True)
     st.markdown(f"#### 예측기간 중 {min_date}이 <span style='color:blue'>{min_row['yhat']:,.0f}만원</span>으로 가장 낮아", unsafe_allow_html=True)
 
