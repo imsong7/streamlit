@@ -35,6 +35,7 @@ def run_ml(total_df):
     if selected == 'Home':
         home()
     elif selected == '예측':
+        
         predictType(total_df)
         predictDistrict(total_df)      
         pass

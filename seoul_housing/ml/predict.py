@@ -109,7 +109,7 @@ def predictType(total_df):
     types = list(total_df['BLDG_USG'].unique())
     periods = int(st.number_input("향후 예측기간을 지정하세요(1일~30일)", min_value=1, max_value=30, step=1))
 
-    col = st.columns((2, 2), gap='medium')
+    col = st.columns((1, 2), gap='medium')
     with col[0]:
         st.markdown(f"### 2025년 서울시 주거형태별 평균가격 예측 {periods}일간 ")
 
