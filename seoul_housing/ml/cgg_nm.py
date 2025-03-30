@@ -62,7 +62,7 @@ def predictDistrict(total_df):
         ax[row, col].yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos: '{:,.0f}'.format(x)))
         
         if col == 0:
-            ax[row, col].set_ylabel("평균가격(만원)", fontproperties=font_prop fontsize=15)
+            ax[row, col].set_ylabel("평균가격(만원)", fontproperties=font_prop, fontsize=15)
         else:
             ax[row, col].set_ylabel('')
 
