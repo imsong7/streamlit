@@ -65,9 +65,7 @@ def mapPlotly(merge_df, month):
                            opacity=0.5,
                            labels={'mean':'아파트 평균가격(만원)'})
 
-    fig.update_layout(
-        margin={"r":0, "t":0, "l":0, "b":0})  # Title settings
-    
+    fig.update_layout(margin=dict(r=0, t=0, l=0, b=0))
     fig.update_traces(hovertemplate='<b>%{location}</b><br>아파트평균가격: %{z:,.0f}(만원)')
     fig.update_coloraxes(colorbar_tickformat='000')
     
