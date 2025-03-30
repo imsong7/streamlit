@@ -80,7 +80,7 @@ def predictDistrict(total_df):
 
     # Update layout for the subplots and titles
     fig.update_layout(
-        title=f"서울시 평균가격 예측 ({periods}일간)",
+        title=f"2025년 서울시 평균가격 예측 ({periods}일간)",
         title_font=dict(size=20),
         autosize=False,
         width=1800,  # Increased width
@@ -98,7 +98,7 @@ def predictDistrict(total_df):
                 row=i, col=j, 
                 title_font=dict(size=8), 
                 tickfont=dict(size=8),
-                tickformat='%y-%m-%d'  # Ensure the date format is '%y-%m-%d'
+                tickformat='%m-%d'  # Ensure the date format is '%y-%m-%d'
             )
             # Only show y-axis labels on the first column (column 1)
             if j != 1:
