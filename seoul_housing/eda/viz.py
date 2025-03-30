@@ -6,7 +6,7 @@ from plotly.subplots import make_subplots
 import plotly.express as px
 
 def meanChart(total_df, cgg_nm):
-    st.markdown("### 📍 {cgg_nm} 가구별 평균 가격 추세 \n")
+    st.markdown(f"### 📍 {cgg_nm} 가구별 평균 가격 추세 \n")
     filtered_df = total_df[total_df["CGG_NM"] == cgg_nm]
     filtered_df = filtered_df[filtered_df["CTRT_DAY"].between("2025-02-01", "2025-03-30")]
     result = filtered_df.groupby(["CTRT_DAY", "BLDG_USG"])["THING_AMT"].agg('mean').reset_index()
@@ -49,7 +49,7 @@ def meanChart(total_df, cgg_nm):
     st.plotly_chart(fig)
 
 def cntChart(total_df, cgg_nm):
-    st.markdown("### 📍 {cgg_nm} 가구별 거래 건수 추세 \n")
+    st.markdown(f"### 📍 {cgg_nm} 가구별 거래 건수 추세 \n")
     filtered_df = total_df[total_df['CGG_NM']==cgg_nm]
     filtered_df = filtered_df[filtered_df["CTRT_DAY"].between("2025-02-01", "2025-03-30")]
     result = filtered_df.groupby(["CTRT_DAY", "BLDG_USG"])["THING_AMT"].count().reset_index().rename(columns={'THING_AMT':'거래건수'})
@@ -113,16 +113,17 @@ def barChart(total_df):
     st.plotly_chart(fig)
 
 def showViz(total_df):
-    col = st.columns((2, 2), gap='medium')
-
     total_df["CTRT_DAY"] = pd.to_datetime(total_df["CTRT_DAY"], format="%Y-%m-%d")
-
-
     barChart(total_df)
 
     cgg_nm = st.selectbox("자치구명", sorted(total_df["CGG_NM"].unique()))
     st.markdown("<hr>", unsafe_allow_html=True)
+
+    col = st.columns((2, 2), gap='medium')
+    filtered_df = total_df[total_df["CGG_NM"] == cgg_nm]
+
     with col[0]:
-        meanChart(total_df, cgg_nm)
+        meanChart(filtered_df)
+    
     with col[1]:
-        cntChart(total_df, cgg_nm)
+        cntChart(filtered_df)
