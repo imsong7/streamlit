@@ -98,7 +98,7 @@ def predictDistrict(total_df, periods):
 
         ax[row, col].grid(True, alpha=0.3)
     
-    plt.subplots_adjust(bottom=0.15, hspace=0.7, wspace=0.3)
+    plt.subplots_adjust(bottom=0.15, hspace=0.1, wspace=0.3)
     
     fig.tight_layout()
     st.pyplot(fig)
