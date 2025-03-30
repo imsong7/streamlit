@@ -118,7 +118,7 @@ def predictDistrict(total_df):
                 row=i, col=j, 
                 title_font=dict(size=8), 
                 tickfont=dict(size=8),
-                tickformat='%m월 %d일'  # Ensure the date format is '%m월 %d일'
+                tickformat='%b, %d'  # Ensure the date format is 'Feb, 23'
             )
             # Only show y-axis labels on the first column (column 1)
             if j != 1:
