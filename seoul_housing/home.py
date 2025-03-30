@@ -31,10 +31,11 @@ def run_home():
     sorted_df = filtered_month[["CGG_NM", "STDG_NM", "BLDG_NM", "ARCH_AREA", "THING_AMT"]]
 
     with col[0]:
+        st.markdown(f"### 2025년 {month_dict[selected_month]}월 서울시 아파트 평균가격(만원)")
         showMap(total_df, month_dict[selected_month])
-        st.markdown(f"### 🏠 {selected_month} 아파트 가격 상위 5개")
+        st.markdown(f"#### 🏠 {selected_month} 아파트 가격 상위 5개")
         st.dataframe(sorted_df.sort_values(by='THING_AMT', ascending=False).head(5).reset_index(drop=True))
-        st.markdown(f"### 🏠 {selected_month} 아파트 가격 하위 5개")
+        st.markdown(f"#### 🏠 {selected_month} 아파트 가격 하위 5개")
         sorted_df = filtered_month[["CGG_NM", "STDG_NM", "BLDG_NM", "ARCH_AREA", "THING_AMT"]]
         st.dataframe(sorted_df.sort_values(by='THING_AMT', ascending=True).head(5).reset_index(drop=True))
 
