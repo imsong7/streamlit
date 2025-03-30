@@ -39,6 +39,7 @@ def reportMain(total_df):
     max_date = forecast['ds'].max()
     start_date = max_date - pd.Timedelta(days=periods)
     future_data = forecast[forecast['ds'] > start_date]
+    start_date = start_date.strftime('%m월 %d일')
 
     max_row = future_data.loc[future_data['yhat'].idxmax(), ['ds', 'yhat']]
     min_row = future_data.loc[future_data['yhat'].idxmin(), ['ds', 'yhat']]
