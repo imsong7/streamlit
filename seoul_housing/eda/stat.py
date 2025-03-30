@@ -23,11 +23,13 @@ def set_korean_font():
     return font_prop
 
 def twoMeans(total_df):
+    font_prop = set_korean_font() 
+    
     total_df['month'] = total_df['CTRT_DAY'].dt.month
     apt_df = total_df[(total_df['BLDG_USG'] == '아파트') & (total_df['month'].isin([2, 3]))]
     st.markdown("<hr>", unsafe_allow_html=True)
     st.markdown("### 집계 \n"
-                "- 2월 3월의 아파트 가격을 비교한다.")
+                "2월 3월의 아파트 가격을 비교한다.")
     ttest_df = round(apt_df.groupby('month')['THING_AMT'].agg(['mean', 'std', 'size']), 1)
     st.dataframe(ttest_df, use_container_width=True)
     
@@ -42,7 +44,7 @@ def twoMeans(total_df):
     mar_df = apt_df[apt_df['month']==3]
     result = ttest(feb_df['THING_AMT'], mar_df['THING_AMT'], paired=False)
     st.dataframe(result, use_container_width=True)
-    st.markdown(f"확인결과 p-value 값이 {result['p-val'].values[0]} 이므로 $H_{0}$을 채택하여, 2월과 3월의 아파트 평균 차이는 없다.")
+    st.markdown(f"확인결과 p-value 값이 **{result['p-val'].values[0]}** 이므로 $H_{0}$을 채택하여, 2월과 3월의 아파트 평균 차이는 없다.")
 
     st.markdown("<hr>", unsafe_allow_html=True)
     selected_cgg_nm = st.sidebar.selectbox("자치구명", sorted(total_df["CGG_NM"].unique()))
@@ -55,15 +57,17 @@ def twoMeans(total_df):
     cgg_result = ttest(cgg_feb_df['THING_AMT'], cgg_mar_df['THING_AMT'], paired=False)
     st.dataframe(cgg_result, use_container_width=True)
     if cgg_result['p-val'].values[0] > 0.05:
-        st.markdown(f"확인결과 p-value 값이 {cgg_result['p-val'].values[0]} 이므로 $H_{0}$을 채택하여, 2월과 3월의 아파트 평균 차이는 없다.") # 귀무가설
+        st.markdown(f"확인결과 p-value 값이 **{cgg_result['p-val'].values[0]}** 이므로 $H_{0}$을 채택하여, 2월과 3월의 아파트 평균 차이는 없다.") # 귀무가설
     else:
-        st.markdown(f"확인결과 p-value 값이 {cgg_result['p-val'].values[0]} 이므로 $H_{1}$을 채택하여, 2월과 3월의 아파트 평균 차이는 있다.") # 대립가설
+        st.markdown(f"확인결과 p-value 값이 **{cgg_result['p-val'].values[0]}** 이므로 $H_{1}$을 채택하여, 2월과 3월의 아파트 평균 차이는 있다.") # 대립가설
 
     st.markdown("<hr>", unsafe_allow_html=True)
-    st.markdown(f"### 서울시 :Blue[{selected_cgg_nm}] 2월 vs 3월 시각화", unsafe_allow_html=True)
+    st.markdown(f"### 서울시 :[{selected_cgg_nm}] 2월 vs 3월 시각화", unsafe_allow_html=True)
     fig, ax = plt.subplots(figsize=(10,3))
     sns.pointplot(x='month', y='THING_AMT', data=cgg_df)
     sns.despine()
+    ax.set_xlabel("월", fontproperties=font_prop, fontsize=12)
+    ax.set_ylabel("아파트 거래가격(만원)", fontproperties=font_prop, fontsize=12)
     st.pyplot(fig)
     st.dataframe(round(cgg_df.groupby('month')['THING_AMT'].agg(['mean', 'std', 'size']), 1), use_container_width=True)
 
@@ -75,8 +79,7 @@ def corrRelation(total_df):
     
     st.markdown("<hr>", unsafe_allow_html=True)
     st.markdown("### 상관관계 분석을 위한 데이터 확인 \n"
-                "- 건물면적과 물건금액의 상관관계를 확인해보도록 한다. \n"
-                "- 먼저 추출된 데이터를 확인한다.")
+                "먼저 추출된 데이터에서 건물면적과 물건금액의 상관관계를 확인해보도록 한다. \n")
     corr_df = apt_df[['CTRT_DAY', 'THING_AMT', 'ARCH_AREA', 'CGG_NM', 'month']].reset_index(drop=True)
     st.dataframe(corr_df.head())
 
@@ -86,6 +89,7 @@ def corrRelation(total_df):
     fig, ax = plt.subplots(figsize=(10, 6))
     sns.scatterplot(x='ARCH_AREA', y='THING_AMT', data=corr_df, ax=ax)
     ax.set_title('건물면적과 물건금액의 상관관계', fontproperties=font_prop, fontsize=15, weight='bold')
+    ax.grid(True, alpha=0.3)
     st.pyplot(fig)
 
     st.markdown("<hr>", unsafe_allow_html=True)
@@ -98,9 +102,7 @@ def corrRelation(total_df):
     selected_cgg_nm = st.sidebar.selectbox("자치구명", sorted(corr_df['CGG_NM'].unique()))
     selected_month = st.sidebar.selectbox("월", sorted(corr_df['month'].unique()))
     st.markdown("<hr>", unsafe_allow_html=True)
-    st.markdown("### 각 자치구별 상관관계 시각화\n"
-                f"#### 서울시 {selected_cgg_nm} {selected_month}월 아파트 가격 ~ 건물면적 상관관계 분석 \n"
-                )
+    st.markdown(f"### 서울시 {selected_cgg_nm} {selected_month}월 아파트 가격 ~ 건물면적 상관관계 분석 \n")
     
     cgg_df = corr_df[(corr_df['CGG_NM']==selected_cgg_nm) & (corr_df['month']==selected_month)]
     corr_coef = pg.corr(cgg_df['ARCH_AREA'], cgg_df['THING_AMT'])
@@ -151,9 +153,9 @@ def regRession(total_df):
     # 회귀식
     st.markdown("<hr>", unsafe_allow_html=True)
     st.markdown("### 건물면적과 아파트가격 회귀분석 \n"
-                "- 통계의 가정들이 맞는지 확인해보도록 한다. \n"
-                "#### 정규성 검정 \n"
-                "- 먼저 시각적으로 확인한다. 잔차의 정규성 검정한다.")
+                "통계의 가정들이 맞는지 확인해보도록 한다. \n"
+                "#### 1) 정규성 검정 \n"
+                "먼저 시각적으로 잔차의 정규성 검정한다.")
     
     mod1 = pg.linear_regression(reg_df['ARCH_AREA'], reg_df['THING_AMT'])
     res = mod1.residuals_
@@ -170,8 +172,8 @@ def regRession(total_df):
                 "- 만약 p-value가 0.05보다 매우 작으면, 잔차의 정규성은 위반되었기 때문에, 여기에서는 통상적인 회귀의 결괏값을 해석할 필요가 없다. \n"
                 "- 이런 경우, 극단적인 이상치를 제거해야 하는 과정이 필요하다.")
             
-    st.markdown("#### 회귀모형 확인 \n"
-                "- 결정계수 $R^2$와 p-value를 확인한다.")
+    st.markdown("#### 2) 회귀모형 확인 \n"
+                "결정계수 $R^2$와 p-value를 확인한다.")
     st.dataframe(mod1.round(2), use_container_width=True)
     
     intercept, slope = mod1['coef'].values[0], mod1['coef'].values[1]
