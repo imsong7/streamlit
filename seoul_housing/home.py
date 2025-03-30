@@ -22,7 +22,9 @@ def run_home():
 
     total_df["CTRT_DAY"] = pd.to_datetime(total_df["CTRT_DAY"].astype(str), format="%Y-%m-%d")
     total_df["month"] = total_df["CTRT_DAY"].dt.month
-    total_df = total_df.loc[total_df["BLDG_USG"]=="아파트", :]
+    selected_type = st.selectbox("자치구", sorted(total_df["BLDG_USG"].unique()))
+    
+    total_df = total_df.loc[total_df["BLDG_USG"]==selected_type, :]
 
     selected_month = st.sidebar.radio("확인하고 싶은 월을 선택하세요", ["1월", "2월", "3월"])
     month_dict = {'1월': 1, '2월': 2, '3월': 3}
@@ -31,18 +33,18 @@ def run_home():
     sorted_df = filtered_month[["CGG_NM", "STDG_NM", "BLDG_NM", "ARCH_AREA", "THING_AMT"]]
 
     with col[0]:
-        st.subheader(f"2025년 {month_dict[selected_month]}월 서울시 아파트 평균가격")
+        st.subheader(f"2025년 {month_dict[selected_month]}월 서울시 {selected_type} 평균가격")
         showMap(total_df, month_dict[selected_month])
-        st.markdown(f"#### 🏠 {selected_month} 아파트 가격 상위 3개")
+        st.markdown(f"#### 🏠 {selected_month} {selected_type} 가격 상위 3개")
         st.dataframe(sorted_df.sort_values(by='THING_AMT', ascending=False).head(3).reset_index(drop=True))
-        st.markdown(f"#### 🏠 {selected_month} 아파트 가격 하위 3개")
+        st.markdown(f"#### 🏠 {selected_month} {selected_type} 가격 하위 3개")
         sorted_df = filtered_month[["CGG_NM", "STDG_NM", "BLDG_NM", "ARCH_AREA", "THING_AMT"]]
         st.dataframe(sorted_df.sort_values(by='THING_AMT', ascending=True).head(3).reset_index(drop=True))
 
     with col[1]:
         st.subheader('')
         cgg_nm = st.selectbox("자치구", sorted(total_df["CGG_NM"].unique()))
-        st.markdown(f'#### 📍 {cgg_nm} {selected_month} 아파트 가격 개요')
+        st.markdown(f'#### {cgg_nm} {selected_month} {selected_type} 가격 개요')
 
         col1, col2 = st.columns(2)
         filtered_month = total_df[total_df['month'] == month_dict[selected_month]]
@@ -77,10 +79,10 @@ def run_home():
 
 
         st.markdown("<hr>", unsafe_allow_html=True)
-        st.markdown(f"#### 🏠 {cgg_nm} 아파트 가격 상위 5개")
+        st.markdown(f"#### 🏠 {cgg_nm} {selected_type} 가격 상위 5개")
         sorted_df = filtered_month[["CGG_NM", "STDG_NM", "BLDG_NM", "ARCH_AREA", "THING_AMT"]]
         st.dataframe(sorted_df.sort_values(by='THING_AMT', ascending=False).head(5).reset_index(drop=True))
-        st.markdown(f"#### 🏠 {cgg_nm} 아파트 가격 하위 5개")
+        st.markdown(f"#### 🏠 {cgg_nm} {selected_type} 가격 하위 5개")
         sorted_df = filtered_month[["CGG_NM", "STDG_NM", "BLDG_NM", "ARCH_AREA", "THING_AMT"]]
         st.dataframe(sorted_df.sort_values(by='THING_AMT', ascending=True).head(5).reset_index(drop=True))
         
