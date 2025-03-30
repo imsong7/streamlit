@@ -14,7 +14,7 @@ def reportMain(total_df):
     cgg_nm = st.sidebar.selectbox("자치구", sorted(list(total_df['CGG_NM'].unique())))
     periods = st.sidebar.number_input("향후 예측기간을 지정하세요 (1일~30일)", min_value=1, max_value=30, step=1)
 
-    model_path = f'/Users/songsooyeoun/Desktop/git_test/streamlit/project1/ml/model/{cgg_nm}.model.json'
+    model_path = f'seoul_housing/ml/model/{cgg_nm}.model.json'
     
     # ✅ Handle missing model file
     if not os.path.exists(model_path):
