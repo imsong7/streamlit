@@ -62,11 +62,11 @@ def twoMeans(total_df):
         st.markdown(f"확인결과 p-value 값이 **{result['p-val'].values[0]}** 이므로 $H_{0}$을 채택하여, {month1}월과 {month2}월의 아파트 평균 차이는 없다.")
 
         st.markdown("<hr>", unsafe_allow_html=True)
-        selected_cgg_nm = st.sidebar.selectbox("자치구명", sorted(total_df["CGG_NM"].unique()))
+        st.markdown(f"자치구를 선택하여 {month1}월과 {month2}월의 아파트 평균 차이가 있는지 확인하도록 한다. \n")
+        selected_cgg_nm = st.selectbox("자치구명", sorted(total_df["CGG_NM"].unique()))
         cols = st.columns((2, 2), gap='medium')
         with cols[0]:
-            st.markdown(f"#### {selected_cgg_nm} {month1}월 vs {month2}월 차이 검정 \n"
-                        f"- 자치구를 선택하여 {month1}월과 {month2}월의 아파트 평균 차이가 있는지 확인하도록 한다.")
+            st.markdown(f"#### {selected_cgg_nm} {month1}월 vs {month2}월 차이 검정 \n")
 
             cgg_df = apt_df[apt_df['CGG_NM']==selected_cgg_nm]
             cgg_month1 = cgg_df[cgg_df['month']==month1]
