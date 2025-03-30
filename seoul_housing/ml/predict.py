@@ -115,7 +115,7 @@ def predict(total_df):
     total_df['CTRT_DAY'] = pd.to_datetime(total_df['CTRT_DAY'], format='%Y-%m-%d')
     periods = int(st.number_input("향후 예측기간을 지정하세요(1일~30일)", min_value=1, max_value=30, step=1))
 
-    cols = st.columns((1.5, 2), gap='medium')
+    cols = st.columns((1.5, 2.2), gap='medium')
     with cols[0]:
         predictType(total_df, periods)
     with cols[1]:
