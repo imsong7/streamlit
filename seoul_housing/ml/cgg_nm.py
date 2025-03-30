@@ -29,7 +29,7 @@ def predictDistrict(total_df):
     fig = make_subplots(
         rows=5, cols=5, 
         subplot_titles=[f"{cgg_nms[i]} 평균가격 예측 시나리오" for i in range(len(cgg_nms))],
-        vertical_spacing=0.1, horizontal_spacing=0.1
+        vertical_spacing=0.05, horizontal_spacing=0.05
     )
     
     for i in range(len(cgg_nms)):  
@@ -73,7 +73,7 @@ def predictDistrict(total_df):
         title=f"서울시 평균가격 예측 ({periods}일간)",
         title_font=dict(size=20),
         autosize=False,
-        width=1200,
+        width=1500,
         height=1200,
         showlegend=False
     )
