@@ -7,6 +7,13 @@ from utils import load_data
 from eda.eda_home import run_eda
 from ml.ml_home import run_ml 
 
+st.set_page_config(
+    page_title="서울시 부동산 대시보드",  
+    layout="wide", 
+    initial_sidebar_state="expanded" 
+)
+
+
 def main():
     total_df = load_data()
     with st.sidebar:
