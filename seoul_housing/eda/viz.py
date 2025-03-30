@@ -114,14 +114,14 @@ def barChart(total_df):
     st.plotly_chart(fig)
 
 def showViz(total_df):
+    col = st.columns((2, 2), gap='medium')
+
     total_df["CTRT_DAY"] = pd.to_datetime(total_df["CTRT_DAY"], format="%Y-%m-%d")
     cgg_nm = st.sidebar.selectbox("자치구명", sorted(total_df["CGG_NM"].unique()))
-    selected = st.sidebar.radio("차트 메뉴", ['가구당 평균 가격 추세', '가구당 거래 건수', '지역별 평균 가격 막대 그래프'])
-    if selected == "가구당 평균 가격 추세":
+
+    with col[0]:
         meanChart(total_df, cgg_nm)
-    elif selected == "가구당 거래 건수":
+    with col[1]:
         cntChart(total_df, cgg_nm)
-    elif selected == "지역별 평균 가격 막대 그래프":
-        barChart(total_df)
-    else:
-        st.warning("Error")
+
+    barChart(total_df)
