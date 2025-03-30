@@ -38,7 +38,7 @@ def predictDistrict(total_df):
     st.markdown(f"### 2025년 서울시 자치구역별 평균가격 예측 {periods}일간 ")
 
     models = load_models(cgg_nms)
-    fig, ax = plt.subplots(figsize=(25,20), sharey=False, ncols=5, nrows=5)
+    fig, ax = plt.subplots(figsize=(30,20), sharey=False, ncols=5, nrows=5)
     for i in range(len(cgg_nms)):  
         future = models[i].make_future_dataframe(periods=periods)
         forecast = models[i].predict(future)

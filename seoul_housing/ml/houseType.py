@@ -5,6 +5,7 @@ import streamlit as st
 import pandas as pd
 from prophet import Prophet
 import matplotlib.font_manager as fm
+import matplotlib.ticker as ticker
 import os
 
 # 한글 폰트 설정
@@ -39,6 +40,12 @@ def predict_plot(total_df, types, periods):
         for tick in ax[row, col].get_xticklabels():
             tick.set_rotation(30)
         
+        ax[row, col].xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%Y-%m-%d'))
+        ax[row, col].xaxis.set_major_locator(plt.matplotlib.dates.DayLocator(interval=7))
+        plt.setp(ax[row, col].get_xticklabels(), rotation=45, ha='right', fontproperties=font_prop)
+        
+        ax[row, col].yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos: '{:,.0f}'.format(x)))
+
     return fig
 
 def predictType(total_df):

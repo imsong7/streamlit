@@ -16,13 +16,16 @@ import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
 import os
 
-font_path = "seoul_housing/Nanum_Gothic/NanumGothic-Regular.ttf"
-nanum_font = fm.FontProperties(fname=font_path)
-plt.rcParams["font.family"] = nanum_font.get_name()
-
+def set_korean_font():
+    font_path = os.path.join('seoul_housing', 'Nanum_Gothic', 'NanumGothic-Regular.ttf')
+    font_prop = fm.FontProperties(fname=font_path)
+    plt.rcParams['font.family'] = 'NanumGothic'
+    plt.rcParams['axes.unicode_minus'] = False  # 마이너스 기호 깨짐 방지
+    return font_prop
 
 
 def mapMatplotlib(merge_df):
+    font_prop = set_korean_font()
     fig, ax = plt.subplots(ncols=2, sharey=True, figsize=(15, 10))
     merge_df[merge_df['month'] == 2].plot(ax=ax[0], column='mean', cmap='Pastel1', legend=False, alpha=0.9, edgecolor='gray')
     merge_df[merge_df['month'] == 3].plot(ax=ax[1], column='mean', cmap='Pastel1', legend=False, alpha=0.9, edgecolor='gray')
@@ -30,23 +33,24 @@ def mapMatplotlib(merge_df):
     patch_col = ax[0].collections[0]
     cb = fig.colorbar(patch_col, ax=ax, shrink=0.5)
     for i, row in merge_df[merge_df['month'] == 2].iterrows():
-        ax[0].annotate(row['SIG_KOR_NM'], xy=(row['lon'], row['lat']), xytext=(-7,2), textcoords='offset points', fontsize=8, color='black')
+        ax[0].annotate(row['SIG_KOR_NM'], xy=(row['lon'], row['lat']), xytext=(-7,2), textcoords='offset points', fontproperties=font_prop, fontsize=8, color='black')
     for i, row in merge_df[merge_df['month'] == 3].iterrows():
-        ax[1].annotate(row['SIG_KOR_NM'], xy=(row['lon'], row['lat']), xytext=(-7,2), textcoords='offset points', fontsize=8, color='black')
+        ax[1].annotate(row['SIG_KOR_NM'], xy=(row['lon'], row['lat']), xytext=(-7,2), textcoords='offset points', fontproperties=font_prop, fontsize=8, color='black')
 
-    ax[0].set_title('2023-2월 아파트 평균(만원)')
-    ax[1].set_title('2023-3월 아파트 평균(만원)')
+    ax[0].set_title('2023-2월 아파트 평균(만원)', fontproperties=font_prop)
+    ax[1].set_title('2023-3월 아파트 평균(만원)', fontproperties=font_prop)
     ax[0].set_axis_off()
     ax[1].set_axis_off()
 
     st.pyplot(fig)
 
 def mapPlotly(merge_df):
+    font_prop = set_korean_font()
     with open('seoul_housing/sig_20230729/seoul.geojson') as f:
         seouls = json.load(f)
     
-    moth = st.sidebar.radio("월", [2, 3])  # Fix: Use `moth` instead of `month`
-    result = merge_df[merge_df['month'] == moth].reset_index(drop=True)  # Fix: Correct variable name
+    month = st.sidebar.radio("월", [2, 3])  
+    result = merge_df[merge_df['month'] == month].reset_index(drop=True)  # Fix: Correct variable name
     mapbox_style = st.sidebar.selectbox('지도스타일', ['white-bg', 'open-street-map', 'carto-positron', 'carto-darkmatter', 
                                                     'stamen-terrain', 'stamen-toner', 'stamen-watercolor'])
     fig = px.choropleth_mapbox(result,
@@ -60,7 +64,7 @@ def mapPlotly(merge_df):
                            opacity=0.5,
                            labels={'mean':'아파트 평균가격(만원)'})
 
-    fig.update_layout(margin={"r":0, "t":0, "l":0, "b":0})
+    fig.update_layout(margin={"r":0, "t":0, "l":0, "b":0}, font=dict(family=font_prop.get_name()))
     fig.update_traces(hovertemplate='<b>%{location}</b><br>아파트평균가격: %{z:,.0f}(만원)')
     fig.update_coloraxes(colorbar_tickformat='000')
     

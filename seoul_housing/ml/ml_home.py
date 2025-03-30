@@ -11,7 +11,7 @@ from ml.report import reportMain
 def home():
     st.markdown("### 머신러닝 예측 개요 \n"
                 "- 가구당 예측 그래프 추세 \n"
-                "- 자치구볍ㄹ 예측 그래프 추세 \n"
+                "- 자치구역별 예측 그래프 추세 \n"
                 "- 사용된 알고리즘 소개 \n"
                 "   + Facebook Prophet 알고리즘 사용\n"
                 "   + 출처 : hpp")
