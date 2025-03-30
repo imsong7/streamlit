@@ -19,7 +19,7 @@ def meanChart(total_df, cgg_nm):
     # Create subplots with 2 rows and 2 columns
     fig = make_subplots(rows=2, cols=2, shared_xaxes=True, 
                         subplot_titles=('아파트', '단독다가구', '오피스텔', '연립다세대'),
-                        horizontal_spacing=0.15)
+                        horizontal_spacing=0.0)
     
     # Add line graphs to the subplots
     fig.add_trace(px.line(df1,
