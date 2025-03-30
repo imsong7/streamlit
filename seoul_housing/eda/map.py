@@ -53,6 +53,8 @@ def mapPlotly(merge_df):
     result = merge_df[merge_df['month'] == month].reset_index(drop=True)  # Fix: Correct variable name
     mapbox_style = st.sidebar.selectbox('지도스타일', ['white-bg', 'open-street-map', 'carto-positron', 'carto-darkmatter', 
                                                     'stamen-terrain', 'stamen-toner', 'stamen-watercolor'])
+    
+    st.markdown(f"#### 2023년 {month}월 아파트 평균(만원)")
     fig = px.choropleth_mapbox(result,
                            geojson=seouls,
                            locations='SIG_KOR_NM', color='mean',
