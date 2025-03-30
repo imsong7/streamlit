@@ -24,46 +24,57 @@ def set_korean_font():
 
 def twoMeans(total_df):
     font_prop = set_korean_font() 
-    
+
     total_df['month'] = total_df['CTRT_DAY'].dt.month
-    apt_df = total_df[(total_df['BLDG_USG'] == '아파트') & (total_df['month'].isin([2, 3]))]
+    apt_df = total_df[(total_df['BLDG_USG'] == '아파트') & (total_df['month'].isin([1, 2, 3]))]
+    
     st.markdown("<hr>", unsafe_allow_html=True)
     st.markdown("### 집계 \n"
-                "2월 3월의 아파트 가격을 비교한다.")
+                "1월, 2월, 3월의 아파트 가격을 비교한다.")
+    
     ttest_df = round(apt_df.groupby('month')['THING_AMT'].agg(['mean', 'std', 'size']), 1)
     st.dataframe(ttest_df, use_container_width=True)
     
     st.markdown("<hr>", unsafe_allow_html=True)
-    st.markdown("### 서울시 통합 2월 vs 3월 차이 검정 \n"
-                "- 2월과 3월의 아파트 평균 가격의 차이를 검정한다. \n"
+    st.markdown("### 서울시 통합 1월 vs 2월 vs 3월 차이 검정 \n"
+                "- 1월, 2월, 3월의 아파트 평균 가격의 차이를 검정한다. \n"
                 "- 가설설정 \n"
-                "  + 귀무가설 : $H_{0}$: 2월과 3월의 아파트 평균 차이는 없다. \n"
-                "  + 대립가설 : $H_{1}$: 2월과 3월의 아파트 평균 차이는 있다. \n")
+                "  + 귀무가설 : $H_{0}$: 1월, 2월, 3월의 아파트 평균 차이는 없다. \n"
+                "  + 대립가설 : $H_{1}$: 1월, 2월, 3월의 아파트 평균 차이는 있다. \n")
     
-    feb_df = apt_df[apt_df['month']==2]
-    mar_df = apt_df[apt_df['month']==3]
-    result = ttest(feb_df['THING_AMT'], mar_df['THING_AMT'], paired=False)
+    jan_df = apt_df[apt_df['month'] == 1]
+    feb_df = apt_df[apt_df['month'] == 2]
+    mar_df = apt_df[apt_df['month'] == 3]
+    
+    # Perform ANOVA test for multiple groups
+    from scipy.stats import f_oneway
+    result = f_oneway(jan_df['THING_AMT'], feb_df['THING_AMT'], mar_df['THING_AMT'])
+    
     st.dataframe(result, use_container_width=True)
-    st.markdown(f"확인결과 p-value 값이 **{result['p-val'].values[0]}** 이므로 $H_{0}$을 채택하여, 2월과 3월의 아파트 평균 차이는 없다.")
+    st.markdown(f"확인결과 p-value 값이 **{result.pvalue}** 이므로, 1월, 2월, 3월의 아파트 평균 차이는 **{'있다' if result.pvalue < 0.05 else '없다'}**.")
 
     st.markdown("<hr>", unsafe_allow_html=True)
     selected_cgg_nm = st.sidebar.selectbox("자치구명", sorted(total_df["CGG_NM"].unique()))
-    st.markdown(f"### 서울시 {selected_cgg_nm} 2월 vs 3월 차이 검정 \n"
-                "- 자치구를 선택하여 2월과 3월의 아파트 평균 차이가 있는지 확인하도록 한다.")
+    st.markdown(f"### 서울시 {selected_cgg_nm} 1월, 2월, 3월 차이 검정 \n"
+                "- 자치구를 선택하여 1월, 2월, 3월의 아파트 평균 차이가 있는지 확인하도록 한다.")
 
-    cgg_df = apt_df[apt_df['CGG_NM']==selected_cgg_nm]
-    cgg_feb_df = cgg_df[cgg_df['month']==2]
-    cgg_mar_df = cgg_df[cgg_df['month']==3]
-    cgg_result = ttest(cgg_feb_df['THING_AMT'], cgg_mar_df['THING_AMT'], paired=False)
+    cgg_df = apt_df[apt_df['CGG_NM'] == selected_cgg_nm]
+    cgg_jan_df = cgg_df[cgg_df['month'] == 1]
+    cgg_feb_df = cgg_df[cgg_df['month'] == 2]
+    cgg_mar_df = cgg_df[cgg_df['month'] == 3]
+    
+    # Perform ANOVA test for multiple groups for selected region
+    cgg_result = f_oneway(cgg_jan_df['THING_AMT'], cgg_feb_df['THING_AMT'], cgg_mar_df['THING_AMT'])
+    
     st.dataframe(cgg_result, use_container_width=True)
-    if cgg_result['p-val'].values[0] > 0.05:
-        st.markdown(f"확인결과 p-value 값이 **{cgg_result['p-val'].values[0]}** 이므로 $H_{0}$을 채택하여, 2월과 3월의 아파트 평균 차이는 없다.") # 귀무가설
+    if cgg_result.pvalue > 0.05:
+        st.markdown(f"확인결과 p-value 값이 **{cgg_result.pvalue}** 이므로 $H_{0}$을 채택하여, 1월, 2월, 3월의 아파트 평균 차이는 없다.")  # 귀무가설
     else:
-        st.markdown(f"확인결과 p-value 값이 **{cgg_result['p-val'].values[0]}** 이므로 $H_{1}$을 채택하여, 2월과 3월의 아파트 평균 차이는 있다.") # 대립가설
+        st.markdown(f"확인결과 p-value 값이 **{cgg_result.pvalue}** 이므로 $H_{1}$을 채택하여, 1월, 2월, 3월의 아파트 평균 차이는 있다.")  # 대립가설
 
     st.markdown("<hr>", unsafe_allow_html=True)
-    st.markdown(f"### 서울시 :[{selected_cgg_nm}] 2월 vs 3월 시각화", unsafe_allow_html=True)
-    fig, ax = plt.subplots(figsize=(10,3))
+    st.markdown(f"### 서울시 :[{selected_cgg_nm}] 1월, 2월, 3월 시각화", unsafe_allow_html=True)
+    fig, ax = plt.subplots(figsize=(10, 3))
     sns.pointplot(x='month', y='THING_AMT', data=cgg_df)
     sns.despine()
     ax.set_xlabel("월", fontproperties=font_prop, fontsize=12)
@@ -75,7 +86,7 @@ def corrRelation(total_df):
     font_prop = set_korean_font() 
     
     total_df['month'] = total_df['CTRT_DAY'].dt.month
-    apt_df = total_df[(total_df['BLDG_USG'] == '아파트') & (total_df['month'].isin([2, 3]))]
+    apt_df = total_df[(total_df['BLDG_USG'] == '아파트') & (total_df['month'].isin([1, 2, 3]))]
     
     st.markdown("<hr>", unsafe_allow_html=True)
     st.markdown("### 상관관계 분석을 위한 데이터 확인 \n"

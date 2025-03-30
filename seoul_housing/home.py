@@ -15,8 +15,8 @@ def run_home():
     total_df = total_df.loc[total_df["BLDG_USG"]=="아파트", :]
 
     cgg_nm = st.sidebar.selectbox("자치구", sorted(total_df["CGG_NM"].unique()))
-    selected_month = st.sidebar.radio("확인하고 싶은 월을 선택하세요", ["3월", "2월"])
-    month_dict = {'3월': 3, '2월': 2}
+    selected_month = st.sidebar.radio("확인하고 싶은 월을 선택하세요", ["3월", "2월", "1월"])
+    month_dict = {'3월': 3, '2월': 2, '1월': 1}
     st.markdown("<hr>", unsafe_allow_html=True)
     st.subheader(f'{cgg_nm} {selected_month} 아파트 가격 개요')
     st.markdown("자치구와 월을 클릭하면 자동으로 각 지역구의 거래된 **최소가격**, **최대가격**을 확인할 수 있습니다.")

@@ -19,21 +19,26 @@ def set_korean_font():
 
 def mapMatplotlib(merge_df):
     font_prop = set_korean_font()
-    fig, ax = plt.subplots(ncols=2, sharey=True, figsize=(18, 12))
-    merge_df[merge_df['month'] == 2].plot(ax=ax[0], column='mean', cmap='Pastel1', legend=False, alpha=0.9, edgecolor='gray')
-    merge_df[merge_df['month'] == 3].plot(ax=ax[1], column='mean', cmap='Pastel1', legend=False, alpha=0.9, edgecolor='gray')
+    fig, ax = plt.subplots(ncols=3, sharey=True, figsize=(18, 12))
+    merge_df[merge_df['month'] == 1].plot(ax=ax[0], column='mean', cmap='Pastel1', legend=False, alpha=0.9, edgecolor='gray')
+    merge_df[merge_df['month'] == 2].plot(ax=ax[1], column='mean', cmap='Pastel1', legend=False, alpha=0.9, edgecolor='gray')
+    merge_df[merge_df['month'] == 3].plot(ax=ax[2], column='mean', cmap='Pastel1', legend=False, alpha=0.9, edgecolor='gray')
 
     patch_col = ax[0].collections[0]
     cb = fig.colorbar(patch_col, ax=ax, shrink=0.5)
-    for i, row in merge_df[merge_df['month'] == 2].iterrows():
+    for i, row in merge_df[merge_df['month'] == 1].iterrows():
         ax[0].annotate(row['SIG_KOR_NM'], xy=(row['lon'], row['lat']), xytext=(-7,2), textcoords='offset points', fontproperties=font_prop, fontsize=8, color='black')
-    for i, row in merge_df[merge_df['month'] == 3].iterrows():
+    for i, row in merge_df[merge_df['month'] == 2].iterrows():
         ax[1].annotate(row['SIG_KOR_NM'], xy=(row['lon'], row['lat']), xytext=(-7,2), textcoords='offset points', fontproperties=font_prop, fontsize=8, color='black')
+    for i, row in merge_df[merge_df['month'] == 3].iterrows():
+        ax[2].annotate(row['SIG_KOR_NM'], xy=(row['lon'], row['lat']), xytext=(-7,2), textcoords='offset points', fontproperties=font_prop, fontsize=8, color='black')
 
-    ax[0].set_title('2023년 2월 아파트 평균(만원)', fontproperties=font_prop, fontsize=20, weight='heavy')
-    ax[1].set_title('2023년 3월 아파트 평균(만원)', fontproperties=font_prop, fontsize=20, weight='heavy')
+    ax[0].set_title('2023년 1월 아파트 평균(만원)', fontproperties=font_prop, fontsize=20, weight='heavy')
+    ax[1].set_title('2023년 2월 아파트 평균(만원)', fontproperties=font_prop, fontsize=20, weight='heavy')
+    ax[2].set_title('2023년 3월 아파트 평균(만원)', fontproperties=font_prop, fontsize=20, weight='heavy')
     ax[0].set_axis_off()
     ax[1].set_axis_off()
+    ax[2].set_axis_off()
 
     st.pyplot(fig)
 
@@ -42,7 +47,7 @@ def mapPlotly(merge_df):
     with open('seoul_housing/sig_20230729/seoul.geojson') as f:
         seouls = json.load(f)
     
-    month = st.sidebar.radio("월", [2, 3])  
+    month = st.sidebar.radio("월", [1, 2, 3])  
     result = merge_df[merge_df['month'] == month].reset_index(drop=True)  # Fix: Correct variable name
     mapbox_style = st.sidebar.selectbox('지도스타일', ['white-bg', 'open-street-map', 'carto-positron', 'carto-darkmatter'], index=1)
 
@@ -84,7 +89,7 @@ def showMap(total_df):
     seoul_gpd['lat'] = seoul_gpd['center_point'].map(lambda x: x.xy[1][0])
 
     total_df['month'] = total_df['CTRT_DAY'].dt.month
-    total_df = total_df[(total_df['BLDG_USG'] == '아파트') & (total_df['month'].isin([2, 3]))]
+    total_df = total_df[(total_df['BLDG_USG'] == '아파트') & (total_df['month'].isin([1, 2, 3]))]
     total_df = total_df[['CTRT_DAY', 'month', 'CGG_CD', 'CGG_NM', 'THING_AMT','BLDG_USG']].reset_index(drop=True)
     
     summary_df = total_df.groupby(['CGG_CD', 'month'])['THING_AMT'].agg(['mean', 'std', 'size']).reset_index()
