@@ -68,7 +68,7 @@ def predictDistrict(total_df, periods):
     cgg_nms = sorted(list(total_df['CGG_NM'].unique()))
 
     models = load_models(cgg_nms)
-    fig, ax = plt.subplots(figsize=(30,25), sharey=False, ncols=5, nrows=5)
+    fig, ax = plt.subplots(figsize=(30,23), sharey=False, ncols=5, nrows=5)
     for i in range(len(cgg_nms)):  
         future = models[i].make_future_dataframe(periods=periods)
         forecast = models[i].predict(future)
@@ -116,7 +116,7 @@ def predict(total_df):
     total_df['CTRT_DAY'] = pd.to_datetime(total_df['CTRT_DAY'], format='%Y-%m-%d')
     periods = int(st.number_input("향후 예측기간을 지정하세요(1일~30일)", min_value=1, max_value=30, step=1))
 
-    cols = st.columns((1.3, 2.2), gap='medium')
+    cols = st.columns((1.2, 2.2), gap='medium')
     with cols[0]:
         predictType(total_df, periods)
     with cols[1]:
