@@ -75,7 +75,7 @@ def predictDistrict(total_df):
         title_font=dict(size=20),
         autosize=False,
         width=1500,  # Increased width
-        height=1500,  # Increased height
+        height=1200,  # Increased height
         showlegend=False
     )
 
@@ -86,7 +86,6 @@ def predictDistrict(total_df):
     for i in range(1, 6):
         for j in range(1, 6):
             fig.update_xaxes(
-                title_text="날짜", 
                 row=i, col=j, 
                 title_font=dict(size=8), 
                 tickfont=dict(size=8),
