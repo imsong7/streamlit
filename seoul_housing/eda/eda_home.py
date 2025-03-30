@@ -7,24 +7,6 @@ from eda.viz import showViz
 from eda.stat import showStat
 from eda.map import showMap
 
-st.set_page_config(
-    page_title="EDM 분석 페이지",  
-    layout="wide",  # 전체 너비 설정되지만, CSS로 제한
-    initial_sidebar_state="expanded" 
-)
-# 🔽 본문 너비 제한 (1000px 이하로 조정)
-st.markdown(
-    """
-    <style>
-    .main {
-        max-width: 1000px;  /* 최대 너비 제한 */
-        margin: 0 auto;  /* 가운데 정렬 */
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
 
 def home():
     st.markdown("### 📈 Visualization 개요 \n"

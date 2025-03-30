@@ -8,25 +8,6 @@ from ml.houseType import predictType
 from ml.cgg_nm import predictDistrict
 from ml.report import reportMain
 
-st.set_page_config(
-    page_title="ML 분석 페이지",  
-    layout="wide",  # 전체 너비 설정되지만, CSS로 제한
-    initial_sidebar_state="expanded" 
-)
-
-# 🔽 본문 너비 제한 (1000px 이하로 조정)
-st.markdown(
-    """
-    <style>
-    .main {
-        max-width: 1000px;  /* 최대 너비 제한 */
-        margin: 0 auto;  /* 가운데 정렬 */
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
 def home():
     st.markdown("### ⚙️ 머신러닝 예측 개요 \n"
             "- 가구당 예측 그래프 추세: 가구당 예측 결과를 시간에 따라 시각화하여 예측된 변화 추이를 확인합니다. \n"
