@@ -37,20 +37,25 @@ def reportMain(total_df):
     )
     total_df["CTRT_DAY"] = pd.to_datetime(total_df["CTRT_DAY"], format="%Y-%m-%d")
     future_data = forecast[forecast['ds'] > total_df['CTRT_DAY'].max()]
+    
+    # Find max and min values for forecast
     max_row = future_data.loc[future_data['yhat'].idxmax(), ['ds', 'yhat']]
     min_row = future_data.loc[future_data['yhat'].idxmin(), ['ds', 'yhat']]
 
-    max_date = future_data.loc[future_data['yhat'].idxmax(), 'ds'].strftime('%m월 %d일')
-    min_date = future_data.loc[future_data['yhat'].idxmin(), 'ds'].strftime('%m월 %d일')
+    # Format dates and yhat values
+    max_date = max_row['ds'].strftime('%m월 %d일')
+    min_date = min_row['ds'].strftime('%m월 %d일')
+    max_value = max_row['yhat']
+    min_value = min_row['yhat']
     mean_yhat = future_data['yhat'].mean()
 
     start_date = future_data['ds'].min().strftime('%m월 %d일')
     end_date = future_data['ds'].max().strftime('%m월 %d일')
 
-    st.markdown(f"### 📍 {cgg_nm} 향후 {periods}일간(start_date ~ end_date) 아파트 가격 예측")
+    st.markdown(f"### 📍 {cgg_nm} 향후 {periods}일간({start_date} ~ {end_date}) 아파트 가격 예측")
     st.markdown(f"#### 평균 가격은 {mean_yhat:,.0f}만원")
-    st.markdown(f"#### 예측기간 중 {max_date}이 {max_row['yhat']:,.0f}만원으로 가장 높아")
-    st.markdown(f"#### 예측기간 중 {min_date}이 {min_row['yhat']:,.0f}만원으로 가장 낮아")
+    st.markdown(f"#### 예측기간 중 {max_date}이 {max_value:,.0f}만원으로 가장 높아")
+    st.markdown(f"#### 예측기간 중 {min_date}이 {min_value:,.0f}만원으로 가장 낮아")
 
     fig = plot_plotly(model, forecast)
     fig.update_layout(
