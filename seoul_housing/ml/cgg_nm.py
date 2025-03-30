@@ -83,7 +83,7 @@ def predictDistrict(total_df):
     fig.update_xaxes(tickangle=45, tickfont=dict(size=8), row=1, col=1)
     fig.update_xaxes(title_text="날짜", title_font=dict(size=8), tickfont=dict(size=8))
     
-    # Update x-axis format to '%y-%m-%d'
+    # Update x-axis format to '%y-%m-%d' for all subplots
     for i in range(1, 6):
         for j in range(1, 6):
             fig.update_xaxes(
@@ -91,7 +91,7 @@ def predictDistrict(total_df):
                 row=i, col=j, 
                 title_font=dict(size=8), 
                 tickfont=dict(size=8),
-                tickformat='%y-%m-%d'  # Set the format to '%y-%m-%d'
+                tickformat='%y-%m-%d'  # Ensure the date format is '%y-%m-%d'
             )
             # Only show y-axis labels on the first column (column 1)
             if j != 1:
