@@ -35,7 +35,7 @@ def reportMain(total_df):
         mime="text/csv"
     )
 
-    future_data = forecast[forecast['ds'] > total_df['ds'].max()]
+    future_data = forecast[forecast['ds'] > total_df['CTRT_DAY'].max()]
     max_row = future_data.loc[future_data['yhat'].idxmax(), ['ds', 'yhat']]
     min_row = future_data.loc[future_data['yhat'].idxmin(), ['ds', 'yhat']]
 
