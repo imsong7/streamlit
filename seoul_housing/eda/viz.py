@@ -6,7 +6,7 @@ from plotly.subplots import make_subplots
 import plotly.express as px
 
 def meanChart(total_df, cgg_nm):
-    st.markdown("## 가구별 평균 가격 추세 \n")
+    st.markdown("### 가구별 평균 가격 추세 \n")
     filtered_df = total_df[total_df["CGG_NM"] == cgg_nm]
     filtered_df = filtered_df[filtered_df["CTRT_DAY"].between("2025-02-01", "2025-03-30")]
     result = filtered_df.groupby(["CTRT_DAY", "BLDG_USG"])["THING_AMT"].agg('mean').reset_index()
@@ -39,7 +39,6 @@ def meanChart(total_df, cgg_nm):
                           y='THING_AMT',
                           title='연립다세대 실거래가', markers=True).data[0], row=2, col=2)
     fig.update_layout(
-        title='가구별 평균값 추세 그래프',
         width=800,
         height=600, 
         showlegend=True,

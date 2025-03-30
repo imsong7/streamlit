@@ -7,13 +7,6 @@ import geopandas as gpd
 import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
 import plotly.express as px
-
-import matplotlib.pyplot as plt
-import matplotlib.font_manager as fm
-import os
-
-import matplotlib.pyplot as plt
-import matplotlib.font_manager as fm
 import os
 
 def set_korean_font():
