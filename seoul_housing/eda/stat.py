@@ -185,7 +185,7 @@ def regRession(total_df):
     ax.set_title("회귀선", fontproperties=font_prop, fontsize=15, weight='bold')
     ax.set_xlabel("건물면적", fontproperties=font_prop, fontsize=12)
     ax.set_ylabel("아파트 거래가격(만원)", fontproperties=font_prop, fontsize=12)
-    ax.plot(x, slope*x + intercept)
+    ax.plot(x, slope*x + intercept, color='red')
     ax.grid(True, alpha=0.3)
 
     if intercept < 0:
