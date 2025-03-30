@@ -27,7 +27,7 @@ def mapMatplotlib(merge_df):
     st.pyplot(fig)
 
 def mapPlotly(merge_df):
-    with open('/Users/songsooyeoun/Desktop/git_test/streamlit/project1/sig_20230729/seoul.geojson') as f:
+    with open('seoul_housing/sig_20230729/seoul.geojson') as f:
         seouls = json.load(f)
     
     moth = st.sidebar.radio("월", [2, 3])  # Fix: Use `moth` instead of `month`

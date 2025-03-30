@@ -8,8 +8,7 @@ from millify import prettify # 숫자 더 읽기 쉽게 간결한 형식으로 �
 def run_home():
     total_df = load_data()
     st.markdown("## 대시보드 개요 \n"
-    "본 프로젝트는 서울시 부동산 실거래가를 알려주는 대시보드입니다."
-    "여기에 독자가 넣고 싶은 추가 내용을 넣을 수 있습니다.")
+    "본 프로젝트는 서울시 부동산 실거래가를 알려주는 대시보드입니다.")
 
     total_df["CTRT_DAY"] = pd.to_datetime(total_df["CTRT_DAY"].astype(str), format="%Y-%m-%d")
     total_df["month"] = total_df["CTRT_DAY"].dt.month
@@ -37,11 +36,11 @@ def run_home():
         st.metric(label=f"{cgg_nm} 최대가격(만원)", value=prettify(int(march_max_price)))
 
     st.markdown("<hr>", unsafe_allow_html=True)
-    st.markdown("### 아파트 가격 상위 3")
+    st.markdown("### 아파트 가격 상위 3 자치구")
     sorted_df = filtered_month[["CGG_NM", "STDG_NM", "BLDG_NM", "ARCH_AREA", "THING_AMT"]]
     st.dataframe(sorted_df.sort_values(by='THING_AMT', ascending=False).head(3).reset_index(drop=True))
     st.markdown("<hr>", unsafe_allow_html=True)
-    st.markdown("### 아파트 가격 하위 3")
+    st.markdown("### 아파트 가격 하위 3 자치구")
     sorted_df = filtered_month[["CGG_NM", "STDG_NM", "BLDG_NM", "ARCH_AREA", "THING_AMT"]]
     st.dataframe(sorted_df.sort_values(by='THING_AMT', ascending=True).head(3).reset_index(drop=True))
     st.markdown("<hr>", unsafe_allow_html=True)
