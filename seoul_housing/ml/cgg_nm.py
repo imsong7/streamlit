@@ -71,7 +71,7 @@ def predictDistrict(total_df):
     # Update layout for the subplots and titles
     fig.update_layout(
         title=f"서울시 평균가격 예측 ({periods}일간)",
-        title_font=dict(size=10),
+        title_font=dict(size=2),
         autosize=False,
         width=1200,
         height=1200,
@@ -79,14 +79,14 @@ def predictDistrict(total_df):
     )
 
     # Rotate x-axis labels for readability
-    fig.update_xaxes(tickangle=45)
+    fig.update_xaxes(tickangle=45, tickfont=dict(size=8))
 
-    # Update y-axis labels for each subplot
-    fig.update_yaxes(title_text="평균가격 (만원)", row=1, col=1)
+    # Update y-axis labels for each subplot with smaller font size
+    fig.update_yaxes(title_text="평균가격 (만원)", row=1, col=1, title_font=dict(size=8), tickfont=dict(size=8))
     for i in range(1, 6):
         for j in range(1, 6):
-            fig.update_yaxes(title_text="평균가격 (만원)", row=i, col=j)
-            fig.update_xaxes(title_text="날짜", row=i, col=j)
+            fig.update_yaxes(title_text="평균가격 (만원)", row=i, col=j, title_font=dict(size=8), tickfont=dict(size=8))
+            fig.update_xaxes(title_text="날짜", row=i, col=j, title_font=dict(size=8), tickfont=dict(size=8))
 
     # Show the plot in Streamlit
     st.plotly_chart(fig)
