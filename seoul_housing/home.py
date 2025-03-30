@@ -19,9 +19,14 @@ def run_home():
     month_dict = {'1월': 1, '2월': 2, '3월': 3}
     st.markdown("<hr>", unsafe_allow_html=True)
     st.subheader(f'📍 {cgg_nm} {selected_month} 아파트 가격 개요')
+
     st.markdown("자치구와 월을 클릭하면 자동으로 각 지역구의 거래된 **최소가격**, **최대가격**을 확인할 수 있습니다.")
     col1, col2 = st.columns(2)
     filtered_month = total_df[total_df['month'] == month_dict[selected_month]]
+
+    avg_max_price = filtered_month.groupby("CGG_NM")['THING_AMT'].max().mean()
+    avg_min_price = filtered_month.groupby("CGG_NM")['THING_AMT'].min().mean()
+
     filtered_month = filtered_month[filtered_month['CGG_NM'] == cgg_nm]
 
     # NaN 값 제외하고 최소가격과 최대가격 계산
@@ -29,11 +34,16 @@ def run_home():
     min_price = filtered_month['THING_AMT'].min()
     max_price = filtered_month['THING_AMT'].max()
 
+    max_delta = max_price - avg_max_price
+    min_delta = min_price - avg_min_price
+
+
+
     with col1:
-        st.metric(label=f"{cgg_nm} 최소가격(만원)", value=prettify(int(min_price)))
+        st.metric(label=f"{cgg_nm} 최소가격(만원)", value=prettify(int(min_price)), delta=max_delta)
 
     with col2:
-        st.metric(label=f"{cgg_nm} 최대가격(만원)", value=prettify(int(max_price)))
+        st.metric(label=f"{cgg_nm} 최대가격(만원)", value=prettify(int(max_price)), delta=min_delta)
 
     st.markdown("<hr>", unsafe_allow_html=True)
     st.markdown("### 🏠 아파트 가격 상위 3 자치구")
