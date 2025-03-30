@@ -3,7 +3,6 @@
 import streamlit as st
 import json
 import os
-import pandas as pd
 from prophet.serialize import model_from_json
 from prophet.plot import plot_plotly
 
@@ -35,28 +34,21 @@ def reportMain(total_df):
         file_name=f"{cgg_nm}_아파트 평균값 예측_{periods}일간.csv",
         mime="text/csv"
     )
-    # 예측된 날짜가 포함된 future 데이터에서 예측 기간만 추출
-    future_data = forecast[forecast['ds'] > forecast['ds'].max()]
 
-    
-    # Find max and min values for forecast
-    max_row = future_data.loc[future_data['yhat'].idxmax(), ['ds', 'yhat']]
-    min_row = future_data.loc[future_data['yhat'].idxmin(), ['ds', 'yhat']]
+    max_row = forecast.loc[forecast['yhat'].idxmax(), ['ds', 'yhat']]
+    min_row = forecast.loc[forecast['yhat'].idxmin(), ['ds', 'yhat']]
 
-    # Format dates and yhat values
-    max_date = max_row['ds'].strftime('%m월 %d일')
-    min_date = min_row['ds'].strftime('%m월 %d일')
-    max_value = max_row['yhat']
-    min_value = min_row['yhat']
-    mean_yhat = future_data['yhat'].mean()
+    max_date = forecast.loc[forecast['yhat'].idxmax(), 'ds'].strftime('%m월 %d일')
+    min_date = forecast.loc[forecast['yhat'].idxmin(), 'ds'].strftime('%m월 %d일')
+    mean_yhat = forecast['yhat'].mean()
 
-    start_date = future_data['ds'].min().strftime('%m월 %d일')
-    end_date = future_data['ds'].max().strftime('%m월 %d일')
+    start_date = forecast[forecast['ds'] > total_df['ds'].max()]['ds'].min().strftime('%m월 %d일')
+    end_date = forecast[forecast['ds'] > total_df['ds'].max()]['ds'].max().strftime('%m월 %d일')
 
-    st.markdown(f"### 📍 {cgg_nm} 향후 {periods}일간({start_date} ~ {end_date}) 아파트 가격 예측")
+    st.markdown(f"### 📍 {cgg_nm} 향후 {periods}일간(start_date ~ end_date) 아파트 가격 예측")
     st.markdown(f"#### 평균 가격은 {mean_yhat:,.0f}만원")
-    st.markdown(f"#### 예측기간 중 {max_date}이 {max_value:,.0f}만원으로 가장 높아")
-    st.markdown(f"#### 예측기간 중 {min_date}이 {min_value:,.0f}만원으로 가장 낮아")
+    st.markdown(f"#### 예측기간 중 {max_date}이 {max_row['yhat']:,.0f}만원으로 가장 높아")
+    st.markdown(f"#### 예측기간 중 {min_date}이 {min_row['yhat']:,.0f}만원으로 가장 낮아")
 
     fig = plot_plotly(model, forecast)
     fig.update_layout(
