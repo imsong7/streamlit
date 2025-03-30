@@ -22,7 +22,13 @@ def run_home():
 
     total_df["CTRT_DAY"] = pd.to_datetime(total_df["CTRT_DAY"].astype(str), format="%Y-%m-%d")
     total_df["month"] = total_df["CTRT_DAY"].dt.month
-    selected_type = st.sidebar.selectbox("주거형태별", sorted(total_df["BLDG_USG"].unique()))
+    selected_type = st.sidebar.selectbox("주거형태별", sorted(total_df["BLDG_USG"].unique()), index=1)
+
+    if selected_type == "단독다가구":
+        cols = ["CGG_NM", "STDG_NM", "ARCH_AREA", "THING_AMT"]
+    else:
+        cols = ["CGG_NM", "STDG_NM", "BLDG_NM", "ARCH_AREA", "THING_AMT"]
+
     
     total_df = total_df.loc[total_df["BLDG_USG"]==selected_type, :]
 
@@ -30,7 +36,7 @@ def run_home():
     month_dict = {'1월': 1, '2월': 2, '3월': 3}
 
     filtered_month = total_df[total_df['month'] == month_dict[selected_month]]
-    sorted_df = filtered_month[["CGG_NM", "STDG_NM", "BLDG_NM", "ARCH_AREA", "THING_AMT"]]
+    sorted_df = filtered_month[cols]
 
     with col[0]:
         st.subheader(f"2025년 {month_dict[selected_month]}월 서울시 {selected_type} 평균가격")
@@ -38,7 +44,7 @@ def run_home():
         st.markdown(f"#### 🏠 {selected_month} {selected_type} 가격 상위 3개")
         st.dataframe(sorted_df.sort_values(by='THING_AMT', ascending=False).head(3).reset_index(drop=True))
         st.markdown(f"#### 🏠 {selected_month} {selected_type} 가격 하위 3개")
-        sorted_df = filtered_month[["CGG_NM", "STDG_NM", "BLDG_NM", "ARCH_AREA", "THING_AMT"]]
+        sorted_df = filtered_month[cols]
         st.dataframe(sorted_df.sort_values(by='THING_AMT', ascending=True).head(3).reset_index(drop=True))
 
     with col[1]:
@@ -80,10 +86,10 @@ def run_home():
 
         st.markdown("<hr>", unsafe_allow_html=True)
         st.markdown(f"#### 🏠 {cgg_nm} {selected_type} 가격 상위 5개")
-        sorted_df = filtered_month[["CGG_NM", "STDG_NM", "BLDG_NM", "ARCH_AREA", "THING_AMT"]]
+        sorted_df = filtered_month[cols]
         st.dataframe(sorted_df.sort_values(by='THING_AMT', ascending=False).head(5).reset_index(drop=True))
         st.markdown(f"#### 🏠 {cgg_nm} {selected_type} 가격 하위 5개")
-        sorted_df = filtered_month[["CGG_NM", "STDG_NM", "BLDG_NM", "ARCH_AREA", "THING_AMT"]]
+        sorted_df = filtered_month[cols]
         st.dataframe(sorted_df.sort_values(by='THING_AMT', ascending=True).head(5).reset_index(drop=True))
         
     st.markdown("<hr>", unsafe_allow_html=True)
