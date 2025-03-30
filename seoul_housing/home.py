@@ -34,16 +34,24 @@ def run_home():
     min_price = filtered_month['THING_AMT'].min()
     max_price = filtered_month['THING_AMT'].max()
 
+    # 최대/최소 가격과 평균 최대/최소 가격 차이 계산
     max_delta = max_price - avg_max_price
     min_delta = min_price - avg_min_price
 
-
-
     with col1:
-        st.metric(label=f"{cgg_nm} 최소가격(만원)", value=prettify(int(min_price)), delta=max_delta)
+        st.metric(
+            label=f"{cgg_nm} 최소가격 (만원)", 
+            value=f"{min_price:,.0f}", 
+            delta=f"{min_delta:,.0f} 만원"
+        )
 
     with col2:
-        st.metric(label=f"{cgg_nm} 최대가격(만원)", value=prettify(int(max_price)), delta=min_delta)
+        st.metric(
+            label=f"{cgg_nm} 최대가격 (만원)", 
+            value=f"{max_price:,.0f}", 
+            delta=f"{max_delta:,.0f} 만원"
+        )
+
 
     st.markdown("<hr>", unsafe_allow_html=True)
     st.markdown("### 🏠 아파트 가격 상위 3 자치구")
