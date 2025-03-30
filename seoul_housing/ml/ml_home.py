@@ -4,8 +4,7 @@ import streamlit as st
 import pandas as pd
 from streamlit_option_menu import option_menu
 
-from ml.predict import predictType
-from ml.predict import predictDistrict
+from ml.predict import predict
 from ml.report import reportMain
 
 def home():
@@ -35,9 +34,7 @@ def run_ml(total_df):
     if selected == 'Home':
         home()
     elif selected == '예측':
-        
-        predictType(total_df)
-        predictDistrict(total_df)      
+        predict(total_df)   
         pass
     elif selected == '보고서':
         reportMain(total_df)

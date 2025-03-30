@@ -63,10 +63,7 @@ def load_models(cgg_nms):
 
 def predictDistrict(total_df, periods):
     font_prop = set_korean_font()
-
-    total_df['CTRT_DAY'] = pd.to_datetime(total_df['CTRT_DAY'], format='%Y-%m-%d')
     cgg_nms = sorted(list(total_df['CGG_NM'].unique()))
-    st.markdown(f"### 2025년 서울시 자치구역별 평균가격 예측 {periods}일간 ")
 
     models = load_models(cgg_nms)
     fig, ax = plt.subplots(figsize=(30,20), sharey=False, ncols=5, nrows=5)
@@ -104,18 +101,21 @@ def predictDistrict(total_df, periods):
     fig.tight_layout()
     st.pyplot(fig)
 
-def predictType(total_df):
-    total_df['CTRT_DAY'] = pd.to_datetime(total_df['CTRT_DAY'], format='%Y-%m-%d')
+def predictType(total_df, periods):
+    st.markdown(f"### 2025년 서울시 주거형태별 평균가격 예측 {periods}일간 ")
     types = list(total_df['BLDG_USG'].unique())
+
+    fig = predict_plot(total_df, types, periods)
+    fig.tight_layout()
+    st.pyplot(fig)
+    st.markdown("<hr>", unsafe_allow_html=True)
+
+def predict(total_df):
+    total_df['CTRT_DAY'] = pd.to_datetime(total_df['CTRT_DAY'], format='%Y-%m-%d')
     periods = int(st.number_input("향후 예측기간을 지정하세요(1일~30일)", min_value=1, max_value=30, step=1))
 
-    col = st.columns((1, 2), gap='medium')
-    with col[0]:
-        st.markdown(f"### 2025년 서울시 주거형태별 평균가격 예측 {periods}일간 ")
-
-        fig = predict_plot(total_df, types, periods)
-        fig.tight_layout()
-        st.pyplot(fig)
-        st.markdown("<hr>", unsafe_allow_html=True)
-    with col[1]:
+    cols = st.columns((1, 2), gap='medium')
+    with cols[0]:
+        predictType(total_df, periods)
+    with cols[1]:
         predictDistrict(total_df, periods)
