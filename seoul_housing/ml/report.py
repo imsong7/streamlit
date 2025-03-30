@@ -42,14 +42,17 @@ def reportMain(total_df):
     min_date = forecast.loc[forecast['yhat'].idxmin(), 'ds'].strftime('%m월 %d일')
     mean_yhat = forecast['yhat'].mean()
 
-    st.markdown(f"### 📍 {cgg_nm} 향후 {periods} 예측")
+    start_date = forecast[forecast['ds'] > total_df['ds'].max()]['ds'].min().strftime('%m월 %d일')
+    end_date = forecast[forecast['ds'] > total_df['ds'].max()]['ds'].max().strftime('%m월 %d일')
+
+    st.markdown(f"### 📍 {cgg_nm} 향후 {periods}일간(start_date ~ end_date) 아파트 가격 예측")
     st.markdown(f"#### 평균 가격은 {mean_yhat:,.0f}만원")
     st.markdown(f"#### 예측기간 중 {max_date}이 {max_row['yhat']:,.0f}만원으로 가장 높아")
     st.markdown(f"#### 예측기간 중 {min_date}이 {min_row['yhat']:,.0f}만원으로 가장 낮아")
 
     fig = plot_plotly(model, forecast)
     fig.update_layout(
-            title=f"{cgg_nm} 아파트 평균값 예측 {periods}일간",
+            title=f"{cgg_nm} 아파트 평균값 예측 ({periods}일간)",
             title_font=dict(size=20),
             xaxis_title="날짜",
             yaxis_title="아파트 평균값 (만원)",
