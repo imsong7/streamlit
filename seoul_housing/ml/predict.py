@@ -108,7 +108,6 @@ def predictType(total_df, periods):
     fig = predict_plot(total_df, types, periods)
     fig.tight_layout()
     st.pyplot(fig)
-    st.markdown("<hr>", unsafe_allow_html=True)
 
 def predict(total_df):
     total_df['CTRT_DAY'] = pd.to_datetime(total_df['CTRT_DAY'], format='%Y-%m-%d')
@@ -119,3 +118,4 @@ def predict(total_df):
         predictType(total_df, periods)
     with cols[1]:
         predictDistrict(total_df, periods)
+    st.markdown("<hr>", unsafe_allow_html=True)
