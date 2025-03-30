@@ -20,7 +20,7 @@ def predict_plot(total_df, types, periods):
     # 한글 폰트 설정 적용
     font_prop = set_korean_font()
     
-    fig, ax = plt.subplots(figsize=(10,6), sharex=True, ncols=2, nrows=2)
+    fig, ax = plt.subplots(figsize=(10,6), ncols=2, nrows=2)
     for i in range(0, len(types)):
         model = Prophet()
         total_df2 = total_df.loc[total_df['BLDG_USG']==types[i], ['CTRT_DAY', 'THING_AMT']]
