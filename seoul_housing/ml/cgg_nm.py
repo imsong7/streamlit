@@ -36,7 +36,7 @@ def predictDistrict(total_df):
     periods = int(st.number_input("향후 예측기간을 지정하세요(1일~30일)", min_value=1, max_value=30, step=1))
 
     models = load_models(cgg_nms)
-    fig, ax = plt.subplots(figsize=(20,10) sharey=False, ncols=5, nrows=5)
+    fig, ax = plt.subplots(figsize=(20,10, sharey=False, ncols=5, nrows=5)
     for i in range(len(cgg_nms)):  
         future = models[i].make_future_dataframe(periods=periods)
         forecast = models[i].predict(future)
