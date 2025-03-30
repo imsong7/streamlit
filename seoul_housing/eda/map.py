@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
 import plotly.express as px
 
-font_path = "seoul_housing/Nanum_Gothic/NanumGothic.ttf"
+font_path = "seoul_housing/Nanum_Gothic/NanumGothic-Regular.ttf"
 nanum_font = fm.FontProperties(fname=font_path, size=14)
 plt.rcParams["font.family"] = nanum_font.get_name()
 
