@@ -68,7 +68,7 @@ def predictDistrict(total_df, periods):
     cgg_nms = sorted(list(total_df['CGG_NM'].unique()))
 
     models = load_models(cgg_nms)
-    fig, ax = plt.subplots(figsize=(30,20), sharey=False, ncols=5, nrows=5)
+    fig, ax = plt.subplots(figsize=(30,25), sharey=False, ncols=5, nrows=5)
     for i in range(len(cgg_nms)):  
         future = models[i].make_future_dataframe(periods=periods)
         forecast = models[i].predict(future)
