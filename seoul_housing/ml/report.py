@@ -36,6 +36,8 @@ def reportMain(total_df):
         mime="text/csv"
     )
 
+    forecast['ds'] = pd.to_datetime(forecast['ds'])
+    
     max_date = forecast['ds'].max()
     start_date = max_date - pd.Timedelta(days=periods)
     future_data = forecast[forecast['ds'] > start_date]
