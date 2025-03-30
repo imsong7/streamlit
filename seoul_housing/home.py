@@ -36,11 +36,11 @@ def run_home():
     month_dict = {'1월': 1, '2월': 2, '3월': 3}
 
     filtered_month = total_df[total_df['month'] == month_dict[selected_month]]
-    sorted_df = filtered_month[cols]
 
     with col[0]:
         st.subheader(f"2025년 {month_dict[selected_month]}월 서울시 {selected_type} 평균가격")
         showMap(total_df, month_dict[selected_month])
+        sorted_df = filtered_month[cols]
         st.markdown(f"#### 🏠 {selected_month} {selected_type} 가격 상위 3개")
         st.dataframe(sorted_df.sort_values(by='THING_AMT', ascending=False).head(3).reset_index(drop=True))
         st.markdown(f"#### 🏠 {selected_month} {selected_type} 가격 하위 3개")
