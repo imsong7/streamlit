@@ -45,17 +45,19 @@ def predictDistrict(total_df):
         models[i].plot(forecast, ax=ax[row, col], uncertainty=True)
 
         ax[row, col].set_title(f"{cgg_nms[i]} 평균가격 예측", fontproperties=font_prop)
-        ax[row, col].set_xlabel("날짜", fontproperties=font_prop)
         ax[row, col].set_ylabel("평균가격(만원)", fontproperties=font_prop)
         
-        # 날짜 형식 설정 - '2025-02-11' 형식으로 표시
         ax[row, col].xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%Y-%m-%d'))
-        
-        # x축 레이블 설정
+        ax[row, col].xaxis.set_major_locator(plt.matplotlib.dates.DayLocator(interval=7))
         plt.setp(ax[row, col].get_xticklabels(), rotation=45, ha='right', fontproperties=font_prop)
         
-        # x축 틱 개수 조정 (너무 많으면 겹칠 수 있으므로)
-        ax[row, col].xaxis.set_major_locator(plt.matplotlib.dates.MonthLocator())
+        min_date = forecast['ds'].min()
+        max_date = forecast['ds'].max()
+        ax[row, col].set_xlim([min_date, max_date])
+        
+        # 그리드 추가하여 가독성 향상
+        ax[row, col].grid(True, alpha=0.3)
+    
         
         # 그리드 추가하여 가독성 향상
         ax[row, col].grid(True, alpha=0.3)
