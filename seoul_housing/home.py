@@ -44,7 +44,6 @@ def run_home():
         st.markdown(f"#### 🏠 {selected_month} {selected_type} 가격 상위 3개")
         st.dataframe(sorted_df.sort_values(by='THING_AMT', ascending=False).head(3).reset_index(drop=True))
         st.markdown(f"#### 🏠 {selected_month} {selected_type} 가격 하위 3개")
-        sorted_df = filtered_month[cols]
         st.dataframe(sorted_df.sort_values(by='THING_AMT', ascending=True).head(3).reset_index(drop=True))
 
     with col[1]:
@@ -53,12 +52,12 @@ def run_home():
         st.markdown(f'#### {cgg_nm} {selected_month} {selected_type} 가격 개요')
 
         col1, col2 = st.columns(2)
-        filtered_month = total_df[total_df['month'] == month_dict[selected_month]]
 
         avg_max_price = filtered_month.groupby("CGG_NM")['THING_AMT'].max().mean()
         avg_min_price = filtered_month.groupby("CGG_NM")['THING_AMT'].min().mean()
 
         filtered_month = filtered_month[filtered_month['CGG_NM'] == cgg_nm]
+        sorted_df = filtered_month[cols]
 
         # NaN 값 제외하고 최소가격과 최대가격 계산
         filtered_month = filtered_month.dropna(subset=['THING_AMT'])  
@@ -86,10 +85,8 @@ def run_home():
 
         st.markdown("<hr>", unsafe_allow_html=True)
         st.markdown(f"#### 🏠 {cgg_nm} {selected_type} 가격 상위 5개")
-        sorted_df = filtered_month[cols]
         st.dataframe(sorted_df.sort_values(by='THING_AMT', ascending=False).head(5).reset_index(drop=True))
         st.markdown(f"#### 🏠 {cgg_nm} {selected_type} 가격 하위 5개")
-        sorted_df = filtered_month[cols]
         st.dataframe(sorted_df.sort_values(by='THING_AMT', ascending=True).head(5).reset_index(drop=True))
         
     st.markdown("<hr>", unsafe_allow_html=True)
