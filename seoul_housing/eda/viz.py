@@ -107,8 +107,7 @@ def barChart(total_df):
     fig.update_yaxes(tickformat=".0f",
                     title_text="물건가격(만원)",
                     range=[0, df_sorted['THING_AMT'].max()])
-    fig.update_layout(title="Bar Chart - Ascending Order",
-                      xaxis_title='지역구명',
+    fig.update_layout(xaxis_title='지역구명',
                       yaxis_title='거래건수')
     st.plotly_chart(fig)
 
