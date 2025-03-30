@@ -68,7 +68,7 @@ def mapPlotly(merge_df):
         margin={"r":0, "t":0, "l":0, "b":0},
         font=dict(family=font_prop.get_name()),
         title=f"2023년 {month}월 서울시 아파트 평균가격",
-        title_font=dict(family=font_prop.get_name(), size=20, weight='bold')  # Title settings
+        title_font=dict(family=font_prop.get_name(), size=30)  # Title settings
     )
     
     fig.update_traces(hovertemplate='<b>%{location}</b><br>아파트평균가격: %{z:,.0f}(만원)')
