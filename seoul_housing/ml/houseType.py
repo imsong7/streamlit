@@ -4,8 +4,21 @@ import matplotlib.pyplot as plt
 import streamlit as st
 import pandas as pd
 from prophet import Prophet
+import matplotlib.font_manager as fm
+import os
+
+# 한글 폰트 설정
+def set_korean_font():
+    font_path = os.path.join('seoul_housing', 'Nanum_Gothic', 'NanumGothic-Regular.ttf')
+    font_prop = fm.FontProperties(fname=font_path)
+    plt.rcParams['font.family'] = 'NanumGothic'
+    plt.rcParams['axes.unicode_minus'] = False  # 마이너스 기호 깨짐 방지
+    return font_prop
 
 def predict_plot(total_df, types, periods):
+    # 한글 폰트 설정 적용
+    font_prop = set_korean_font()
+    
     fig, ax = plt.subplots(figsize=(10,6), sharex=True, ncols=2, nrows=2)
     for i in range(0, len(types)):
         model = Prophet()
@@ -19,9 +32,10 @@ def predict_plot(total_df, types, periods):
         row, col = divmod(i, 2)
         model.plot(forecast, ax=ax[row, col], uncertainty=True)
 
-        ax[row, col].set_title(f"서울시 {types[i]} 평균가격 예측 시나리오 {periods}일간")
-        ax[row, col].set_xlabel("날짜")
-        ax[row, col].set_ylabel("평균가격(만원)")
+        # 타이틀, 라벨에 한글 폰트 적용
+        ax[row, col].set_title(f"서울시 {types[i]} 평균가격 예측 시나리오 {periods}일간", fontproperties=font_prop)
+        ax[row, col].set_xlabel("날짜", fontproperties=font_prop)
+        ax[row, col].set_ylabel("평균가격(만원)", fontproperties=font_prop)
         for tick in ax[row, col].get_xticklabels():
             tick.set_rotation(30)
         

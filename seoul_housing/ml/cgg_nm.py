@@ -43,7 +43,6 @@ def predictDistrict(total_df):
         forecast = models[i].predict(future)
         all_yhat.extend(forecast['yhat'])
         
-        # Main prediction line
         fig.add_trace(
             go.Scatter(
                 x=forecast['ds'], y=forecast['yhat'], mode='lines',
@@ -51,7 +50,6 @@ def predictDistrict(total_df):
             ), row=row, col=col
         )
         
-        # Upper bound
         fig.add_trace(
             go.Scatter(
                 x=forecast['ds'], y=forecast['yhat_upper'], mode='lines',
@@ -60,7 +58,6 @@ def predictDistrict(total_df):
             ), row=row, col=col
         )
         
-        # Lower bound
         fig.add_trace(
             go.Scatter(
                 x=forecast['ds'], y=forecast['yhat_lower'], mode='lines',
@@ -85,7 +82,6 @@ def predictDistrict(total_df):
         tickformat='%m월 %d일'
     )
     
-    # Set y-axis formatting
     for i in range(1, 6):
         for j in range(1, 6):
             if j != 1:
@@ -99,7 +95,6 @@ def predictDistrict(total_df):
                     row=i, col=j
                 )
     
-    # Update annotation font sizes
     for i in range(len(cgg_nms)):
         fig.layout.annotations[i].update(font=dict(size=8))
         
