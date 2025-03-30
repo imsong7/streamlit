@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import streamlit as st
 import pandas as pd
 import json
+import plotly.graph_objects as go
 from prophet.serialize import model_from_json
 
 @st.cache_resource ## 모델 불러오는 것
@@ -23,20 +24,52 @@ def predictDistrict(total_df):
     periods = int(st.number_input("향후 예측기간을 지정하세요(1일~30일)", min_value=1, max_value=30, step=1))
 
     models = load_models(cgg_nms)
-    fig, ax = plt.subplots(figsize=(20,10), sharex=True, sharey=False, ncols=5, nrows=5)
+    
+    fig = go.Figure()
+
     for i in range(len(cgg_nms)):  
         future = models[i].make_future_dataframe(periods=periods)
         forecast = models[i].predict(future)
 
-        row, col = divmod(i, 5) 
-        models[i].plot(forecast, ax=ax[row, col], uncertainty=True)
+        fig.add_trace(go.Scatter(
+            x=forecast['ds'],
+            y=forecast['yhat'],
+            mode='lines',
+            name=f"서울시 {cgg_nms[i]} 평균가격 예측",
+            line=dict(width=2)
+        ))
 
-        ax[row, col].set_title(f"서울시 {cgg_nms[i]} 평균가격 예측 시나리오 {periods}일간")
-        ax[row, col].set_xlabel("날짜")
-        ax[row, col].set_ylabel("평균가격(만원)")
-        
-        for tick in ax[row, col].get_xticklabels():
-            tick.set_rotation(30)
+        fig.add_trace(go.Scatter(
+            x=forecast['ds'],
+            y=forecast['yhat_upper'],
+            mode='lines',
+            name=f"상한선: {cgg_nms[i]}",
+            line=dict(width=0.5, color='gray', dash='dash'),
+            fill='tonexty', 
+            fillcolor='rgba(0,100,80,0.2)'
+        ))
+        fig.add_trace(go.Scatter(
+            x=forecast['ds'],
+            y=forecast['yhat_lower'],
+            mode='lines',
+            name=f"하한선: {cgg_nms[i]}",
+            line=dict(width=0.5, color='gray', dash='dash'),
+            fill='tonexty',
+            fillcolor='rgba(0,100,80,0.2)'
+        ))
 
-    fig.tight_layout()
-    st.pyplot(fig)
+    fig.update_layout(
+        title=f"서울시 평균가격 예측 ({periods}일간)",
+        title_font=dict(size=20),
+        xaxis_title="날짜",
+        yaxis_title="평균가격 (만원)",
+        autosize=False,
+        width=1000,
+        height=600,
+        template="plotly_dark",  
+        showlegend=True
+    )
+
+    fig.update_xaxes(tickangle=45)
+
+    st.plotly_chart(fig)
