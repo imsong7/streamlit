@@ -8,9 +8,18 @@ import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
 import plotly.express as px
 
+import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
+import os
+
 font_path = "seoul_housing/Nanum_Gothic/NanumGothic-Regular.ttf"
-nanum_font = fm.FontProperties(fname=font_path, size=14)
-plt.rcParams["font.family"] = nanum_font.get_name()
+
+if os.path.exists(font_path):
+    plt.rcParams["font.family"] = fm.FontProperties(fname=font_path).get_name()
+    print(f"✅ Loaded: {plt.rcParams['font.family']}")
+else:
+    print("❌ Font not found!")
+
 
 def mapMatplotlib(merge_df):
     fig, ax = plt.subplots(ncols=2, sharey=True, figsize=(15, 10))
