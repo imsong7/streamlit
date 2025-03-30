@@ -7,6 +7,7 @@ import json
 import os
 import matplotlib.font_manager as fm
 from prophet.serialize import model_from_json
+import matplotlib.ticker as ticker
 
 # 한글 폰트 설정
 def set_korean_font():
@@ -36,7 +37,21 @@ def predictDistrict(total_df):
     periods = int(st.number_input("향후 예측기간을 지정하세요(1일~30일)", min_value=1, max_value=30, step=1))
 
     models = load_models(cgg_nms)
-    fig, ax = plt.subplots(figsize=(20,10), sharey=False, ncols=5, nrows=5)
+    fig, ax = plt.subplots(figsize=(20,20), sharey=False, ncols=5, nrows=5)
+
+    # 모든 예측 값의 범위를 확인하여 y축 범위 결정
+    all_y_values = []
+    
+    # 먼저 모든 데이터의 범위를 확인
+    for i in range(len(cgg_nms)):
+        future = models[i].make_future_dataframe(periods=periods)
+        forecast = models[i].predict(future)
+        all_y_values.extend(forecast['yhat'].tolist())
+    
+    # y축 범위 설정
+    y_min = min(all_y_values) * 0.95  # 여유 공간을 위해 5% 감소
+    y_max = max(all_y_values) * 1.05  # 여유 공간을 위해 5% 증가
+    
     for i in range(len(cgg_nms)):  
         future = models[i].make_future_dataframe(periods=periods)
         forecast = models[i].predict(future)
@@ -58,6 +73,13 @@ def predictDistrict(total_df):
         # 그리드 추가하여 가독성 향상
         ax[row, col].grid(True, alpha=0.3)
     
+        ax[row, col].yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos: '{:,.0f}'.format(x)))
+        
+        # y축 틱 개수 조정 (4-5개 정도로)
+        ax[row, col].yaxis.set_major_locator(ticker.MaxNLocator(5))
+        
+        # 일관된 y축 범위 설정
+        ax[row, col].set_ylim([y_min, y_max])
         
         # 그리드 추가하여 가독성 향상
         ax[row, col].grid(True, alpha=0.3)
