@@ -62,6 +62,7 @@ def load_models(cgg_nms):
     return models
 
 def predictDistrict(total_df, periods):
+    st.markdown(f"#### 📍 2025년 서울시 자치구별 평균가격 예측 {periods}일간 ")
     font_prop = set_korean_font()
     cgg_nms = sorted(list(total_df['CGG_NM'].unique()))
 
@@ -102,7 +103,7 @@ def predictDistrict(total_df, periods):
     st.pyplot(fig)
 
 def predictType(total_df, periods):
-    st.markdown(f"### 2025년 서울시 주거형태별 평균가격 예측 {periods}일간 ")
+    st.markdown(f"#### 📍 2025년 서울시 주거형태별 평균가격 예측 {periods}일간 ")
     types = list(total_df['BLDG_USG'].unique())
 
     fig = predict_plot(total_df, types, periods)
