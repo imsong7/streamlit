@@ -57,7 +57,7 @@ def twoMeans(total_df):
                     f"  + 귀무가설 : $H_{0}$: {month1}월과 {month2}월의 아파트 평균 차이는 없다. \n"
                     f"  + 대립가설 : $H_{1}$: {month1}월과 {month2}월의 아파트 평균 차이는 있다. \n")
     
-        result = ttest(month1['THING_AMT'], month2['THING_AMT'], paired=False)
+        result = ttest(month1_df['THING_AMT'], month2_df['THING_AMT'], paired=False)
         st.dataframe(result, use_container_width=True)
         st.markdown(f"확인결과 p-value 값이 **{result['p-val'].values[0]}** 이므로 $H_{0}$을 채택하여, {month1}월과 {month2}월의 아파트 평균 차이는 없다.")
 
