@@ -63,7 +63,7 @@ def load_models(cgg_nms):
     return models
 
 def predictDistrict(total_df, periods):
-    st.markdown(f"#### 자치구별 ({periods}일간")
+    st.markdown(f"#### 자치구별 평균가격 예측 ({periods}일간)")
     font_prop = set_korean_font()
     cgg_nms = sorted(list(total_df['CGG_NM'].unique()))
 
@@ -104,7 +104,7 @@ def predictDistrict(total_df, periods):
     st.pyplot(fig)
 
 def predictType(total_df, periods):
-    st.markdown(f"#### 주거형태별 ({periods}일간")
+    st.markdown(f"#### 주거형태별 평균가격 예측 ({periods}일간)")
     types = list(total_df['BLDG_USG'].unique())
 
     fig = predict_plot(total_df, types, periods)
@@ -116,7 +116,7 @@ def predict(total_df):
     total_df['CTRT_DAY'] = pd.to_datetime(total_df['CTRT_DAY'], format='%Y-%m-%d')
     periods = int(st.number_input("향후 예측기간을 지정하세요(1일~30일)", min_value=1, max_value=30, step=1))
 
-    cols = st.columns((1.5, 2.2), gap='medium')
+    cols = st.columns((1.3, 2.2), gap='medium')
     with cols[0]:
         predictType(total_df, periods)
     with cols[1]:
