@@ -50,7 +50,7 @@ def mapPlotly(merge_df, month):
     with open('seoul_housing/sig_20230729/seoul.geojson') as f:
         seouls = json.load(f)
     
-    month = st.sidebar.radio("월", [1, 2, 3])  
+    # month = st.sidebar.radio("월", [1, 2, 3])  
     result = merge_df[merge_df['month'] == month].reset_index(drop=True)  # Fix: Correct variable name
     mapbox_style = st.sidebar.selectbox('지도스타일', ['white-bg', 'open-street-map', 'carto-positron', 'carto-darkmatter'], index=1)
 
