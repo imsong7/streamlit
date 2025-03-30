@@ -42,9 +42,10 @@ def reportMain(total_df):
     min_date = forecast.loc[forecast['yhat'].idxmin(), 'ds'].strftime('%m월 %d일')
     mean_yhat = forecast['yhat'].mean()
 
-    st.markdown(f"예측기간 중 {cgg_nm} 평균 가격은 {mean_yhat}로 가장 높아")
-    st.markdown(f"예측기간 중 {max_date}이 {max_row['yhat']:.2f}로 가장 높아")
-    st.markdown(f"예측기간 중 {min_date}이 {min_row['yhat']:.2f}로 가장 높아")
+    st.markdown(f"### 📍 {cgg_nm} 향후 {periods} 예측")
+    st.markdown(f"#### 평균 가격은 {mean_yhat:,.0f}만원")
+    st.markdown(f"#### 예측기간 중 {max_date}이 {max_row['yhat']:,.0f}만원으로 가장 높아")
+    st.markdown(f"#### 예측기간 중 {min_date}이 {min_row['yhat']:,.0f}만원으로 가장 낮아")
 
     fig = plot_plotly(model, forecast)
     fig.update_layout(
