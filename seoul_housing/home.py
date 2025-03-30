@@ -22,7 +22,7 @@ def run_home():
 
     total_df["CTRT_DAY"] = pd.to_datetime(total_df["CTRT_DAY"].astype(str), format="%Y-%m-%d")
     total_df["month"] = total_df["CTRT_DAY"].dt.month
-    selected_type = st.selectbox("자치구", sorted(total_df["BLDG_USG"].unique()))
+    selected_type = st.sidebar.selectbox("주거형태별", sorted(total_df["BLDG_USG"].unique()))
     
     total_df = total_df.loc[total_df["BLDG_USG"]==selected_type, :]
 
