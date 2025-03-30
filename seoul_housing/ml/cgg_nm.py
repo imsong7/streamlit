@@ -46,7 +46,7 @@ def predictDistrict(total_df):
         row, col = divmod(i, 5) 
         models[i].plot(forecast, ax=ax[row, col], uncertainty=True)
 
-        ax[row, col].set_title(f"{cgg_nms[i]}", fontproperties=font_prop)
+        ax[row, col].set_title(f"{cgg_nms[i]}", fontproperties=font_prop, fontsize=5)
         ax[row, col].set_ylabel("평균가격(만원)", fontproperties=font_prop)
         ax[row, col].set_xlabel('')
         ax[row, col].set_xticklabels([])
