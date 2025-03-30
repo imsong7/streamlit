@@ -37,8 +37,8 @@ def mapMatplotlib(merge_df):
     for i, row in merge_df[merge_df['month'] == 3].iterrows():
         ax[1].annotate(row['SIG_KOR_NM'], xy=(row['lon'], row['lat']), xytext=(-7,2), textcoords='offset points', fontproperties=font_prop, fontsize=8, color='black')
 
-    ax[0].set_title('2023년 2월 아파트 평균(만원)', fontproperties=font_prop, fontsize=13)
-    ax[1].set_title('2023년 3월 아파트 평균(만원)', fontproperties=font_prop, fontsize=13)
+    ax[0].set_title('2023년 2월 아파트 평균(만원)', fontproperties=font_prop, fontsize=20, weight='bold')
+    ax[1].set_title('2023년 3월 아파트 평균(만원)', fontproperties=font_prop, fontsize=20, weight='bold')
     ax[0].set_axis_off()
     ax[1].set_axis_off()
 
