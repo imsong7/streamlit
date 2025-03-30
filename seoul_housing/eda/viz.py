@@ -118,12 +118,8 @@ def showViz(total_df):
 
     cgg_nm = st.selectbox("자치구명", sorted(total_df["CGG_NM"].unique()))
     st.markdown("<hr>", unsafe_allow_html=True)
-
     col = st.columns((2, 2), gap='medium')
-    filtered_df = total_df[total_df["CGG_NM"] == cgg_nm]
-
     with col[0]:
-        meanChart(filtered_df)
-    
+        meanChart(total_df, cgg_nm)
     with col[1]:
-        cntChart(filtered_df)
+        cntChart(total_df, cgg_nm)
