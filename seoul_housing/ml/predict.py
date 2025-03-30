@@ -22,8 +22,10 @@ def predict_plot(total_df, types, periods):
     # 한글 폰트 설정 적용
     font_prop = set_korean_font()
     
-    fig, ax = plt.subplots(figsize=(10,6), ncols=2, nrows=2)
-    for i in range(0, len(types)):
+    fig, ax = plt.subplots(figsize=(10,12), ncols=1, nrows=4)
+    ax = ax.flatten()  # Ensure ax is a flat list for indexing
+    
+    for i in range(len(types)):
         model = Prophet()
         total_df2 = total_df.loc[total_df['BLDG_USG']==types[i], ['CTRT_DAY', 'THING_AMT']]
         result_df = total_df2.groupby('CTRT_DAY')['THING_AMT'].agg('mean').reset_index()
@@ -32,20 +34,19 @@ def predict_plot(total_df, types, periods):
         future = model.make_future_dataframe(periods=periods)
         forecast = model.predict(future)
 
-        row, col = divmod(i, 2)
-        model.plot(forecast, ax=ax[row, col], uncertainty=True)
+        model.plot(forecast, ax=ax[i], uncertainty=True)
 
         # 타이틀, 라벨에 한글 폰트 적용
-        ax[row, col].set_title(f"{types[i]}", fontproperties=font_prop)
-        ax[row, col].set_ylabel("평균가격(만원)", fontproperties=font_prop)
-        ax[row, col].set_xlabel('')
-        for tick in ax[row, col].get_xticklabels():
+        ax[i].set_title(f"{types[i]}", fontproperties=font_prop)
+        ax[i].set_ylabel("평균가격(만원)", fontproperties=font_prop)
+        ax[i].set_xlabel('')
+        for tick in ax[i].get_xticklabels():
             tick.set_rotation(30)
         
-        ax[row, col].xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%m-%d'))
-        ax[row, col].xaxis.set_major_locator(plt.matplotlib.dates.DayLocator(interval=7))
-        plt.setp(ax[row, col].get_xticklabels(), rotation=45, ha='right', fontproperties=font_prop)        
-        ax[row, col].yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos: '{:,.0f}'.format(x)))
+        ax[i].xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%m-%d'))
+        ax[i].xaxis.set_major_locator(plt.matplotlib.dates.DayLocator(interval=7))
+        plt.setp(ax[i].get_xticklabels(), rotation=45, ha='right', fontproperties=font_prop)        
+        ax[i].yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos: '{:,.0f}'.format(x)))
 
     return fig
 
