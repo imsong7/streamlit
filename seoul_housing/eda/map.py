@@ -19,7 +19,7 @@ def set_korean_font():
 
 def mapMatplotlib(merge_df):
     font_prop = set_korean_font()
-    fig, ax = plt.subplots(ncols=3, sharey=True, figsize=(40, 15))
+    fig, ax = plt.subplots(ncols=3, sharey=True, figsize=(50, 18))
     merge_df[merge_df['month'] == 1].plot(ax=ax[0], column='mean', cmap='Pastel1', legend=False, alpha=0.9, edgecolor='gray')
     merge_df[merge_df['month'] == 2].plot(ax=ax[1], column='mean', cmap='Pastel1', legend=False, alpha=0.9, edgecolor='gray')
     merge_df[merge_df['month'] == 3].plot(ax=ax[2], column='mean', cmap='Pastel1', legend=False, alpha=0.9, edgecolor='gray')
@@ -36,9 +36,9 @@ def mapMatplotlib(merge_df):
     for i, row in merge_df[merge_df['month'] == 3].iterrows():
         ax[2].annotate(row['SIG_KOR_NM'], xy=(row['lon'], row['lat']), xytext=(-7,2), textcoords='offset points', fontproperties=font_prop, fontsize=8, color='black')
 
-    ax[0].set_title('2023년 1월 아파트 평균(만원)', fontproperties=font_prop, fontsize=20, weight='heavy')
-    ax[1].set_title('2023년 2월 아파트 평균(만원)', fontproperties=font_prop, fontsize=20, weight='heavy')
-    ax[2].set_title('2023년 3월 아파트 평균(만원)', fontproperties=font_prop, fontsize=20, weight='heavy')
+    ax[0].set_title('2023년 1월 아파트 평균(만원)', fontproperties=font_prop, fontsize=23, weight='heavy')
+    ax[1].set_title('2023년 2월 아파트 평균(만원)', fontproperties=font_prop, fontsize=23, weight='heavy')
+    ax[2].set_title('2023년 3월 아파트 평균(만원)', fontproperties=font_prop, fontsize=23, weight='heavy')
     ax[0].set_axis_off()
     ax[1].set_axis_off()
     ax[2].set_axis_off()
