@@ -77,14 +77,15 @@ def run_home():
 
 
         st.markdown("<hr>", unsafe_allow_html=True)
-        st.markdown(f"#### 🏠 {cgg_nm} 아파트 가격 상위 3개")
+        st.markdown(f"#### 🏠 {cgg_nm} 아파트 가격 상위 5개")
         sorted_df = filtered_month[["CGG_NM", "STDG_NM", "BLDG_NM", "ARCH_AREA", "THING_AMT"]]
-        st.dataframe(sorted_df.sort_values(by='THING_AMT', ascending=False).head(3).reset_index(drop=True))
-        st.markdown(f"#### 🏠 {cgg_nm} 아파트 가격 하위 3개")
+        st.dataframe(sorted_df.sort_values(by='THING_AMT', ascending=False).head(5).reset_index(drop=True))
+        st.markdown(f"#### 🏠 {cgg_nm} 아파트 가격 하위 5개")
         sorted_df = filtered_month[["CGG_NM", "STDG_NM", "BLDG_NM", "ARCH_AREA", "THING_AMT"]]
-        st.dataframe(sorted_df.sort_values(by='THING_AMT', ascending=True).head(3).reset_index(drop=True))
-        st.markdown("<hr>", unsafe_allow_html=True)
-        st.caption("출처 : [서울시 부동산 실거래가 정보](https://data.seoul.go.kr/dataList/OA-21275/S/1/datasetView.do)")
+        st.dataframe(sorted_df.sort_values(by='THING_AMT', ascending=True).head(5).reset_index(drop=True))
+        
+    st.markdown("<hr>", unsafe_allow_html=True)
+    st.caption("출처 : [서울시 부동산 실거래가 정보](https://data.seoul.go.kr/dataList/OA-21275/S/1/datasetView.do)")
 
 
     
