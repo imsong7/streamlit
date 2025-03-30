@@ -3,6 +3,7 @@
 import streamlit as st
 import json
 import os
+import pandas as pd
 from prophet.serialize import model_from_json
 from prophet.plot import plot_plotly
 
@@ -34,7 +35,7 @@ def reportMain(total_df):
         file_name=f"{cgg_nm}_아파트 평균값 예측_{periods}일간.csv",
         mime="text/csv"
     )
-
+    total_df["CTRT_DAY"] = pd.to_datetime(total_df["CTRT_DAY"], format="%Y-%m-%d")
     future_data = forecast[forecast['ds'] > total_df['CTRT_DAY'].max()]
     max_row = future_data.loc[future_data['yhat'].idxmax(), ['ds', 'yhat']]
     min_row = future_data.loc[future_data['yhat'].idxmin(), ['ds', 'yhat']]
