@@ -43,7 +43,7 @@ def twoMeans(total_df):
         month1, month2 = selected_months
         st.markdown(f"### {month1}월과 {month2}월 아파트 가격 비교")
 
-        apt_df = total_df[(total_df['BLDG_USG'] == '아파트') & (total_df['month'].isin([selected_months]))]
+        apt_df = total_df[(total_df['BLDG_USG'] == '아파트') & (total_df['month'].isin(selected_months))]
         month1_df = apt_df[apt_df['month'] == month1]
         month2_df = apt_df[apt_df['month'] == month2]
 
@@ -68,6 +68,7 @@ def twoMeans(total_df):
 
         cgg_df = apt_df[apt_df['CGG_NM']==selected_cgg_nm]
         cgg_month1 = cgg_df[cgg_df['month']==month1]
+        cgg_month2 = cgg_df[cgg_df['month']==month2]
 
         cgg_result = ttest(cgg_month1['THING_AMT'], cgg_month2['THING_AMT'], paired=False)
         st.dataframe(cgg_result, use_container_width=True)
