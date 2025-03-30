@@ -82,9 +82,17 @@ def predictDistrict(total_df):
     # Rotate x-axis labels for readability and set consistent x-axis ticks
     fig.update_xaxes(tickangle=45, tickfont=dict(size=8), row=1, col=1)
     fig.update_xaxes(title_text="날짜", title_font=dict(size=8), tickfont=dict(size=8))
+    
+    # Update x-axis format to '%y-%m-%d'
     for i in range(1, 6):
         for j in range(1, 6):
-            fig.update_xaxes(title_text="날짜", row=i, col=j, title_font=dict(size=8), tickfont=dict(size=8))
+            fig.update_xaxes(
+                title_text="날짜", 
+                row=i, col=j, 
+                title_font=dict(size=8), 
+                tickfont=dict(size=8),
+                tickformat='%y-%m-%d'  # Set the format to '%y-%m-%d'
+            )
             # Only show y-axis labels on the first column (column 1)
             if j != 1:
                 fig.update_yaxes(showticklabels=False, row=i, col=j)  # Hide y-axis labels for other columns
