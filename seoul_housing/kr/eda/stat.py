@@ -16,7 +16,7 @@ import matplotlib.font_manager as fm
 import streamlit as st
 
 def set_korean_font():
-    font_path = os.path.join('Nanum_Gothic', 'NanumGothic-Regular.ttf')
+    font_path = os.path.join('seoul_housing', 'Nanum_Gothic', 'NanumGothic-Regular.ttf')
     font_prop = fm.FontProperties(fname=font_path)
     plt.rcParams['font.family'] = 'NanumGothic'
     plt.rcParams['axes.unicode_minus'] = False  # 마이너스 기호 깨짐 방지
