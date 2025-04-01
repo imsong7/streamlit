@@ -15,7 +15,7 @@ def set_english_font():
 def mapPlotly(merge_df, month):
     set_english_font()  # Apply English font settings globally
 
-    with open('sig_20230729/seoul.geojson') as f:
+    with open('seoul_housing/sig_20230729/seoul.geojson') as f:
         seouls = json.load(f)
     
     # Filter data for the selected month
