@@ -76,7 +76,7 @@ def predictDistrict(total_df, periods):
         ax[row, col].set_title(f"{cgg_cds[i]}", fontsize=18)
         ax[row, col].set_ylabel("Average Price (10,000 won)")
         ax[row, col].set_xlabel('')
-        ax[row, col].xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%m-%d'))
+        ax[row, col].xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%m/%d'))
         ax[row, col].xaxis.set_major_locator(plt.matplotlib.dates.DayLocator(interval=7))
         plt.setp(ax[row, col].get_xticklabels(), rotation=45, ha='right')
         
