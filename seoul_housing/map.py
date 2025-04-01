@@ -19,7 +19,7 @@ def set_korean_font():
 def mapPlotly(merge_df, month):
     font_prop = set_korean_font() 
 
-    with open('sig_20230729/seoul.geojson') as f:
+    with open('seoul_housing/sig_20230729/seoul.geojson') as f:
         seouls = json.load(f)
     
     result = merge_df[merge_df['month'] == month].reset_index(drop=True)  
