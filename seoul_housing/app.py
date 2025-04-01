@@ -18,15 +18,15 @@ lang = st.sidebar.radio("Select Language", ["Korean", "English"])
 modules = {
     "Korean": {
         "menu_options": ["홈", "탐색적 분석", "부동산 예측"],
-        "home_module": "streamlit.seoul_housing.kr.home",
-        "eda_module": "streamlit.seoul_housing.kr.eda.eda_home",
-        "ml_module": "streamlit.seoul_housing.kr.ml.ml_home"
+        "home_module": "kr.home",
+        "eda_module": "kr.eda.eda_home",
+        "ml_module": "kr.ml.ml_home"
     },
     "English": {
         "menu_options": ["Home", "Exploratory Analysis", "Real Estate Prediction"],
-        "home_module": "streamlit.seoul_housing.en.home",
-        "eda_module": "streamlit.seoul_housing.en.eda.eda_home",
-        "ml_module": "streamlit.seoul_housing.en.ml.ml_home"
+        "home_module": "en.home",
+        "eda_module": "en.eda.eda_home",
+        "ml_module": "en.ml.ml_home"
     }
 }
 
