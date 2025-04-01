@@ -17,7 +17,7 @@ def set_korean_font():
     return font_prop
 
 def mapPlotly(merge_df, month):
-    font_prop = set_korean_font() 
+    font_prop = set_korean_font()
 
     with open('sig_20230729/seoul.geojson') as f:
         seouls = json.load(f)

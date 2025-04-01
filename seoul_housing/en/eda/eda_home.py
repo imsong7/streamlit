@@ -3,24 +3,24 @@
 import streamlit as st
 import pandas as pd
 from streamlit_option_menu import option_menu
-from eda.viz import showViz
-from eda.stat import showStat
-from eda.map import showMap
+from en.eda.viz import showViz
+from en.eda.stat import showStat
 
 
 def home():
-    st.markdown("### 📈 Visualization 개요 \n"
-    "- 가구당 평균 가격 추세 \n"
-    "- 가구당 거래 건수 추세 \n"
-    "- 지역별 평균 가격 막대 그래프 \n")
-    st.markdown("### 🔢 Statistics 개요 \n"
-                "- 두 집단간 차이 검정 \n"
-                "- 상관분석 \n"
-                "- 회귀분석 \n")
+    st.markdown("### 📈 Visualization Overview \n"
+                "- Average price per household trend \n"
+                "- Number of transactions per household trend \n"
+                "- Average price by region (Bar Chart) \n")
+    st.markdown("### 🔢 Statistics Overview \n"
+                "- Hypothesis testing between two groups \n"
+                "- Correlation analysis \n"
+                "- Regression analysis \n")
+   
 
 def run_eda(total_df):
     total_df["CTRT_DAY"] = pd.to_datetime(total_df["CTRT_DAY"], format="%Y-%m-%d")
-    st.markdown("## 탐색적 자료 분석 개요 \n")
+    st.markdown("## Exploratory Data Analysis Overview \n")
     
     selected = option_menu(None, ["Home", "Visualization", "Statistics"],
                                 icons=['house', 'bar-chart', 'file-spreadsheet'],
@@ -33,7 +33,7 @@ def run_eda(total_df):
                                     "nav-link-selected": {"background-color":"green"},
                                 }
                             )
-    
+
     if selected == "Home":
         home()
     elif selected == "Visualization":
@@ -44,4 +44,3 @@ def run_eda(total_df):
         showStat(total_df)
     else:
         st.warning("Wrong")
-                        

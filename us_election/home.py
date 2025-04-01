@@ -4,7 +4,7 @@ import pandas as pd
 import streamlit as st
 from utils import load_data
 from millify import prettify
-from map import showMap
+# from map import showMap
 
 st.set_page_config(
     page_title="서울시 부동산 대시보드",  

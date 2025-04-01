@@ -4,23 +4,22 @@ import streamlit as st
 import pandas as pd
 from streamlit_option_menu import option_menu
 
-from ml.predict import predict
-from ml.report import reportMain
+from en.ml.predict import predict
+from en.ml.report import reportMain
 
 def home():
-    st.markdown("### ⚙️ 머신러닝 예측 개요 \n"
-            "- 가구당 예측 그래프 추세: 가구당 예측 결과를 시간에 따라 시각화하여 예측된 변화 추이를 확인합니다. \n"
-            "- 자치구역별 예측 그래프 추세: 각 자치구별 예측 결과를 시각화하여 지역별 변화를 분석합니다. \n"
-            "- 사용된 알고리즘 소개: \n"
-            "   + **Facebook Prophet** 알고리즘: 시계열 예측에 효과적인 모델로, 계절성과 트렌드를 자동으로 학습하고 예측합니다. \n"
-            "   + **출처**: https://arxiv.org/pdf/2303.01903")
-
+    st.markdown("### ⚙️ Machine Learning Prediction Overview \n"
+                "- Household Prediction Trend: Visualize predicted changes over time. \n"
+                "- District-wise Prediction Trend: Analyze regional variations in predictions. \n"
+                "- Algorithms Used: \n"
+                "   + **Facebook Prophet**: A model effective for time series forecasting, automatically learning seasonality and trends. \n"
+                "   + **Source**: https://arxiv.org/pdf/2303.01903")
 
 def run_ml(total_df):
     total_df['CTRT_DAY'] = pd.to_datetime(total_df['CTRT_DAY'], format='%Y-%m-%d')
-    st.markdown("## 머신러닝 예측 개요 \n")
-
-    selected = option_menu(None, ["Home", "예측", "보고서"],
+    st.markdown("## Real Estate Prediction Overview \n")
+    
+    selected = option_menu(None, ["Home", "Prediction", "Report"],
                                 icons=['house','bar-chart','map'],
                                 menu_icon='cast', default_index=0, orientation='horizontal',
                                 styles = {
@@ -33,10 +32,10 @@ def run_ml(total_df):
     
     if selected == 'Home':
         home()
-    elif selected == '예측':
+    elif selected == 'Prediction':
         predict(total_df)   
         pass
-    elif selected == '보고서':
+    elif selected == 'Report':
         reportMain(total_df)
         pass
     else:

@@ -1,0 +1,493 @@
+1100000000|서울특별시|Seoul
+1111000000|종로구|Jongno-gu
+1111010100|청운동|Cheongun-dong
+1111010200|신교동|Singyo-dong
+1111010300|궁정동|Gungjeong-dong
+1111010400|효자동|Hyoja-dong
+1111010500|창성동|Changseong-dong
+1111010600|통의동|Tongui-dong
+1111010700|적선동|Jeokseon-dong
+1111010800|통인동|Tongin-dong
+1111010900|누상동|Nusang-dong
+1111011000|누하동|Nuha-dong
+1111011100|옥인동|Ogin-dong
+1111011200|체부동|Chebu-dong
+1111011300|필운동|Pirun-dong
+1111011400|내자동|Naeja-dong
+1111011500|사직동|Sajik-dong
+1111011600|도렴동|Doryeom-dong
+1111011700|당주동|Dangju-dong
+1111011800|내수동|Naesu-dong
+1111011900|세종로|Sejongno
+1111012000|신문로1가|Sinmunno 1(il)-ga
+1111012100|신문로2가|Sinmunno 2(i)-ga
+1111012200|청진동|Cheongjin-dong
+1111012300|서린동|Seorin-dong
+1111012400|수송동|Susong-dong
+1111012500|중학동|Junghak-dong
+1111012600|종로1가|Jongno 1(il)-ga
+1111012700|공평동|Gongpyeong-dong
+1111012800|관훈동|Gwanhun-dong
+1111012900|견지동|Gyeonji-dong
+1111013000|와룡동|Waryong-dong
+1111013100|권농동|Gwonnong-dong
+1111013200|운니동|Unni-dong
+1111013300|익선동|Ikseon-dong
+1111013400|경운동|Gyeongun-dong
+1111013500|관철동|Gwancheol-dong
+1111013600|인사동|Insa-dong
+1111013700|낙원동|Nagwon-dong
+1111013800|종로2가|Jongno 2(i)-ga
+1111013900|팔판동|Palpan-dong
+1111014000|삼청동|Samcheong-dong
+1111014100|안국동|Anguk-dong
+1111014200|소격동|Sogyeok-dong
+1111014300|화동|Hwa-dong
+1111014400|사간동|Sagan-dong
+1111014500|송현동|Songhyeon-dong
+1111014600|가회동|Gahoe-dong
+1111014700|재동|Jae-dong
+1111014800|계동|Gye-dong
+1111014900|원서동|Wonseo-dong
+1111015000|훈정동|Hunjeong-dong
+1111015100|묘동|Myo-dong
+1111015200|봉익동|Bongik-dong
+1111015300|돈의동|Donui-dong
+1111015400|장사동|Jangsa-dong
+1111015500|관수동|Gwansu-dong
+1111015600|종로3가|Jongno 3(sam)-ga
+1111015700|인의동|Inui-dong
+1111015800|예지동|Yeji -dong
+1111015900|원남동|Wonnam-dong
+1111016000|연지동|Yeonji-dong
+1111016100|종로4가|Jongno 4(sa)-ga
+1111016200|효제동|Hyoje-dong
+1111016300|종로5가|Jongno 5(o)-ga
+1111016400|종로6가|Jongno 6(yuk)-ga
+1111016500|이화동|Ihwa-dong
+1111016600|연건동|Yeongeon-dong
+1111016700|충신동|Chungsin-dong
+1111016800|동숭동|Dongsung-dong
+1111016900|혜화동|Hyehwa-dong
+1111017000|명륜1가|Myeongnyun 1(il)-ga
+1111017100|명륜2가|Myeongnyun 2(i)-ga
+1111017200|명륜4가|Myeongnyun 4(sa)-ga
+1111017300|명륜3가|Myeongnyun 3(sam)-ga
+1111017400|창신동|Changsin-dong
+1111017500|숭인동|Sungin-dong
+1111017600|교남동|Gyonam-dong
+1111017700|평동|Pyeong-dong
+1111017800|송월동|Songwol-dong
+1111017900|홍파동|Hongpa-dong
+1111018000|교북동|Gyobuk-dong
+1111018100|행촌동|Haengchon-dong
+1111018200|구기동|Gugi-dong
+1111018300|평창동|Pyeongchang-dong
+1111018400|부암동|Buam-dong
+1111018500|홍지동|Hongji-dong
+1111018600|신영동|Sinyeong-dong
+1111018700|무악동|Muak-dong
+1114000000|중구|Jung-gu
+1114010100|무교동|Mugyo-dong
+1114010200|다동|Da-dong
+1114010300|태평로1가|Taepyeongno 1(il)-ga
+1114010400|을지로1가|Euljiro 1(il)-ga
+1114010500|을지로2가|Euljiro 2(i)-ga
+1114010600|남대문로1가|Namdaemunno 1(il)-ga
+1114010700|삼각동|Samgak-dong
+1114010800|수하동|Suha-dong
+1114010900|장교동|Janggyo-dong
+1114011000|수표동|Supyo-dong
+1114011100|소공동|Sogong-dong
+1114011200|남창동|Namchang-dong
+1114011300|북창동|Bukchang-dong
+1114011400|태평로2가|Taepyeongno 2(i)-ga
+1114011500|남대문로2가|Namdaemunno 2(i)-ga
+1114011600|남대문로3가|Namdaemunno 3(sam)-ga
+1114011700|남대문로4가|Namdaemunno 4(sa)-ga
+1114011800|남대문로5가|Namdaemunno 5(o)-ga
+1114011900|봉래동1가|Bongnae-dong 1(il)-ga
+1114012000|봉래동2가|Bongnae-dong 2(i)-ga
+1114012100|회현동1가|Hoehyeon-dong 1(il)-ga
+1114012200|회현동2가|Hoehyeon-dong 2(i)-ga
+1114012300|회현동3가|Hoehyeon-dong 3(sam)-ga
+1114012400|충무로1가|Chungmuro 1(il)-ga
+1114012500|충무로2가|Chungmuro 2(i)-ga
+1114012600|명동1가|Myeong-dong 1(il)-ga
+1114012700|명동2가|Myeong-dong 2(i)-ga
+1114012800|남산동1가|Namsan-dong 1(il)-ga
+1114012900|남산동2가|Namsan-dong 2(i)-ga
+1114013000|남산동3가|Namsan-dong 3(sam)-ga
+1114013100|저동1가|Jeo-dong 1(il)-ga
+1114013200|충무로4가|Chungmuro 4(sa)-ga
+1114013300|충무로5가|Chungmuro 5(o)-ga
+1114013400|인현동2가|Inhyeon-dong 2(i)-ga
+1114013500|예관동|Yegwan-dong
+1114013600|묵정동|Mukjeong-dong
+1114013700|필동1가|Pil-dong 1(il)-ga
+1114013800|필동2가|Pildong 2(i)-ga
+1114013900|필동3가|Pil-dong 3(sam)-ga
+1114014000|남학동|Namhak-dong
+1114014100|주자동|Juja-dong
+1114014200|예장동|Yejang-dong
+1114014300|장충동1가|Jangchung-dong 1(il)-ga
+1114014400|장충동2가|Jangchung-dong 2(i)-ga
+1114014500|광희동1가|Gwanghui-dong 1(il)-ga
+1114014600|광희동2가|Gwanghui-dong 2(i)-ga
+1114014700|쌍림동|Ssangnim-dong
+1114014800|을지로6가|Euljiro 6(yuk)-ga
+1114014900|을지로7가|Euljiro 7(chil)-ga
+1114015000|을지로4가|Euljiro 4(sa)-ga
+1114015100|을지로5가|Euljiro 5(o)-ga
+1114015200|주교동|Jugyo-dong
+1114015300|방산동|Bangsan-dong
+1114015400|오장동|Ojang-dong
+1114015500|을지로3가|Euljiro 3(sam)-ga
+1114015600|입정동|Ipjeong-dong
+1114015700|산림동|Sallim-dong
+1114015800|충무로3가|Chungmuro 3(sam)-ga
+1114015900|초동|Cho-dong
+1114016000|인현동1가|Inhyeon-dong 1(il)-ga
+1114016100|저동2가|Jeo-dong 2(i)-ga
+1114016200|신당동|Sindang-dong
+1114016300|흥인동|Heungin-dong
+1114016400|무학동|Muhak-dong
+1114016500|황학동|Hwanghak-dong
+1114016600|서소문동|Seosomun-dong
+1114016700|정동|Jeong-dong
+1114016800|순화동|Sunhwa-dong
+1114016900|의주로1가|Uijuro 1(il)-ga
+1114017000|충정로1가|Chungjeongno 1(il)-ga
+1114017100|중림동|Jungnim-dong
+1114017200|의주로2가|Uijuro 2(i)-ga
+1114017300|만리동1가|Malli-dong 1(il)-ga
+1114017400|만리동2가|Malli-dong 2(i)-ga
+1117000000|용산구|Yongsan-gu
+1117010100|후암동|Huam-dong
+1117010200|용산동2가|yongsan-dong  2(i)-ga
+1117010300|용산동4가|Yongsan-dong 4(sa)-ga
+1117010400|갈월동|Garwol-dong
+1117010500|남영동|Namyeong-dong
+1117010600|용산동1가|Yongsan-dong 1(il)-ga
+1117010700|동자동|Dongja-dong
+1117010800|서계동|Seogye-dong
+1117010900|청파동1가|Cheongpa-dong 1(il)-ga
+1117011000|청파동2가|Cheongpa-dong 2(i)-ga
+1117011100|청파동3가|Cheongpa-dong 3(sam)-ga
+1117011200|원효로1가|Wonhyoro 1(iI)-ga
+1117011300|원효로2가|Wonhyoro 2(i)-ga
+1117011400|신창동|Sinchang-dong
+1117011500|산천동|Sancheon-dong
+1117011600|청암동|Cheongam-dong
+1117011700|원효로3가|Wonhyoro 3(sam)-ga
+1117011800|원효로4가|Wonhyoro 4(sa)-ga
+1117011900|효창동|Hyochang-dong
+1117012000|도원동|Dowon-dong
+1117012100|용문동|Yongmun-dong
+1117012200|문배동|Munbae-dong
+1117012300|신계동|Singye-dong
+1117012400|한강로1가|Hangangno 1(il)-ga
+1117012500|한강로2가|Hangangno 2(i)-ga
+1117012600|용산동3가|Yongsan-dong 3(sam)-ga
+1117012700|용산동5가|Yongsan-dong 5(o)-ga
+1117012800|한강로3가|Hangangno 3(sam)-ga
+1117012900|이촌동|Ichon-dong
+1117013000|이태원동|Itaewon-dong
+1117013100|한남동|Hannam-dong
+1117013200|동빙고동|Dongbinggo-dong
+1117013300|서빙고동|Seobinggo-dong
+1117013400|주성동|Juseong-dong
+1117013500|용산동6가|Yongsan-dong 6(yuk)-ga
+1117013600|보광동|Bogwang-dong
+1120000000|성동구|Seongdong-gu
+1120010100|상왕십리동|Sangwangsimni-dong
+1120010200|하왕십리동|Hawangsimni-dong
+1120010300|홍익동|Hongik-dong
+1120010400|도선동|Doseon-dong
+1120010500|마장동|Majang-dong
+1120010600|사근동|Sageun-dong
+1120010700|행당동|Haengdang-dong
+1120010800|응봉동|Eungbong-dong
+1120010900|금호동1가|Geumho-dong1(il)-ga
+1120011000|금호동2가|Geumho-dong2(i)-ga
+1120011100|금호동3가|Geumho-dong3(sam)-ga
+1120011200|금호동4가|Geumho-dong4(sa)-ga
+1120011300|옥수동|Oksu-dong
+1120011400|성수동1가|Seongsu-dong1(il)-ga
+1120011500|성수동2가|Seongsu-dong2(i)-ga
+1120011800|송정동|Songjeong-dong
+1120012200|용답동|Yongdap-dong
+1121500000|광진구|Gwangjin-gu
+1121510100|중곡동|Junggok-dong
+1121510200|능동|Neung-dong
+1121510300|구의동|Guui-dong
+1121510400|광장동|Gwangjang-dong
+1121510500|자양동|Jayang-dong
+1121510700|화양동|Hwayang-dong
+1121510900|군자동|Gunja-dong
+1123000000|동대문구|Dongdaemun-gu
+1123010100|신설동|Sinseol-dong
+1123010200|용두동|Yongdu-dong
+1123010300|제기동|Jegi-dong
+1123010400|전농동|Jeonnong-dong
+1123010500|답십리동|Dapsipni-dong
+1123010600|장안동|Jangan-dong
+1123010700|청량리동|Cheongnyangni-dong
+1123010800|회기동|Hoegi-dong
+1123010900|휘경동|Hwigyeong-dong
+1123011000|이문동|Imun-dong
+1126000000|중랑구|Jungnang-gu
+1126010100|면목동|Myeonmok-dong
+1126010200|상봉동|Sangbong-dong
+1126010300|중화동|Junghwa-dong
+1126010400|묵동|Muk-dong
+1126010500|망우동|Mangu-dong
+1126010600|신내동|Sinnae-dong
+1129000000|성북구|Seongbuk-gu
+1129010100|성북동|Seongbuk-dong
+1129010200|성북동1가|Seongbuk-dong 1(il)-ga
+1129010300|돈암동|Donam-dong
+1129010400|동소문동1가|Dongsomun-dong 1(il)-ga
+1129010500|동소문동2가|Dongsomun-dong 2(i)-ga
+1129010600|동소문동3가|Dongsomun-dong 3(sam)-ga
+1129010700|동소문동4가|Dongsomun-dong 4(sa)-ga
+1129010800|동소문동5가|Dongsomun-dong 5(o)-ga
+1129010900|동소문동6가|Dongsomun-dong 6(yuk)-ga
+1129011000|동소문동7가|Dongsomun-dong 7(chil)-ga
+1129011100|삼선동1가|Samseon-dong 1(il)-ga
+1129011200|삼선동2가|Samseon-dong 2(i)-ga
+1129011300|삼선동3가|Samseon-dong 3(sam)-ga
+1129011400|삼선동4가|Samseon-dong 4(sa)-ga
+1129011500|삼선동5가|Samseon-dong 5(o)-ga
+1129011600|동선동1가|Dongseon-dong 1(il)-ga
+1129011700|동선동2가|Dongseon-dong 2(i)-ga
+1129011800|동선동3가|Dongseon-dong 3(sam)-ga
+1129011900|동선동4가|Dongseon-dong 4(sa)-ga
+1129012000|동선동5가|Dongseon-dong 5(o)-ga
+1129012100|안암동1가|Anam-dong 1(il)-ga
+1129012200|안암동2가|Anam-dong 2(i)-ga
+1129012300|안암동3가|Anam-dong 3(sam)-ga
+1129012400|안암동4가|Anam-dong 4(sa)-ga
+1129012500|안암동5가|Anam-dong 5(o)-ga
+1129012600|보문동4가|Bomun-dong 4(sa)-ga
+1129012700|보문동5가|Bomun-dong 5(o)-ga
+1129012800|보문동6가|Bomun-dong 6(yuk)-ga
+1129012900|보문동7가|Bomun-dong 7(chil)-ga
+1129013000|보문동1가|Bomun-dong 1(il)-ga
+1129013100|보문동2가|Bomun-dong 2(i)-ga
+1129013200|보문동3가|Bomun-dong 3(sam)-ga
+1129013300|정릉동|Jeongneung-dong
+1129013400|길음동|Gireum-dong
+1129013500|종암동|Jongam-dong
+1129013600|하월곡동|Hawolgok-dong
+1129013700|상월곡동|Sangwolgok-dong
+1129013800|장위동|Jangwi-dong
+1129013900|석관동|Seokgwan-dong
+1130500000|강북구|Gangbuk-gu
+1130510100|미아동|Mia-dong
+1130510200|번동|Beon-dong
+1130510300|수유동|Suyu-dong
+1130510400|우이동|Ui-dong
+1132000000|도봉구|Dobong-gu
+1132010500|쌍문동|Ssangmun-dong
+1132010600|방학동|Banghak-dong
+1132010700|창동|Chang-dong
+1132010800|도봉동|Dobong-dong
+1135000000|노원구|Nowon-gu
+1135010200|월계동|Wolgye-dong
+1135010300|공릉동|Gongneung-dong
+1135010400|하계동|Hagye-dong
+1135010500|상계동|Sanggye-dong
+1135010600|중계동|Junggye-dong
+1138000000|은평구|Eunpyeong-gu
+1138010100|수색동|Susaek-dong
+1138010200|녹번동|Nokbeon-dong
+1138010300|불광동|Bulgwang-dong
+1138010400|갈현동|Galhyeon-dong
+1138010500|구산동|Gusan-dong
+1138010600|대조동|Daejo-dong
+1138010700|응암동|Eungam-dong
+1138010800|역촌동|Yeokchon-dong
+1138010900|신사동|Sinsa-dong
+1138011000|증산동|Jeungsan-dong
+1138011400|진관동|Jingwan-dong
+1141000000|서대문구|Seodaemun-gu
+1141010100|충정로2가|Chungjeongno 2(i)-ga
+1141010200|충정로3가|Chungjeongno 3(sam)-ga
+1141010300|합동|Hap-dong
+1141010400|미근동|Migeun-dong
+1141010500|냉천동|Naengcheon-dong
+1141010600|천연동|Cheonyeon-dong
+1141010700|옥천동|Okcheon-dong
+1141010800|영천동|Yeongcheon-dong
+1141010900|현저동|Hyeonjeo-dong
+1141011000|북아현동|Bugahyeon-dong
+1141011100|홍제동|Hongje-dong
+1141011200|대현동|Daehyeon-dong
+1141011300|대신동|Daesin-dong
+1141011400|신촌동|Sinchon-dong
+1141011500|봉원동|Bongwon-dong
+1141011600|창천동|Changcheon-dong
+1141011700|연희동|Yeonhui-dong
+1141011800|홍은동|Hongeun-dong
+1141011900|북가좌동|Bukgajwa-dong
+1141012000|남가좌동|Namgajwa-dong
+1144000000|마포구|Mapo-gu
+1144010100|아현동|Ahyeon-dong
+1144010200|공덕동|Gongdeok-dong
+1144010300|신공덕동|Singongdeok-dong
+1144010400|도화동|Dohwa-dong
+1144010500|용강동|Yonggang-dong
+1144010600|토정동|Tojeong-dong
+1144010700|마포동|Mapo-dong
+1144010800|대흥동|Daeheung-dong
+1144010900|염리동|Yeomni-dong
+1144011000|노고산동|Nogosan-dong
+1144011100|신수동|Sinsu-dong
+1144011200|현석동|Hyeonseok-dong
+1144011300|구수동|Gusu-dong
+1144011400|창전동|Changjeon-dong
+1144011500|상수동|Sangsu-dong
+1144011600|하중동|Hajung-dong
+1144011700|신정동|Sinjeong-dong
+1144011800|당인동|Dangin-dong
+1144012000|서교동|Seogyo-dong
+1144012100|동교동|Donggyo-dong
+1144012200|합정동|Hapjeong-dong
+1144012300|망원동|Mangwon-dong
+1144012400|연남동|Yeonnam-dong
+1144012500|성산동|Seongsan-dong
+1144012600|중동|Jung-dong
+1144012700|상암동|Sangam-dong
+1147000000|양천구|Yangcheon-gu
+1147010100|신정동|Sinjeong-dong
+1147010200|목동|Mok-dong
+1147010300|신월동|Sinwol-dong
+1150000000|강서구|Gangseo-gu
+1150010100|염창동|Yeomchang-dong
+1150010200|등촌동|Deungchon-dong
+1150010300|화곡동|Hwagok-dong
+1150010400|가양동|Gayang-dong
+1150010500|마곡동|Magok-dong
+1150010600|내발산동|Naebalsan-dong
+1150010700|외발산동|Oebalsan-dong
+1150010800|공항동|Gonghang-dong
+1150010900|방화동|Banghwa-dong
+1150011000|개화동|Gaehwa-dong
+1150011100|과해동|Gwahae-dong
+1150011200|오곡동|Ogok-dong
+1150011300|오쇠동|Osoe-dong
+1153000000|구로구|Guro-gu
+1153010100|신도림동|Sindorim-dong
+1153010200|구로동|Guro-dong
+1153010300|가리봉동|Garibong-dong
+1153010600|고척동|Gocheok-dong
+1153010700|개봉동|Gaebong-dong
+1153010800|오류동|Oryu-dong
+1153010900|궁동|Gung-dong
+1153011000|온수동|Onsu-dong
+1153011100|천왕동|Cheonwang-dong
+1153011200|항동|Hang-dong
+1154500000|금천구|Geumcheon-gu
+1154510100|가산동|Gasan-dong
+1154510200|독산동|Doksan-dong
+1154510300|시흥동|Siheung-dong
+1156000000|영등포구|Yeongdeungpo-gu
+1156010100|영등포동|Yeongdeungpo-dong
+1156010200|영등포동1가|Yeongdeungpo-dong 1(il)-ga
+1156010300|영등포동2가|Yeongdeungpo-dong 2(i)-ga
+1156010400|영등포동3가|Yeongdeungpo-dong 3(sam)-ga
+1156010500|영등포동4가|Yeongdeungpo-dong 4(sa)-ga
+1156010600|영등포동5가|Yeongdeungpo-dong 5(o)-ga
+1156010700|영등포동6가|Yeongdeungpo-dong 6(yuk)-ga
+1156010800|영등포동7가|Yeongdeungpo-dong 7(chil)-ga
+1156010900|영등포동8가|Yeongdeungpo-dong 8(pal)-ga
+1156011000|여의도동|Yeouido-dong
+1156011100|당산동1가|Dangsan-dong 1(il)-ga
+1156011200|당산동2가|Dangsan-dong 2(i)-ga
+1156011300|당산동3가|Dangsan-dong 3(sam)-ga
+1156011400|당산동4가|Dangsan-dong 4(sa)-ga
+1156011500|당산동5가|Dangsan-dong 5(o)-ga
+1156011600|당산동6가|Dangsan-dong 6(yuk)-ga
+1156011700|당산동|Dangsan-dong
+1156011800|도림동|Dorim-dong
+1156011900|문래동1가|Mullae-dong 1(il)-ga
+1156012000|문래동2가|Mullae-dong 2(i)-ga
+1156012100|문래동3가|Mullae-dong 3(sam)-ga
+1156012200|문래동4가|Mullae-dong 4(sa)-ga
+1156012300|문래동5가|Mullae-dong 5(o)-ga
+1156012400|문래동6가|Mullae-dong 6(yuk)-ga
+1156012500|양평동1가|Yangpyeong-dong 1(il)-ga
+1156012600|양평동2가|Yangpyeong-dong 2(i)-ga
+1156012700|양평동3가|Yangpyeong-dong 3(sam)-ga
+1156012800|양평동4가|Yangpyeong-dong 4(sa)-ga
+1156012900|양평동5가|Yangpyeong-dong 5(o)-ga
+1156013000|양평동6가|Yangpyeong-dong 6(yuk)-ga
+1156013100|양화동|Yanghwa-dong
+1156013200|신길동|Singil-dong
+1156013300|대림동|Daerim-dong
+1156013400|양평동|Yangpyeong-dong
+1159000000|동작구|Dongjak-gu
+1159010100|노량진동|Noryangjin-dong
+1159010200|상도동|Sangdo-dong
+1159010300|상도1동|Sangdo 1(il)-dong
+1159010400|본동|Bon-dong
+1159010500|흑석동|Heukseok-dong
+1159010600|동작동|Dongjak-dong
+1159010700|사당동|Sadang-dong
+1159010800|대방동|Daebang-dong
+1159010900|신대방동|Sindaebang-dong
+1162000000|관악구|Gwanak-gu
+1162010100|봉천동|Bongcheon-dong
+1162010200|신림동|Sillim-dong
+1162010300|남현동|Namhyeon-dong
+1165000000|서초구|Seocho-gu
+1165010100|방배동|Bangbae-dong
+1165010200|양재동|Yangjae-dong
+1165010300|우면동|Umyeon-dong
+1165010400|원지동|Wonji-dong
+1165010600|잠원동|Jamwon-dong
+1165010700|반포동|Banpo-dong
+1165010800|서초동|Seocho-dong
+1165010900|내곡동|Naegok-dong
+1165011000|염곡동|Yeomgok-dong
+1165011100|신원동|Sinwon-dong
+1168000000|강남구|Gangnam-gu
+1168010100|역삼동|Yeoksam-dong
+1168010300|개포동|Gaepo-dong
+1168010400|청담동|Cheongdam-dong
+1168010500|삼성동|Samseong-dong
+1168010600|대치동|Daechi-dong
+1168010700|신사동|Sinsa-dong
+1168010800|논현동|Nonhyeon-dong
+1168011000|압구정동|Apgujeong-dong
+1168011100|세곡동|Segok-dong
+1168011200|자곡동|Jagok-dong
+1168011300|율현동|Yulhyeon-dong
+1168011400|일원동|Irwon-dong
+1168011500|수서동|Suseo-dong
+1168011800|도곡동|Dogok-dong
+1171000000|송파구|Songpa-gu
+1171010100|잠실동|Jamsil-dong
+1171010200|신천동|Sincheon-dong
+1171010300|풍납동|Pungnap-dong
+1171010400|송파동|Songpa-dong
+1171010500|석촌동|Seokchon-dong
+1171010600|삼전동|Samjeon-dong
+1171010700|가락동|Garak-dong
+1171010800|문정동|Munjeong-dong
+1171010900|장지동|Jangji-dong
+1171011100|방이동|Bangi-dong
+1171011200|오금동|Ogeum-dong
+1171011300|거여동|Geoyeo-dong
+1171011400|마천동|Macheon-dong
+1174000000|강동구|Gangdong-gu
+1174010100|명일동|Myeongil-dong
+1174010200|고덕동|Godeok-dong
+1174010300|상일동|Sangil-dong
+1174010500|길동|Gil-dong
+1174010600|둔촌동|Dunchon-dong
+1174010700|암사동|Amsa-dong
+1174010800|성내동|Seongnae-dong
+1174010900|천호동|Cheonho-dong
+1174011000|강일동|Gangil-dong

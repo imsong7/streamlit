@@ -10,80 +10,75 @@ import os
 import json
 from prophet.serialize import model_from_json
 
-# 한글 폰트 설정
-def set_korean_font():
-    font_path = os.path.join('seoul_housing', 'Nanum_Gothic', 'NanumGothic-Regular.ttf')
-    font_prop = fm.FontProperties(fname=font_path)
-    plt.rcParams['font.family'] = 'NanumGothic'
-    plt.rcParams['axes.unicode_minus'] = False  # 마이너스 기호 깨짐 방지
-    return font_prop
+def set_english_font():
+    plt.rcParams['font.family'] = 'Arial'  # Or any other English-compatible font
+    plt.rcParams['axes.unicode_minus'] = False  # Prevent minus sign breakage
 
 def predict_plot(total_df, types, periods):
-    font_prop = set_korean_font()
+    set_english_font()  # No need to assign to font_prop as it's not used here
     
     fig, ax = plt.subplots(figsize=(6,9), ncols=1, nrows=4)
     ax = ax.flatten()  
     
     for i in range(len(types)):
         model = Prophet()
-        total_df2 = total_df.loc[total_df['BLDG_USG']==types[i], ['CTRT_DAY', 'THING_AMT']]
+        total_df2 = total_df.loc[total_df['BLDG_USG'] == types[i], ['CTRT_DAY', 'THING_AMT']]
         result_df = total_df2.groupby('CTRT_DAY')['THING_AMT'].agg('mean').reset_index()
-        result_df = result_df.rename(columns={'CTRT_DAY':'ds', 'THING_AMT':'y'})
+        result_df = result_df.rename(columns={'CTRT_DAY': 'ds', 'THING_AMT': 'y'})
         model.fit(result_df)
         future = model.make_future_dataframe(periods=periods)
         forecast = model.predict(future)
 
         model.plot(forecast, ax=ax[i], uncertainty=True)
-        ax[i].set_title(f"{types[i]}", fontproperties=font_prop)
-        ax[i].set_ylabel("평균가격(만원)", fontproperties=font_prop)
+        ax[i].set_title(f"{types[i]}")
+        ax[i].set_ylabel("Average Price (10,000 won)")
         ax[i].set_xlabel('')
         ax[i].xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%m-%d'))
         ax[i].xaxis.set_major_locator(plt.matplotlib.dates.DayLocator(interval=7))
-        plt.setp(ax[i].get_xticklabels(), rotation=45, ha='right', fontproperties=font_prop)        
+        plt.setp(ax[i].get_xticklabels(), rotation=45, ha='right')        
         ax[i].yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos: '{:,.0f}'.format(x)))
 
     return fig
 
-
-@st.cache_resource ## 모델 불러오는 것
-def load_models(cgg_nms):
+@st.cache_resource  # Load model once
+def load_models(cgg_cds):
     models = []
-    for cgg_nm in cgg_nms:
-        print(cgg_nm)
-        with open(f'seoul_housing/ml/model/{cgg_nm}.model.json', 'r') as fin:
+    for cgg_cd in cgg_cds:
+        print(cgg_cd)
+        with open(f'en/ml/model/{cgg_cd}.model.json', 'r') as fin:
             model = model_from_json(json.load(fin))
         models.append(model)
-    models
     return models
 
 def predictDistrict(total_df, periods):
-    st.markdown(f"#### 📍 자치구별 평균가격 예측 ({periods}일간)")
-    font_prop = set_korean_font()
-    cgg_nms = sorted(list(total_df['CGG_NM'].unique()))
+    set_english_font() 
+    st.markdown(f"#### 📍 District-wise Average Price Prediction ({periods} days)")
+    cgg_cds = sorted(list(total_df['CGG_NM_EN'].unique()))
 
-    models = load_models(cgg_nms)
-    fig, ax = plt.subplots(figsize=(30,20), sharey=False, ncols=5, nrows=5)
+    models = load_models(cgg_cds)
+    fig, ax = plt.subplots(figsize=(30, 20), sharey=False, ncols=5, nrows=5)
     y_min, y_max = float('inf'), float('-inf')
-    for i in range(len(cgg_nms)):  
+    
+    for i in range(len(cgg_cds)):  
         future = models[i].make_future_dataframe(periods=periods)
         forecast = models[i].predict(future)
 
         y_min = min(y_min, forecast['yhat_lower'].min())
         y_max = max(y_max, forecast['yhat_upper'].max())
 
-    for i in range(len(cgg_nms)):  
+    for i in range(len(cgg_cds)):  
         future = models[i].make_future_dataframe(periods=periods)
         forecast = models[i].predict(future)
 
         row, col = divmod(i, 5) 
         models[i].plot(forecast, ax=ax[row, col], uncertainty=True)
 
-        ax[row, col].set_title(f"{cgg_nms[i]}", fontproperties=font_prop, fontsize=18)
-        ax[row, col].set_ylabel("평균가격(만원)", fontproperties=font_prop)
+        ax[row, col].set_title(f"{cgg_cds[i]}", fontsize=18)
+        ax[row, col].set_ylabel("Average Price (10,000 won)")
         ax[row, col].set_xlabel('')
         ax[row, col].xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%m-%d'))
         ax[row, col].xaxis.set_major_locator(plt.matplotlib.dates.DayLocator(interval=7))
-        plt.setp(ax[row, col].get_xticklabels(), rotation=45, ha='right', fontproperties=font_prop)
+        plt.setp(ax[row, col].get_xticklabels(), rotation=45, ha='right')
         
         min_date = forecast['ds'].min()
         max_date = forecast['ds'].max()
@@ -99,7 +94,7 @@ def predictDistrict(total_df, periods):
     st.pyplot(fig)
 
 def predictType(total_df, periods):
-    st.markdown(f"#### 📍 주거형태별 평균가격 예측 ({periods}일간)")
+    st.markdown(f"#### 📍 Housing Type-wise Average Price Prediction ({periods} days)")
     types = list(total_df['BLDG_USG'].unique())
 
     fig = predict_plot(total_df, types, periods)
@@ -107,9 +102,9 @@ def predictType(total_df, periods):
     st.pyplot(fig)
 
 def predict(total_df):
-    st.markdown(f"### 2025년 서울시 평균가격 예측")
+    st.markdown(f"### 2025 Seoul Average Price Prediction")
     total_df['CTRT_DAY'] = pd.to_datetime(total_df['CTRT_DAY'], format='%Y-%m-%d')
-    periods = int(st.number_input("향후 예측기간을 지정하세요(1일~30일)", min_value=1, max_value=30, step=1))
+    periods = int(st.number_input("Specify prediction period (1 to 30 days)", min_value=1, max_value=30, step=1))
 
     cols = st.columns((1, 2.2), gap='medium')
     with cols[0]:

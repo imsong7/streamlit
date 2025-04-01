@@ -16,7 +16,7 @@ import matplotlib.font_manager as fm
 import streamlit as st
 
 def set_korean_font():
-    font_path = os.path.join('seoul_housing', 'Nanum_Gothic', 'NanumGothic-Regular.ttf')
+    font_path = os.path.join('Nanum_Gothic', 'NanumGothic-Regular.ttf')
     font_prop = fm.FontProperties(fname=font_path)
     plt.rcParams['font.family'] = 'NanumGothic'
     plt.rcParams['axes.unicode_minus'] = False  # 마이너스 기호 깨짐 방지
@@ -104,27 +104,28 @@ def corrRelation(total_df):
     st.dataframe(corr_df.head())
 
     st.markdown("<hr>", unsafe_allow_html=True)
-    st.markdown("### 📍 상관관계 분석 시각화")
-    
-    fig, ax = plt.subplots(figsize=(10, 6))
-    sns.scatterplot(x='ARCH_AREA', y='THING_AMT', data=corr_df, ax=ax)
-    ax.set_title('건물 면적과 아파트 거래가격의 상관관계', fontproperties=font_prop, fontsize=15)
-    ax.set_xlabel('건물 면적', fontproperties=font_prop)
-    ax.set_ylabel('아파트 거래가격(만원)', fontproperties=font_prop)
-    ax.grid(True, alpha=0.3)
-    st.pyplot(fig)
+    st.markdown(f"### 📍 아파트 가격 ~ 건물면적 상관관계 분석 \n")
+        
+    col = st.columns((2, 2), gap='medium')
+    with col[0]:
+        fig, ax = plt.subplots(figsize=(10, 6))
+        sns.scatterplot(x='ARCH_AREA', y='THING_AMT', data=corr_df, ax=ax)
+        ax.set_title('건물 면적과 아파트 거래가격의 상관관계', fontproperties=font_prop, fontsize=15)
+        ax.set_xlabel('건물 면적', fontproperties=font_prop)
+        ax.set_ylabel('아파트 거래가격(만원)', fontproperties=font_prop)
+        ax.grid(True, alpha=0.3)
+        st.pyplot(fig)
 
-    st.markdown("<hr>", unsafe_allow_html=True)
-    st.markdown("### 📍 상관관계 계수 및 검정 \n")
-    seoul_coef = pg.corr(corr_df['ARCH_AREA'], corr_df['THING_AMT'])["r"].values[0] 
-    st.dataframe(pg.corr(corr_df['ARCH_AREA'],  corr_df['THING_AMT']).round(3), use_container_width=True)
-    st.markdown(f"상관계수는 **{seoul_coef:.2f}** 이며 건물면적이 증가할 때마다, 물건금액도 같이 증가하는 경향성을 보인다. \n"
-                "그렇다면, 각 자치구별로 상관관계 시각화 및 상관계수는 어떻게 다른지 확인해본다.")
+    with col[1]:
+        st.markdown("#### 상관관계 계수 및 검정 \n")
+        seoul_coef = pg.corr(corr_df['ARCH_AREA'], corr_df['THING_AMT'])["r"].values[0] 
+        st.dataframe(pg.corr(corr_df['ARCH_AREA'],  corr_df['THING_AMT']).round(3), use_container_width=True)
+        st.markdown(f"상관계수는 <span style='color:red'>{seoul_coef:.2f}</span> 이며 건물면적이 증가할 때마다, 물건금액도 같이 증가하는 경향성을 보인다. \n"
+                    "그렇다면, 각 자치구별로 상관관계 시각화 및 상관계수는 어떻게 다른지 확인해본다.",  unsafe_allow_html=True)
     
-    selected_cgg_nm = st.sidebar.selectbox("자치구명", sorted(corr_df['CGG_NM'].unique()))
-    selected_month = st.sidebar.selectbox("월", sorted(corr_df['month'].unique()))
     st.markdown("<hr>", unsafe_allow_html=True)
-    st.markdown(f"### 📍 서울시 {selected_cgg_nm} {selected_month}월 아파트 가격 ~ 건물면적 상관관계 분석 \n")
+    selected_cgg_nm = st.selectbox("자치구명", sorted(corr_df['CGG_NM'].unique()))
+    selected_month = st.selectbox("월", sorted(corr_df['month'].unique()))
     
     cgg_df = corr_df[(corr_df['CGG_NM']==selected_cgg_nm) & (corr_df['month']==selected_month)]
     corr_coef = pg.corr(cgg_df['ARCH_AREA'], cgg_df['THING_AMT'])
@@ -139,23 +140,6 @@ def corrRelation(total_df):
     ax.set_ylabel("아파트 거래가격(만원)", fontproperties=font_prop, fontsize=12)
     ax.grid(True, alpha=0.3)
     st.pyplot(fig)
-
-    st.markdown("<hr>", unsafe_allow_html=True)
-    st.markdown("### 📍 거래건수 및 아파트 가격 상관관계")
-    mean_size = cgg_df.groupby("CTRT_DAY")['THING_AMT'].agg(['mean', 'size'])
-    corr_coef_df = pg.corr(mean_size['size'], mean_size['mean'])
-    st.dataframe(corr_coef_df, use_container_width=True)
-
-    fig, ax = plt.subplots(figsize=(10,6))
-    sns.scatterplot(x='size', y='mean', data=mean_size)
-    ax.text(0.95, 0.05, f'Pearson Correlation: {corr_coef["r"].values[0]:.2f}',
-            transform=ax.transAxes, ha='right', fontsize=12)
-    ax.set_title('상관계수', fontproperties=font_prop, fontsize=15, weight='bold')
-    ax.set_xlabel("거래건수", fontproperties=font_prop, fontsize=12)
-    ax.set_ylabel("아파트 평균 거래가격(만원)", fontproperties=font_prop, fontsize=12)
-    ax.grid(True, alpha=0.3)
-    st.pyplot(fig)
-
 
 def regRession(total_df):
     font_prop = set_korean_font() 
@@ -175,50 +159,53 @@ def regRession(total_df):
     # 회귀식
     st.markdown("<hr>", unsafe_allow_html=True)
     st.markdown("### 📍 건물면적과 아파트가격 회귀분석 \n"
-                "통계의 가정들이 맞는지 확인해보도록 한다. \n"
-                "#### 1) 정규성 검정 \n"
-                "먼저 시각적으로 잔차의 정규성 검정한다.")
-    
-    mod1 = pg.linear_regression(reg_df['ARCH_AREA'], reg_df['THING_AMT'])
-    res = mod1.residuals_
-    res = pd.DataFrame(res, columns=['Residuals'])
-    
-    # Histogram with custom font
-    fig = px.histogram(res, x='Residuals')
-    st.plotly_chart(fig)
-    
-    sw = pg.normality(res, method='shapiro')
-    st.dataframe(sw, use_container_width=True)
-    
-    st.markdown("- 자치구명을 변경하면 통계적으로 유의하게 나온 것도 잇고, 그렇지 않은 곳도 있다. \n"
-                "- 만약 p-value가 0.05보다 매우 작으면, 잔차의 정규성은 위반되었기 때문에, 여기에서는 통상적인 회귀의 결괏값을 해석할 필요가 없다. \n"
-                "- 이런 경우, 극단적인 이상치를 제거해야 하는 과정이 필요하다.")
-            
-    st.markdown("#### 2) 회귀모형 확인 \n"
-                "결정계수 $R^2$와 p-value를 확인한다.")
-    st.dataframe(mod1.round(2), use_container_width=True)
-    
-    intercept, slope = mod1['coef'].values[0], mod1['coef'].values[1]
-    st.write("상수:", intercept, "기울기:", slope)
-
-    # Scatter plot with custom font for regression line
-    fig, ax = plt.subplots(figsize=(10,6))
-    x = np.linspace(0, reg_df['ARCH_AREA'].max())
-    
-    sns.scatterplot(data=reg_df, x='ARCH_AREA', y='THING_AMT', ax=ax)
-    ax.set_title("회귀선", fontproperties=font_prop, fontsize=15, weight='bold')
-    ax.set_xlabel("건물면적", fontproperties=font_prop, fontsize=12)
-    ax.set_ylabel("아파트 거래가격(만원)", fontproperties=font_prop, fontsize=12)
-    ax.plot(x, slope*x + intercept, color='red')
-    ax.grid(True, alpha=0.3)
-
-    if intercept < 0:
-        equation_line = f'$Y={slope:.1f}X{intercept:.1f}, R^2={np.round(mod1["adj_r2"].values[0], 3)}$'
-    else:
-        equation_line = f'$Y={slope:.1f}X+{intercept:.1f}, R^2={np.round(mod1["adj_r2"].values[0], 3)}$'
+                "통계의 가정들이 맞는지 확인해보도록 한다. \n")
+    col = st.columns((2, 2), gap='medium')
+    with col[0]:
+        st.markdown("#### 1) 정규성 검정 \n"
+                    "먼저 시각적으로 잔차의 정규성 검정한다.")
         
-    ax.text(0.95, 0.05, equation_line, transform=ax.transAxes, ha='right', fontsize=12)
-    st.pyplot(fig)
+        mod1 = pg.linear_regression(reg_df['ARCH_AREA'], reg_df['THING_AMT'])
+        res = mod1.residuals_
+        res = pd.DataFrame(res, columns=['Residuals'])
+        
+        # Histogram with custom font
+        fig = px.histogram(res, x='Residuals')
+        st.plotly_chart(fig)
+        
+        sw = pg.normality(res, method='shapiro')
+        st.dataframe(sw, use_container_width=True)
+        
+        st.markdown("- 자치구명을 변경하면 통계적으로 유의하게 나온 것도 잇고, 그렇지 않은 곳도 있다. \n"
+                    "- 만약 p-value가 0.05보다 매우 작으면, 잔차의 정규성은 위반되었기 때문에, 여기에서는 통상적인 회귀의 결괏값을 해석할 필요가 없다. \n"
+                    "- 이런 경우, 극단적인 이상치를 제거해야 하는 과정이 필요하다.")
+    
+    with col[1]:
+        st.markdown("#### 2) 회귀모형 확인 \n"
+                    "결정계수 $R^2$와 p-value를 확인한다.")
+        st.dataframe(mod1.round(2), use_container_width=True)
+        
+        intercept, slope = mod1['coef'].values[0], mod1['coef'].values[1]
+        st.write("상수:", intercept, "기울기:", slope)
+
+        # Scatter plot with custom font for regression line
+        fig, ax = plt.subplots(figsize=(10,6))
+        x = np.linspace(0, reg_df['ARCH_AREA'].max())
+        
+        sns.scatterplot(data=reg_df, x='ARCH_AREA', y='THING_AMT', ax=ax)
+        ax.set_title("회귀선", fontproperties=font_prop, fontsize=15, weight='bold')
+        ax.set_xlabel("건물면적", fontproperties=font_prop, fontsize=12)
+        ax.set_ylabel("아파트 거래가격(만원)", fontproperties=font_prop, fontsize=12)
+        ax.plot(x, slope*x + intercept, color='red')
+        ax.grid(True, alpha=0.3)
+
+        if intercept < 0:
+            equation_line = f'$Y={slope:.1f}X{intercept:.1f}, R^2={np.round(mod1["adj_r2"].values[0], 3)}$'
+        else:
+            equation_line = f'$Y={slope:.1f}X+{intercept:.1f}, R^2={np.round(mod1["adj_r2"].values[0], 3)}$'
+            
+        ax.text(0.95, 0.05, equation_line, transform=ax.transAxes, ha='right', fontsize=12)
+        st.pyplot(fig)
 
     
     
