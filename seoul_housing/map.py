@@ -43,7 +43,7 @@ def mapPlotly(merge_df, month):
     st.plotly_chart(fig)
 
 def showMap(total_df, month):
-    shapefile_path = "sig_20230729/sig.shp"
+    shapefile_path = "seoul_housing/sig_20230729/sig.shp"
 
     seoul_gpd  = gpd.read_file(shapefile_path, encoding='cp949')
     seoul_gpd = seoul_gpd[seoul_gpd['SIG_CD'].astype(str).str.startswith('11')]
