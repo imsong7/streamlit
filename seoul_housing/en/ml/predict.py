@@ -45,7 +45,7 @@ def load_models(cgg_cds):
     models = []
     for cgg_cd in cgg_cds:
         print(cgg_cd)
-        with open(f'en/ml/model/{cgg_cd}.model.json', 'r') as fin:
+        with open(f'seoul_housing/en/ml/model/{cgg_cd}.model.json', 'r') as fin:
             model = model_from_json(json.load(fin))
         models.append(model)
     return models

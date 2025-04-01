@@ -49,7 +49,7 @@ def load_models(cgg_nms):
     models = []
     for cgg_nm in cgg_nms:
         print(cgg_nm)
-        with open(f'kr/ml/model/{cgg_nm}.model.json', 'r') as fin:
+        with open(f'seoul_housing/kr/ml/model/{cgg_nm}.model.json', 'r') as fin:
             model = model_from_json(json.load(fin))
         models.append(model)
     models
