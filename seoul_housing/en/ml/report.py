@@ -16,7 +16,7 @@ def reportMain(total_df):
     cgg_nm = st.sidebar.selectbox("Select District", sorted(list(total_df['CGG_NM_EN'].unique())))
     periods = st.sidebar.number_input("Specify the forecast period (1 to 30 days)", min_value=1, max_value=30, step=1)
 
-    model_path = f'en/ml/model/{cgg_nm}.model.json'
+    model_path = f'seoul_housing/en/ml/model/{cgg_nm}.model.json'
     
     if not os.path.exists(model_path):
         st.error(f"🚨 Error: Model file for {cgg_nm} not found.")
