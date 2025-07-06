@@ -183,19 +183,13 @@ def corrRelation(total_df):
 
     fig, ax = plt.subplots(figsize=(10,6))
     sns.scatterplot(x='ARCH_AREA', y='THING_AMT', data=cgg_df)
+    ax.text(0.95, 0.05, f'상관계수: {corr_coef["r"].values[0]:.2f}',
+            transform=ax.transAxes, ha='right', fontsize=12)
     ax.set_title('상관관계', fontproperties=font_prop, fontsize=15, weight='bold')
     ax.set_xlabel("건물 면적", fontproperties=font_prop, fontsize=12)
     ax.set_ylabel("아파트 거래가격(만원)", fontproperties=font_prop, fontsize=12)
     ax.grid(True, alpha=0.3)
     st.pyplot(fig)
-
-    corr_r = corr_coef['r'].values[0]
-    corr_p = corr_coef['p-val'].values[0]
-    st.markdown(
-        f"{selected_cgg_nm}의 {selected_month}월 기준 건물면적과 아파트 거래금액 간의 상관계수는 "
-        f"<span style='color:red'>{corr_r:.2f}</span>입니다. ",
-        unsafe_allow_html=True
-    )
 
 def regRession(total_df):
     font_prop = set_korean_font() 
