@@ -51,15 +51,20 @@ def twoMeans(total_df):
         st.dataframe(ttest_df, use_container_width=True)
     
         st.markdown("<hr>", unsafe_allow_html=True)
-        st.markdown(f"#### 서울시 통합 {month1}월 vs {month2}월 차이 검정 \n"
-                    f"- {month1}월과 {month2}월의 아파트 평균 가격의 차이를 검정한다. \n"
-                    "- 가설설정 \n"
-                    f"  + 귀무가설 : $H_{0}$: {month1}월과 {month2}월의 아파트 평균 차이는 없다. \n"
-                    f"  + 대립가설 : $H_{1}$: {month1}월과 {month2}월의 아파트 평균 차이는 있다. \n")
+        # 가설설정 강조
+        st.markdown(f"""
+        #### 서울시 통합 {month1}월 vs {month2}월 차이 검정  
+        **{month1}월과 {month2}월의 아파트 평균 가격 차이를 통계적으로 검정합니다.**
 
-        # 컬럼 설명 표 추가
+        #### 가설 설정  
+        > - **귀무가설 $H_0$**: {month1}월과 {month2}월의 아파트 평균 가격 차이는 **없다**.  
+        > - **대립가설 $H_1$**: {month1}월과 {month2}월의 아파트 평균 가격 차이는 **있다**.  
+        """, unsafe_allow_html=True)
+
+        # 통계결과 컬럼 설명
         st.markdown("""
-         **통계결과 컬럼 설명**  
+        ---
+        **통계결과 컬럼 설명**  
         - **T**: t-통계량 (두 집단 평균 차이에 대한 검정값)<br>
         - **dof**: 자유도<br>
         - **p-val**: 유의확률 (0.05 미만이면 통계적으로 유의함)<br>
