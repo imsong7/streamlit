@@ -200,29 +200,37 @@ def regRession(total_df):
     
     with col[1]:
         st.markdown("#### 2) 회귀모형 확인 \n"
-                    "결정계수 $R^2$와 p-value를 확인한다.")
-        st.dataframe(mod1.round(2), use_container_width=True)
-        
-        intercept, slope = round(mod1['coef'].values[0], 4), round(mod1['coef'].values[1], 4)
-        st.write("상수:", intercept, "기울기:", slope)
+                    "이번에는 회귀모형의 적합도를 나타내는 결정계수($R^2$)와 회귀계수들의 유의성을 확인한다.\n"
+                    "- 결정계수($R^2$): 모형이 종속변수 변동성을 얼마나 잘 설명하는지를 나타내는 지표로, 0~1 사이 값이다. 1에 가까울수록 모형 설명력이 좋다.\n"
+                    "- p-value: 회귀계수가 통계적으로 유의한지 여부를 판단한다. 보통 0.05 미만이면 유의하다고 본다.\n")
 
-        # Scatter plot with custom font for regression line
+        # 회귀 결과 데이터프레임 출력 (소수점 2자리 반올림)
+        st.dataframe(mod1.round(2), use_container_width=True)
+
+        # 계수 소수점 4자리 반올림
+        intercept, slope = round(mod1['coef'].values[0], 4), round(mod1['coef'].values[1], 4)
+        st.write(f"상수(절편): {intercept}  |  기울기(회귀계수): {slope}")
+
+        # 산점도 및 회귀선 그리기
         fig, ax = plt.subplots(figsize=(10,6))
         x = np.linspace(0, reg_df['ARCH_AREA'].max())
-        
+
         sns.scatterplot(data=reg_df, x='ARCH_AREA', y='THING_AMT', ax=ax)
-        ax.set_title("회귀선", fontproperties=font_prop, fontsize=15, weight='bold')
-        ax.set_xlabel("건물면적", fontproperties=font_prop, fontsize=12)
-        ax.set_ylabel("아파트 거래가격(만원)", fontproperties=font_prop, fontsize=12)
-        ax.plot(x, slope*x + intercept, color='red')
+        ax.set_title("건물면적과 아파트 거래가격 간의 회귀선", fontproperties=font_prop, fontsize=15, weight='bold')
+        ax.set_xlabel("건물면적 (ARCH_AREA)", fontproperties=font_prop, fontsize=12)
+        ax.set_ylabel("아파트 거래가격(만원) (THING_AMT)", fontproperties=font_prop, fontsize=12)
+        ax.plot(x, slope*x + intercept, color='red')  # 회귀선
         ax.grid(True, alpha=0.3)
 
+        # 회귀방정식 및 결정계수 텍스트 표시
+        adj_r2 = np.round(mod1["adj_r2"].values[0], 3)
         if intercept < 0:
-            equation_line = f'$Y={slope:.1f}X{intercept:.1f}, R^2={np.round(mod1["adj_r2"].values[0], 3)}$'
+            equation_line = f'$Y = {slope:.4f}X {intercept:.4f}, \\ R^2 = {adj_r2}$'
         else:
-            equation_line = f'$Y={slope:.1f}X+{intercept:.1f}, R^2={np.round(mod1["adj_r2"].values[0], 3)}$'
-            
+            equation_line = f'$Y = {slope:.4f}X + {intercept:.4f}, \\ R^2 = {adj_r2}$'
+
         ax.text(0.95, 0.05, equation_line, transform=ax.transAxes, ha='right', fontsize=12)
+
         st.pyplot(fig)
 
     
