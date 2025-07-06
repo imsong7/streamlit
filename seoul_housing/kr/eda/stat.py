@@ -79,14 +79,14 @@ def twoMeans(total_df):
 
         if pval > 0.05:
             st.markdown(
-                f"확인 결과 p-value = **{pval:.4f}** 으로, 유의수준 0.05보다 크므로 귀무가설을 기각할 수 없습니다.<br>"
-                f"→ 따라서 **{month1}월과 {month2}월의 아파트 평균 가격 차이는 통계적으로 유의하지 않습니다.**",
+                f"확인 결과 p-value = <span style='color:red; font-weight:bold;'>{pval:.4f}</span> 으로, 유의수준 0.05보다 크므로 귀무가설을 기각할 수 없습니다.<br>"
+                f"→ 따라서 <span style='color:red; font-weight:bold;'>{month1}월과 {month2}월의 아파트 평균 가격 차이는 통계적으로 유의하지 않습니다.</span>",
                 unsafe_allow_html=True
             )
         else:
             st.markdown(
-                f"확인 결과 p-value = **{pval:.4f}** 으로, 유의수준 0.05보다 작으므로 귀무가설을 기각합니다.<br>"
-                f"→ 따라서 **{month1}월과 {month2}월의 아파트 평균 가격 차이는 통계적으로 유의합니다.**",
+                f"확인 결과 p-value = <span style='color:red; font-weight:bold;'>{pval:.4f}</span> 으로, 유의수준 0.05보다 작으므로 귀무가설을 기각합니다.<br>"
+                f"→ 따라서 <span style='color:red; font-weight:bold;'>{month1}월과 {month2}월의 아파트 평균 가격 차이는 통계적으로 유의합니다.</span>",
                 unsafe_allow_html=True
             )
 
