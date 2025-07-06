@@ -136,8 +136,7 @@ def corrRelation(total_df):
     apt_df = total_df[(total_df['BLDG_USG'] == '아파트') & (total_df['month'].isin([1, 2, 3]))]
     
     st.markdown("<hr>", unsafe_allow_html=True)
-    st.markdown("### 📍 데이터 확인 \n"
-                "먼저 추출된 데이터에서 건물면적과 물건금액의 상관관계를 확인해보도록 한다. \n")
+    st.markdown("#### 📍 데이터 확인 \n")
     corr_df = apt_df[['CTRT_DAY', 'CGG_NM', 'month', 'BLDG_NM', 'ARCH_AREA', 'THING_AMT']].reset_index(drop=True)
     cols = ['CTRT_DAY', 'CGG_NM', 'BLDG_NM', 'ARCH_AREA', 'THING_AMT']
     st.dataframe(corr_df[cols].head())
@@ -156,7 +155,7 @@ def corrRelation(total_df):
     corr_res = pg.corr(corr_df['ARCH_AREA'], corr_df['THING_AMT']).round(3)
     seoul_coef = corr_res["r"].values[0]
     st.markdown(
-        "통계결과 컬럼 설명 <br>"
+        "**통계결과 컬럼 설명** <br>"
         "- **n**: 샘플 수 (관측치 개수)<br>"
         "- **r**: 피어슨 상관계수 (-1~1 사이 값으로, 1에 가까울수록 강한 양의 상관관계)<br>"
         "- **CI95%**: 상관계수의 95% 신뢰구간<br>"
