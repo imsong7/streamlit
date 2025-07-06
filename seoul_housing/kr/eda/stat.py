@@ -103,7 +103,7 @@ def twoMeans(total_df):
         sns.boxplot(x='month', y='THING_AMT', data=cgg_df, palette="pastel")
         sns.despine()
         ax.set_xlabel("월", fontproperties=font_prop, fontsize=12)
-        ax.set_ylabel("아파트 거래가격(원)", fontproperties=font_prop, fontsize=12)
+        ax.set_ylabel("아파트 거래가격(만원)", fontproperties=font_prop, fontsize=12)
         st.pyplot(fig)
 
         # 월별 통계 요약
@@ -125,6 +125,7 @@ def twoMeans(total_df):
                 f"→ 따라서 <span style='color:red;'>{selected_cgg_nm}의 {month1}월과 {month2}월 아파트 평균 가격 차이는 통계적으로 유의합니다.</span>",
                 unsafe_allow_html=True
             )
+
 
     else:
         st.warning("두 개의 월을 선택해주세요.")
@@ -148,7 +149,7 @@ def corrRelation(total_df):
     sns.scatterplot(x='ARCH_AREA', y='THING_AMT', data=corr_df, ax=ax)
     ax.set_title('상관관계', fontproperties=font_prop, fontsize=15)
     ax.set_xlabel('건물 면적', fontproperties=font_prop)
-    ax.set_ylabel('아파트 거래가격(원)', fontproperties=font_prop)
+    ax.set_ylabel('아파트 거래가격(만원)', fontproperties=font_prop)
     ax.grid(True, alpha=0.3)
     st.pyplot(fig)
 
@@ -186,7 +187,7 @@ def corrRelation(total_df):
             transform=ax.transAxes, ha='right', fontsize=12)
     ax.set_title('상관관계', fontproperties=font_prop, fontsize=15, weight='bold')
     ax.set_xlabel("건물 면적", fontproperties=font_prop, fontsize=12)
-    ax.set_ylabel("아파트 거래가격(원)", fontproperties=font_prop, fontsize=12)
+    ax.set_ylabel("아파트 거래가격(만원)", fontproperties=font_prop, fontsize=12)
     ax.grid(True, alpha=0.3)
     st.pyplot(fig)
 
@@ -259,12 +260,12 @@ def regRession(total_df):
     sns.scatterplot(data=reg_df, x='ARCH_AREA', y='THING_AMT', ax=ax)
     ax.set_title("건물면적과 아파트 거래가격 간의 회귀선", fontproperties=font_prop, fontsize=15, weight='bold')
     ax.set_xlabel("건물면적", fontproperties=font_prop, fontsize=12)
-    ax.set_ylabel("아파트 거래가격(원)", fontproperties=font_prop, fontsize=12)
+    ax.set_ylabel("아파트 거래가격(만원)", fontproperties=font_prop, fontsize=12)
     ax.plot(x, slope*x + intercept, color='red')  # 회귀선
     ax.grid(True, alpha=0.3)
     
     # 해석 문장
-    slope_text = f"건물면적이 1㎡ 증가할 때 아파트 가격은 평균적으로 약 <span style='color:red;'>{int(slope)}원</span> 증가합니다."
+    slope_text = f"건물면적이 1㎡ 증가할 때 아파트 가격은 평균적으로 약 <span style='color:red;'>{slope}만 원</span> 증가합니다."
     st.markdown("#### 회귀계수 해석")
     st.markdown(slope_text, unsafe_allow_html=True)
 
