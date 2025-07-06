@@ -212,9 +212,7 @@ def regRession(total_df):
 
         # 계수 소수점 4자리 반올림
         intercept, slope = round(mod1['coef'].values[0], 4), round(mod1['coef'].values[1], 4)
-        st.markdown(f"**상수(절편):** {intercept}  <br>  **기울기(회귀계수):** {slope}", unsafe_allow_html=True)
-
-
+        
         # 산점도 및 회귀선 그리기
         fig, ax = plt.subplots(figsize=(10,6))
         x = np.linspace(0, reg_df['ARCH_AREA'].max())
@@ -225,6 +223,11 @@ def regRession(total_df):
         ax.set_ylabel("아파트 거래가격(만원)", fontproperties=font_prop, fontsize=12)
         ax.plot(x, slope*x + intercept, color='red')  # 회귀선
         ax.grid(True, alpha=0.3)
+        
+        # 해석 문장
+        slope_text = f"건물면적이 1㎡ 증가할 때 아파트 가격은 평균적으로 약 {slope}만 원 증가합니다."
+        st.markdown("#### 📌 회귀계수 해석")
+        st.markdown(f"- {slope_text}")
 
         # 회귀방정식 및 결정계수 텍스트 표시
         adj_r2 = np.round(mod1["adj_r2"].values[0], 3)
