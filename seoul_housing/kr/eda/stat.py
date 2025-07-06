@@ -263,11 +263,6 @@ def regRession(total_df):
     ax.set_ylabel("아파트 거래가격(만원)", fontproperties=font_prop, fontsize=12)
     ax.plot(x, slope*x + intercept, color='red')  # 회귀선
     ax.grid(True, alpha=0.3)
-    
-    # 해석 문장
-    slope_text = f"건물면적이 1㎡ 증가할 때 아파트 가격은 평균적으로 약 <span style='color:red;'>{slope}만 원</span> 증가합니다."
-    st.markdown("#### 회귀계수 해석")
-    st.markdown(slope_text, unsafe_allow_html=True)
 
 
     # 회귀방정식 및 결정계수 텍스트 표시
