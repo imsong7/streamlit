@@ -154,14 +154,14 @@ def corrRelation(total_df):
 
     corr_res = pg.corr(corr_df['ARCH_AREA'], corr_df['THING_AMT']).round(3)
     seoul_coef = corr_res["r"].values[0]
-    st.markdown(
-        "**통계결과 컬럼 설명** <br>"
-        "- **n**: 샘플 수 (관측치 개수)<br>"
-        "- **r**: 피어슨 상관계수 (-1~1 사이 값으로, 1에 가까울수록 강한 양의 상관관계)<br>"
-        "- **CI95%**: 상관계수의 95% 신뢰구간<br>"
-        "- **pval**: 유의확률 (0.05 미만이면 통계적으로 유의함)<br>",
-        unsafe_allow_html=True
-    )
+    st.markdown("""
+    **통계결과 컬럼 설명** <br>
+    - **n**: 샘플 수 (관측치 개수)<br>
+    - **r**: 피어슨 상관계수 (-1~1 사이 값으로, 1에 가까울수록 강한 양의 상관관계)<br>
+    - **CI95%**: 상관계수의 95% 신뢰구간<br>
+    - **pval**: 유의확률 (0.05 미만이면 통계적으로 유의함)<br>
+    """, unsafe_allow_html=True)
+
     # 주요 컬럼만 선택
     corr_res_display = corr_res[['n', 'r', 'CI95%', 'p-val']]
     st.dataframe(corr_res_display, use_container_width=True)
