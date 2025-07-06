@@ -186,8 +186,7 @@ def regRession(total_df):
         fig = px.histogram(res, x='Residuals')
         st.plotly_chart(fig)
 
-        st.markdown("""
-        - **W**        : Shapiro-Wilk 검정 통계량 (1에 가까울수록 정규성 충족)
+        st.markdown("""- **W**        : Shapiro-Wilk 검정 통계량 (1에 가까울수록 정규성 충족)
         - **pval**     : p-value (0.05 이상이면 정규성 만족)
         - **normal**   : 정규성 만족 여부 (True/False)
         """)
