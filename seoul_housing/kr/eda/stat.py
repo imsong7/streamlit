@@ -182,14 +182,6 @@ def regRession(total_df):
         res = mod1.residuals_
         res = pd.DataFrame(res, columns=['Residuals'])
 
-        # 잔차 히스토그램 그리기
-        fig = px.histogram(res, x='Residuals')
-        st.plotly_chart(fig)
-
-        # Shapiro-Wilk 정규성 검정
-        sw = pg.normality(res, method='shapiro')
-        st.dataframe(sw, use_container_width=True)
-
         # 컬럼 의미 설명 표 추가
         st.markdown("""
         | 컬럼명    | 의미                                              |
@@ -200,6 +192,14 @@ def regRession(total_df):
         | normal    | 정규성 만족 여부 (True/False)                       |
         """)
 
+        # 잔차 히스토그램 그리기
+        fig = px.histogram(res, x='Residuals')
+        st.plotly_chart(fig)
+
+        # Shapiro-Wilk 정규성 검정
+        sw = pg.normality(res, method='shapiro')
+        st.dataframe(sw, use_container_width=True)
+        
     
     with col[1]:
         st.markdown("#### 2) 회귀모형 확인 \n"
