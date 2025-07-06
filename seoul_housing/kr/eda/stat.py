@@ -157,13 +157,23 @@ def corrRelation(total_df):
 
     with col[1]:
         st.markdown("#### 상관관계 계수 및 검정\n")
-        seoul_coef = pg.corr(corr_df['ARCH_AREA'], corr_df['THING_AMT'])["r"].values[0] 
-        st.dataframe(pg.corr(corr_df['ARCH_AREA'], corr_df['THING_AMT']).round(3), use_container_width=True)
+        corr_res = pg.corr(corr_df['ARCH_AREA'], corr_df['THING_AMT']).round(3)
+        seoul_coef = corr_res["r"].values[0]
+        # 주요 컬럼만 선택
+        corr_res_display = corr_res[['n', 'r', 'CI95%', 'pval']]
+        st.dataframe(corr_res_display, use_container_width=True)
+
         st.markdown(
             f"전체 서울시 데이터 기준으로 건물면적과 아파트 거래금액 간의 상관계수는 <span style='color:red'>{seoul_coef:.2f}</span>입니다. "
-            "이는 건물면적이 증가할수록 아파트 가격도 함께 증가하는 경향이 있음을 의미합니다.<br><br>",
+            "이는 건물면적이 증가할수록 아파트 가격도 함께 증가하는 경향이 있음을 의미합니다.<br><br>"
+            "다음은 결과 컬럼별 설명입니다.<br>"
+            "- **n**: 샘플 수 (관측치 개수)<br>"
+            "- **r**: 피어슨 상관계수 (-1~1 사이 값으로, 1에 가까울수록 강한 양의 상관관계)<br>"
+            "- **CI95%**: 상관계수의 95% 신뢰구간<br>"
+            "- **pval**: 유의확률 (0.05 미만이면 통계적으로 유의함)<br>",
             unsafe_allow_html=True
         )
+
 
     st.markdown("<hr>", unsafe_allow_html=True)
     selected_cgg_nm = st.selectbox("자치구명", sorted(corr_df['CGG_NM'].unique()))
