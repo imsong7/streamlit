@@ -202,10 +202,14 @@ def regRession(total_df):
         st.markdown("#### 2) 회귀모형 확인 \n"
                     "이번에는 회귀모형의 적합도를 나타내는 결정계수($R^2$)와 회귀계수들의 유의성을 확인한다.\n"
                     "- 결정계수($R^2$): 모형이 종속변수 변동성을 얼마나 잘 설명하는지를 나타내는 지표로, 0~1 사이 값이다. 1에 가까울수록 모형 설명력이 좋다.\n"
-                    "- p-value: 회귀계수가 통계적으로 유의한지 여부를 판단한다. 보통 0.05 미만이면 유의하다고 본다.\n")
+                    "- p-value: 회귀계수가 통계적으로 유의한지 여부를 판단한다. 보통 0.05 미만이면 유의하다고 본다.\n"
+                    "- coef: 회귀계수 (각 독립변수가 종속변수에 미치는 영향력 크기)\n"
+                    "- se: 표준오차 (회귀계수의 추정 정확도를 나타냄)\n"
+                    "- t: t-통계량 (회귀계수의 유의성 검정 통계값)\n")
 
-        # 회귀 결과 데이터프레임 출력 (소수점 2자리 반올림)
-        st.dataframe(mod1.round(2), use_container_width=True)
+        # 필요한 컬럼만 선택해서 출력
+        cols_to_show = ['names', 'coef', 'se', 'T', 'pval', 'r2', 'adj_r2']
+        st.dataframe(mod1[cols_to_show].round(4), use_container_width=True)
 
         # 계수 소수점 4자리 반올림
         intercept, slope = round(mod1['coef'].values[0], 4), round(mod1['coef'].values[1], 4)
