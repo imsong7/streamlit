@@ -179,7 +179,7 @@ def corrRelation(total_df):
     
     cgg_df = corr_df[(corr_df['CGG_NM']==selected_cgg_nm) & (corr_df['month']==selected_month)]
     corr_coef = pg.corr(cgg_df['ARCH_AREA'], cgg_df['THING_AMT'])
-    st.dataframe(corr_coef[corr_res_display], use_container_width=True)
+    st.dataframe(corr_coef, use_container_width=True)
 
     fig, ax = plt.subplots(figsize=(10,6))
     sns.scatterplot(x='ARCH_AREA', y='THING_AMT', data=cgg_df)
