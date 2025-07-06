@@ -211,75 +211,74 @@ def regRession(total_df):
     st.markdown("<hr>", unsafe_allow_html=True)
     st.markdown("### 📍 건물면적과 아파트가격 회귀분석 \n"
                 "통계의 가정들이 맞는지 확인해보도록 한다. \n")
-    col = st.columns((2, 2), gap='medium')
-    with col[0]:
-        st.markdown("#### 1) 정규성 검정 \n"
-                    "시각적으로 잔차의 정규성을 확인한다. \n"
-                    "- 히스토그램에서 잔차가 종 모양(정규분포)인지 살펴본다. \n"
-                    "- 비대칭이 심하거나 한쪽으로 쏠린 모양이면 정규성 가정 위반 가능성이 있다.\n")
 
-        # 회귀분석 수행 (Pingouin 사용)
-        mod1 = pg.linear_regression(reg_df['ARCH_AREA'], reg_df['THING_AMT'])
-        res = mod1.residuals_
-        res = pd.DataFrame(res, columns=['Residuals'])
+    st.markdown("#### 1) 정규성 검정 \n"
+                "시각적으로 잔차의 정규성을 확인한다. \n"
+                "- 히스토그램에서 잔차가 종 모양(정규분포)인지 살펴본다. \n"
+                "- 비대칭이 심하거나 한쪽으로 쏠린 모양이면 정규성 가정 위반 가능성이 있다.\n")
 
-        # 잔차 히스토그램 그리기
-        fig = px.histogram(res, x='Residuals')
-        fig.update_layout(title_text='잔차(Residuals) 분포 히스토그램')
-        st.plotly_chart(fig)
+    # 회귀분석 수행 (Pingouin 사용)
+    mod1 = pg.linear_regression(reg_df['ARCH_AREA'], reg_df['THING_AMT'])
+    res = mod1.residuals_
+    res = pd.DataFrame(res, columns=['Residuals'])
 
-        st.markdown("""
-        - **W**        : Shapiro-Wilk 검정 통계량 (1에 가까울수록 정규성 충족)
-        - **pval**     : p-value (0.05 이상이면 정규성 만족)
-        - **normal**   : 정규성 만족 여부 (True/False)
-        """)
+    # 잔차 히스토그램 그리기
+    fig = px.histogram(res, x='Residuals')
+    fig.update_layout(title_text='잔차(Residuals) 분포 히스토그램')
+    st.plotly_chart(fig)
 
-        # Shapiro-Wilk 정규성 검정
-        sw = pg.normality(res, method='shapiro')
-        st.dataframe(sw, use_container_width=True)
+    st.markdown("""
+    - **W**        : Shapiro-Wilk 검정 통계량 (1에 가까울수록 정규성 충족)
+    - **pval**     : p-value (0.05 이상이면 정규성 만족)
+    - **normal**   : 정규성 만족 여부 (True/False)
+    """)
 
+    # Shapiro-Wilk 정규성 검정
+    sw = pg.normality(res, method='shapiro')
+    st.dataframe(sw, use_container_width=True)
+
+
+
+    st.markdown("#### 2) 회귀모형 확인 \n"
+                "회귀모형의 적합도를 나타내는 결정계수($R^2$)와 회귀계수들의 유의성을 확인한다.\n"
+                "- **r^2**: 모형이 종속변수 변동성을 얼마나 잘 설명하는지를 나타내는 지표로, 0~1 사이 값이다. 1에 가까울수록 모형 설명력이 좋다.\n"
+                "- **coef**: 회귀계수 (각 독립변수가 종속변수에 미치는 영향력 크기)\n"
+                "- **se**: 표준오차 (회귀계수의 추정 정확도를 나타냄)\n"
+                "- **t**: t-통계량 (회귀계수의 유의성 검정 통계값)\n")
+
+    # 필요한 컬럼만 선택해서 출력
+    cols_to_show = ['names', 'coef', 'se', 'T', 'pval', 'r2', 'adj_r2']
+    st.dataframe(mod1[cols_to_show].round(4), use_container_width=True)
+
+    # 계수 소수점 4자리 반올림
+    intercept, slope = round(mod1['coef'].values[0], 4), round(mod1['coef'].values[1], 4)
     
-    with col[1]:
-        st.markdown("#### 2) 회귀모형 확인 \n"
-                    "회귀모형의 적합도를 나타내는 결정계수($R^2$)와 회귀계수들의 유의성을 확인한다.\n"
-                    "- **r^2**: 모형이 종속변수 변동성을 얼마나 잘 설명하는지를 나타내는 지표로, 0~1 사이 값이다. 1에 가까울수록 모형 설명력이 좋다.\n"
-                    "- **coef**: 회귀계수 (각 독립변수가 종속변수에 미치는 영향력 크기)\n"
-                    "- **se**: 표준오차 (회귀계수의 추정 정확도를 나타냄)\n"
-                    "- **t**: t-통계량 (회귀계수의 유의성 검정 통계값)\n")
+    # 산점도 및 회귀선 그리기
+    fig, ax = plt.subplots(figsize=(10,6))
+    x = np.linspace(0, reg_df['ARCH_AREA'].max())
 
-        # 필요한 컬럼만 선택해서 출력
-        cols_to_show = ['names', 'coef', 'se', 'T', 'pval', 'r2', 'adj_r2']
-        st.dataframe(mod1[cols_to_show].round(4), use_container_width=True)
+    sns.scatterplot(data=reg_df, x='ARCH_AREA', y='THING_AMT', ax=ax)
+    ax.set_title("건물면적과 아파트 거래가격 간의 회귀선", fontproperties=font_prop, fontsize=15, weight='bold')
+    ax.set_xlabel("건물면적", fontproperties=font_prop, fontsize=12)
+    ax.set_ylabel("아파트 거래가격(만원)", fontproperties=font_prop, fontsize=12)
+    ax.plot(x, slope*x + intercept, color='red')  # 회귀선
+    ax.grid(True, alpha=0.3)
+    
+    # 해석 문장
+    slope_text = f"건물면적이 1㎡ 증가할 때 아파트 가격은 평균적으로 약 {slope}만 원 증가합니다."
+    st.markdown("#### 📌 회귀계수 해석")
+    st.markdown(f"- {slope_text}")
 
-        # 계수 소수점 4자리 반올림
-        intercept, slope = round(mod1['coef'].values[0], 4), round(mod1['coef'].values[1], 4)
-        
-        # 산점도 및 회귀선 그리기
-        fig, ax = plt.subplots(figsize=(10,6))
-        x = np.linspace(0, reg_df['ARCH_AREA'].max())
+    # 회귀방정식 및 결정계수 텍스트 표시
+    adj_r2 = np.round(mod1["adj_r2"].values[0], 3)
+    if intercept < 0:
+        equation_line = f'$Y = {slope:.4f}X {intercept:.4f}, \\ R^2 = {adj_r2}$'
+    else:
+        equation_line = f'$Y = {slope:.4f}X + {intercept:.4f}, \\ R^2 = {adj_r2}$'
 
-        sns.scatterplot(data=reg_df, x='ARCH_AREA', y='THING_AMT', ax=ax)
-        ax.set_title("건물면적과 아파트 거래가격 간의 회귀선", fontproperties=font_prop, fontsize=15, weight='bold')
-        ax.set_xlabel("건물면적", fontproperties=font_prop, fontsize=12)
-        ax.set_ylabel("아파트 거래가격(만원)", fontproperties=font_prop, fontsize=12)
-        ax.plot(x, slope*x + intercept, color='red')  # 회귀선
-        ax.grid(True, alpha=0.3)
-        
-        # 해석 문장
-        slope_text = f"건물면적이 1㎡ 증가할 때 아파트 가격은 평균적으로 약 {slope}만 원 증가합니다."
-        st.markdown("#### 📌 회귀계수 해석")
-        st.markdown(f"- {slope_text}")
+    ax.text(0.95, 0.05, equation_line, transform=ax.transAxes, ha='right', fontsize=12)
 
-        # 회귀방정식 및 결정계수 텍스트 표시
-        adj_r2 = np.round(mod1["adj_r2"].values[0], 3)
-        if intercept < 0:
-            equation_line = f'$Y = {slope:.4f}X {intercept:.4f}, \\ R^2 = {adj_r2}$'
-        else:
-            equation_line = f'$Y = {slope:.4f}X + {intercept:.4f}, \\ R^2 = {adj_r2}$'
-
-        ax.text(0.95, 0.05, equation_line, transform=ax.transAxes, ha='right', fontsize=12)
-
-        st.pyplot(fig)
+    st.pyplot(fig)
 
     
     
