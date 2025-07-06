@@ -56,10 +56,23 @@ def twoMeans(total_df):
                     "- 가설설정 \n"
                     f"  + 귀무가설 : $H_{0}$: {month1}월과 {month2}월의 아파트 평균 차이는 없다. \n"
                     f"  + 대립가설 : $H_{1}$: {month1}월과 {month2}월의 아파트 평균 차이는 있다. \n")
-    
+
+        # 컬럼 설명 표 추가
+        st.markdown("""
+         **통계결과 컬럼 설명**  
+        - **T**: t-통계량 (두 집단 평균 차이에 대한 검정값)<br>
+        - **dof**: 자유도<br>
+        - **p-val**: 유의확률 (0.05 미만이면 통계적으로 유의함)<br>
+        - **CI95%**: 평균 차이에 대한 95% 신뢰구간<br>
+        - **cohen-d**: 효과 크기 (0.2=작음, 0.5=중간, 0.8=큼)
+        """, unsafe_allow_html=True)
+
         result = ttest(month1_df['THING_AMT'], month2_df['THING_AMT'], paired=False)
         pval = result['p-val'].values[0]
-        st.dataframe(result, use_container_width=True)
+
+        selected_cols = ['T', 'dof', 'p-val', 'CI95%', 'cohen-d']
+        st.dataframe(result[selected_cols], use_container_width=True)
+
         if pval > 0.05:
             st.markdown(
                 f"확인 결과 p-value = **{pval:.4f}** 으로, 유의수준 0.05보다 크므로 귀무가설을 기각할 수 없습니다.<br>"
@@ -95,7 +108,7 @@ def twoMeans(total_df):
 
         st.markdown(f"#### {selected_cgg_nm} {month1}월 vs {month2}월 차이 검정 \n")
         cgg_result = ttest(cgg_month1['THING_AMT'], cgg_month2['THING_AMT'], paired=False)
-        st.dataframe(cgg_result, use_container_width=True)
+        st.dataframe(cgg_result[selected_cols], use_container_width=True)
         if cgg_result['p-val'].values[0] > 0.05:
             st.markdown(f"확인 결과 p-value = **{cgg_result['p-val'].values[0]:.4f}** 으로, 유의수준 0.05보다 크므로 귀무가설을 기각할 수 없습니다. <br>"
                         f"→ 따라서 **{selected_cgg_nm}의 {month1}월과 {month2}월 아파트 평균 가격 차이는 통계적으로 유의하지 않습니다.**",
