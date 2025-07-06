@@ -160,7 +160,7 @@ def regRession(total_df):
     selected_cgg_nm = st.selectbox("자치구명", sorted(corr_df['CGG_NM'].unique()))
     selected_month = st.selectbox("월", sorted(corr_df['month'].unique()))
     reg_df = corr_df[(corr_df['CGG_NM'] == selected_cgg_nm) & (corr_df['month'] == selected_month)]
-    cols = ['CTRT_DAY', 'THING_AMT', 'BLDG_NM', 'ARCH_AREA']
+    cols = ['CTRT_DAY', 'BLDG_NM', 'THING_AMT', 'ARCH_AREA']
     
     st.markdown("<hr>", unsafe_allow_html=True)
     st.markdown("### 📍 데이터 확인")
