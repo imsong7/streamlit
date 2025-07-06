@@ -33,7 +33,7 @@ def twoMeans(total_df):
                 "2개의 월을 선택하여 아파트 가격을 비교한다.")
     
     # 두 개의 월을 선택하도록 함
-    selected_months = st.sidebar.multiselect(
+    selected_months = st.multiselect(
         "비교하고 싶은 두 개의 월을 선택하세요", 
         options=[1, 2, 3], 
         default=[1, 2]
@@ -157,8 +157,8 @@ def regRession(total_df):
     apt_df = total_df[(total_df['BLDG_USG'] == '아파트') & (total_df['month'].isin([2, 3]))]
     corr_df = apt_df[['CTRT_DAY', 'THING_AMT', 'ARCH_AREA', 'CGG_NM', 'month']].reset_index(drop=True)
     
-    selected_cgg_nm = st.sidebar.selectbox("자치구명", sorted(corr_df['CGG_NM'].unique()))
-    selected_month = st.sidebar.selectbox("월", sorted(corr_df['month'].unique()))
+    selected_cgg_nm = st.selectbox("자치구명", sorted(corr_df['CGG_NM'].unique()))
+    selected_month = st.selectbox("월", sorted(corr_df['month'].unique()))
     reg_df = corr_df[(corr_df['CGG_NM'] == selected_cgg_nm) & (corr_df['month'] == selected_month)]
     
     st.markdown("<hr>", unsafe_allow_html=True)
