@@ -154,7 +154,7 @@ def regRession(total_df):
     font_prop = set_korean_font() 
     
     total_df['month'] = total_df['CTRT_DAY'].dt.month
-    apt_df = total_df[(total_df['BLDG_USG'] == '아파트') & (total_df['month'].isin([2, 3]))]
+    apt_df = total_df[(total_df['BLDG_USG'] == '아파트') & (total_df['month'].isin([1, 2, 3]))]
     corr_df = apt_df[['CTRT_DAY', 'THING_AMT', 'ARCH_AREA', 'CGG_NM', 'month']].reset_index(drop=True)
     
     selected_cgg_nm = st.selectbox("자치구명", sorted(corr_df['CGG_NM'].unique()))
