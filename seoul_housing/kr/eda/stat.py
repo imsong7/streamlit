@@ -155,12 +155,12 @@ def regRession(total_df):
     
     total_df['month'] = total_df['CTRT_DAY'].dt.month
     apt_df = total_df[(total_df['BLDG_USG'] == '아파트') & (total_df['month'].isin([1, 2, 3]))]
-    corr_df = apt_df[['CTRT_DAY', 'THING_AMT', 'ARCH_AREA', 'CGG_NM', 'month']].reset_index(drop=True)
+    corr_df = apt_df[['CTRT_DAY', 'THING_AMT', 'BLDG_NM', 'ARCH_AREA', 'CGG_NM', 'month']].reset_index(drop=True)
     
     selected_cgg_nm = st.selectbox("자치구명", sorted(corr_df['CGG_NM'].unique()))
     selected_month = st.selectbox("월", sorted(corr_df['month'].unique()))
     reg_df = corr_df[(corr_df['CGG_NM'] == selected_cgg_nm) & (corr_df['month'] == selected_month)]
-    cols = ['CTRT_DAY', 'THING_AMT', 'ARCH_AREA']
+    cols = ['CTRT_DAY', 'THING_AMT', 'BLDG_NM', 'ARCH_AREA']
     
     st.markdown("<hr>", unsafe_allow_html=True)
     st.markdown("### 📍 데이터 확인")
