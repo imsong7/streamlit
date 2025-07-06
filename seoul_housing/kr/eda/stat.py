@@ -41,96 +41,51 @@ def twoMeans(total_df):
 
     if len(selected_months) == 2:
         month1, month2 = selected_months
-        st.markdown(f"#### 📊 {month1}월과 {month2}월 아파트 가격 비교")
+        st.markdown(f"#### {month1}월과 {month2}월 아파트 가격 비교")
 
-        # 데이터 필터링
         apt_df = total_df[(total_df['BLDG_USG'] == '아파트') & (total_df['month'].isin(selected_months))]
         month1_df = apt_df[apt_df['month'] == month1]
         month2_df = apt_df[apt_df['month'] == month2]
 
-        # 통계 요약
         ttest_df = round(apt_df.groupby('month')['THING_AMT'].agg(['mean', 'std', 'size']), 1)
         st.dataframe(ttest_df, use_container_width=True)
-
+    
         st.markdown("<hr>", unsafe_allow_html=True)
-        st.markdown(f"#### 🧪 서울시 통합 {month1}월 vs {month2}월 차이 검정")
-        st.markdown(f"""
-        - 목적: {month1}월과 {month2}월의 **아파트 평균 가격 차이**를 통계적으로 검정합니다.
-        - 가설 설정:
-            - 귀무가설 $H_0$: 두 달의 평균 가격 차이는 없다.
-            - 대립가설 $H_1$: 두 달의 평균 가격 차이는 있다.
-        """)
-
-        # 독립표본 T-test 수행
+        st.markdown(f"#### 서울시 통합 {month1}월 vs {month2}월 차이 검정 \n"
+                    f"- {month1}월과 {month2}월의 아파트 평균 가격의 차이를 검정한다. \n"
+                    "- 가설설정 \n"
+                    f"  + 귀무가설 : $H_{0}$: {month1}월과 {month2}월의 아파트 평균 차이는 없다. \n"
+                    f"  + 대립가설 : $H_{1}$: {month1}월과 {month2}월의 아파트 평균 차이는 있다. \n")
+    
         result = ttest(month1_df['THING_AMT'], month2_df['THING_AMT'], paired=False)
         st.dataframe(result, use_container_width=True)
-
-        # 값 추출
-        p_val = result['p-val'].values[0]
-        t_val = result['T'].values[0]
-        ci_low, ci_high = result['CI95%'].values
-        cohen_d = result['cohen-d'].values[0]
-        bf10 = result['BF10'].values[0]
-
-        # 검정 결과 해석
-        if p_val > 0.05:
-            st.markdown(f"""
-            ✅ **p-value = {p_val:.4f}** → 유의수준 0.05보다 크므로 귀무가설을 **기각할 수 없습니다.**  
-            → **{month1}월과 {month2}월의 아파트 평균 가격 차이는 통계적으로 유의하지 않습니다.**
-            """)
+        if result['p-val'].values[0] > 0.05:
+            st.markdown(f"확인 결과 p-value = **{result['p-val'].values[0]:.4f}** 으로, 유의수준 0.05보다 크므로 귀무가설을 기각할 수 없습니다. \n"
+                        f"→ 따라서 **{month1}월과 {month2}월의 아파트 평균 가격 차이는 통계적으로 유의하지 않습니다.**")
         else:
-            st.markdown(f"""
-            ✅ **p-value = {p_val:.4f}** → 유의수준 0.05보다 작으므로 귀무가설을 **기각합니다.**  
-            → **{month1}월과 {month2}월의 아파트 평균 가격 차이는 통계적으로 유의합니다.**
-            """)
-            # 추가 해석
-            st.markdown(f"""
-            🔍 **추가 통계 해석**  
-            - 📈 T 통계량: **{t_val:.4f}** → 두 평균의 차이가 표준 오차에 비해 큼을 나타냅니다.  
-            - 📊 신뢰구간 (95%): **({ci_low:,.1f} ~ {ci_high:,.1f})**  
-                → 평균 가격 차이는 이 범위 내에 있을 가능성이 95%입니다.  
-                → 0을 포함하지 않으므로 통계적으로 유의한 차이입니다.  
-            - 📏 효과크기 (Cohen's d): **{cohen_d:.3f}** → {("소" if cohen_d < 0.3 else "중간" if cohen_d < 0.8 else "큰")} 효과 크기  
-            - 🧠 Bayes Factor (BF10): **{bf10:.2e}** → 데이터가 대립가설을 **{bf10:.2e}배 더 지지**합니다.
-            """)
+            st.markdown(f"확인 결과 p-value = **{result['p-val'].values[0]:.4f}** 으로, 유의수준 0.05보다 작으므로 귀무가설을 기각합니다. \n"
+                        f"→ 따라서 **{month1}월과 {month2}월의 아파트 평균 가격 차이는 통계적으로 유의합니다.**")
+
 
         st.markdown("<hr>", unsafe_allow_html=True)
-        st.markdown(f"#### 🏙️ 자치구별 {month1}월과 {month2}월 아파트 평균 가격 차이 검정")
-        st.markdown("원하는 자치구를 선택하여 개별 지역에서도 통계적으로 유의한 차이가 있는지 확인합니다.")
-        
-        # 자치구 선택
+        st.markdown(f"자치구를 선택하여 {month1}월과 {month2}월의 아파트 평균 차이가 있는지 확인하도록 한다. \n")
         selected_cgg_nm = st.selectbox("자치구명", sorted(total_df["CGG_NM"].unique()))
         cols = st.columns((2, 2), gap='medium')
-
         with cols[0]:
-            st.markdown(f"#### 🔍 {selected_cgg_nm} {month1}월 vs {month2}월 차이 검정")
+            st.markdown(f"#### {selected_cgg_nm} {month1}월 vs {month2}월 차이 검정 \n")
 
-            cgg_df = apt_df[apt_df['CGG_NM'] == selected_cgg_nm]
-            cgg_month1 = cgg_df[cgg_df['month'] == month1]
-            cgg_month2 = cgg_df[cgg_df['month'] == month2]
+            cgg_df = apt_df[apt_df['CGG_NM']==selected_cgg_nm]
+            cgg_month1 = cgg_df[cgg_df['month']==month1]
+            cgg_month2 = cgg_df[cgg_df['month']==month2]
 
             cgg_result = ttest(cgg_month1['THING_AMT'], cgg_month2['THING_AMT'], paired=False)
             st.dataframe(cgg_result, use_container_width=True)
-
-            # 결과 해석
-            p_val_cgg = cgg_result['p-val'].values[0]
-            ci_low_cgg, ci_high_cgg = cgg_result['CI95%'].values
-            cohen_d_cgg = cgg_result['cohen-d'].values[0]
-
-            if p_val_cgg > 0.05:
-                st.markdown(f"""
-                ✅ **p-value = {p_val_cgg:.4f}** → 유의수준 0.05보다 크므로 귀무가설을 기각할 수 없습니다.  
-                → **{selected_cgg_nm}의 {month1}월과 {month2}월 평균 가격 차이는 통계적으로 유의하지 않습니다.**
-                """)
+            if cgg_result['p-val'].values[0] > 0.05:
+                st.markdown(f"확인 결과 p-value = **{cgg_result['p-val'].values[0]:.4f}** 으로, 유의수준 0.05보다 크므로 귀무가설을 기각할 수 없습니다. \n"
+                            f"→ 따라서 **{selected_cgg_nm}의 {month1}월과 {month2}월 아파트 평균 가격 차이는 통계적으로 유의하지 않습니다.**")
             else:
-                st.markdown(f"""
-                ✅ **p-value = {p_val_cgg:.4f}** → 유의수준 0.05보다 작으므로 귀무가설을 기각합니다.  
-                → **{selected_cgg_nm}의 {month1}월과 {month2}월 평균 가격 차이는 통계적으로 유의합니다.**
-
-                🔎 **추가 해석**  
-                - 신뢰구간: **({ci_low_cgg:,.1f} ~ {ci_high_cgg:,.1f})**  
-                - 효과크기 (Cohen's d): **{cohen_d_cgg:.3f}** → {("소" if cohen_d_cgg < 0.3 else "중간" if cohen_d_cgg < 0.8 else "큰")} 효과 크기
-                """)
+                st.markdown(f"확인 결과 p-value = **{cgg_result['p-val'].values[0]:.4f}** 으로, 유의수준 0.05보다 작으므로 귀무가설을 기각합니다. \n"
+                            f"→ 따라서 **{selected_cgg_nm}의 {month1}월과 {month2}월 아파트 평균 가격 차이는 통계적으로 유의합니다.**")
 
         
         with cols[1]:
