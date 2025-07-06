@@ -58,13 +58,20 @@ def twoMeans(total_df):
                     f"  + 대립가설 : $H_{1}$: {month1}월과 {month2}월의 아파트 평균 차이는 있다. \n")
     
         result = ttest(month1_df['THING_AMT'], month2_df['THING_AMT'], paired=False)
+        pval = result['p-val'].values[0]
         st.dataframe(result, use_container_width=True)
-        if result['p-val'].values[0] > 0.05:
-            st.markdown(f"확인 결과 p-value = **{result['p-val'].values[0]:.4f}** 으로, 유의수준 0.05보다 크므로 귀무가설을 기각할 수 없습니다. \n"
-                        f"→ 따라서 **{month1}월과 {month2}월의 아파트 평균 가격 차이는 통계적으로 유의하지 않습니다.**")
+        if pval > 0.05:
+            st.markdown(
+                f"확인 결과 p-value = **{pval:.4f}** 으로, 유의수준 0.05보다 크므로 귀무가설을 기각할 수 없습니다.<br>"
+                f"→ 따라서 **{month1}월과 {month2}월의 아파트 평균 가격 차이는 통계적으로 유의하지 않습니다.**",
+                unsafe_allow_html=True
+            )
         else:
-            st.markdown(f"확인 결과 p-value = **{result['p-val'].values[0]:.4f}** 으로, 유의수준 0.05보다 작으므로 귀무가설을 기각합니다. \n"
-                        f"→ 따라서 **{month1}월과 {month2}월의 아파트 평균 가격 차이는 통계적으로 유의합니다.**")
+            st.markdown(
+                f"확인 결과 p-value = **{pval:.4f}** 으로, 유의수준 0.05보다 작으므로 귀무가설을 기각합니다.<br>"
+                f"→ 따라서 **{month1}월과 {month2}월의 아파트 평균 가격 차이는 통계적으로 유의합니다.**",
+                unsafe_allow_html=True
+            )
 
 
         st.markdown("<hr>", unsafe_allow_html=True)
