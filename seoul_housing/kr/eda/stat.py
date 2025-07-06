@@ -69,6 +69,10 @@ def twoMeans(total_df):
 
         st.markdown("<hr>", unsafe_allow_html=True)
         selected_cgg_nm = st.selectbox("자치구명", sorted(total_df["CGG_NM"].unique()))
+        cgg_df = apt_df[apt_df['CGG_NM']==selected_cgg_nm]
+        cgg_month1 = cgg_df[cgg_df['month']==month1]
+        cgg_month2 = cgg_df[cgg_df['month']==month2]
+        
         st.markdown(f"#### {selected_cgg_nm} {month1}월 vs {month2}월 시각화", unsafe_allow_html=True)
 
         fig, ax = plt.subplots(figsize=(10, 3))
@@ -81,9 +85,6 @@ def twoMeans(total_df):
         # 월별 통계 요약
         summary_df = round(cgg_df.groupby('month')['THING_AMT'].agg(['mean', 'std', 'size']), 1)
         st.dataframe(summary_df, use_container_width=True)
-        cgg_df = apt_df[apt_df['CGG_NM']==selected_cgg_nm]
-        cgg_month1 = cgg_df[cgg_df['month']==month1]
-        cgg_month2 = cgg_df[cgg_df['month']==month2]
 
         st.markdown(f"#### {selected_cgg_nm} {month1}월 vs {month2}월 차이 검정 \n")
         cgg_result = ttest(cgg_month1['THING_AMT'], cgg_month2['THING_AMT'], paired=False)
