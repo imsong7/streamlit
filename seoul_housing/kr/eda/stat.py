@@ -160,6 +160,7 @@ def regRession(total_df):
     selected_cgg_nm = st.selectbox("자치구명", sorted(corr_df['CGG_NM'].unique()))
     selected_month = st.selectbox("월", sorted(corr_df['month'].unique()))
     reg_df = corr_df[(corr_df['CGG_NM'] == selected_cgg_nm) & (corr_df['month'] == selected_month)]
+
     
     st.markdown("<hr>", unsafe_allow_html=True)
     st.markdown("### 📍 데이터 확인")
@@ -194,8 +195,8 @@ def regRession(total_df):
                     "결정계수 $R^2$와 p-value를 확인한다.")
         st.dataframe(mod1.round(2), use_container_width=True)
         
-        intercept, slope = mod1['coef'].values[0], mod1['coef'].values[1]
-        st.write("상수:", f'{intercept:.4f}', "기울기:", f'{slope:.4f}')
+        intercept, slope = round(mod1['coef'].values[0], 4), round(mod1['coef'].values[1], 4)
+        st.write("상수:", intercept, "기울기:", slope)
 
         # Scatter plot with custom font for regression line
         fig, ax = plt.subplots(figsize=(10,6))
