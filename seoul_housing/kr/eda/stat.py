@@ -282,7 +282,6 @@ def regRession(total_df):
     st.pyplot(fig)
 
     
-    
 def showStat(total_df):
     total_df['CTRT_DAY'] = pd.to_datetime(total_df['CTRT_DAY'], format='%Y-%m-%d')
     selected = st.selectbox("분석 메뉴", ['두 집단간 차이 검정', '상관분석', '회귀분석'])
