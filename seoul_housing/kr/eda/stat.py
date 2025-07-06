@@ -69,37 +69,32 @@ def twoMeans(total_df):
 
         st.markdown("<hr>", unsafe_allow_html=True)
         selected_cgg_nm = st.selectbox("자치구명", sorted(total_df["CGG_NM"].unique()))
-        cols = st.columns((2, 2), gap='medium')
-        with cols[0]:
-            st.markdown(f"#### {selected_cgg_nm} {month1}월 vs {month2}월 차이 검정 \n")
+        st.markdown(f"#### {selected_cgg_nm} {month1}월 vs {month2}월 시각화", unsafe_allow_html=True)
 
-            cgg_df = apt_df[apt_df['CGG_NM']==selected_cgg_nm]
-            cgg_month1 = cgg_df[cgg_df['month']==month1]
-            cgg_month2 = cgg_df[cgg_df['month']==month2]
+        fig, ax = plt.subplots(figsize=(10, 3))
+        sns.boxplot(x='month', y='THING_AMT', data=cgg_df, palette="pastel")
+        sns.despine()
+        ax.set_xlabel("월", fontproperties=font_prop, fontsize=12)
+        ax.set_ylabel("아파트 거래가격(만원)", fontproperties=font_prop, fontsize=12)
+        st.pyplot(fig)
 
-            cgg_result = ttest(cgg_month1['THING_AMT'], cgg_month2['THING_AMT'], paired=False)
-            st.dataframe(cgg_result, use_container_width=True)
-            if cgg_result['p-val'].values[0] > 0.05:
-                st.markdown(f"확인 결과 p-value = **{cgg_result['p-val'].values[0]:.4f}** 으로, 유의수준 0.05보다 크므로 귀무가설을 기각할 수 없습니다. \n"
-                            f"→ 따라서 **{selected_cgg_nm}의 {month1}월과 {month2}월 아파트 평균 가격 차이는 통계적으로 유의하지 않습니다.**")
-            else:
-                st.markdown(f"확인 결과 p-value = **{cgg_result['p-val'].values[0]:.4f}** 으로, 유의수준 0.05보다 작으므로 귀무가설을 기각합니다. \n"
-                            f"→ 따라서 **{selected_cgg_nm}의 {month1}월과 {month2}월 아파트 평균 가격 차이는 통계적으로 유의합니다.**")
+        # 월별 통계 요약
+        summary_df = round(cgg_df.groupby('month')['THING_AMT'].agg(['mean', 'std', 'size']), 1)
+        st.dataframe(summary_df, use_container_width=True)
+        cgg_df = apt_df[apt_df['CGG_NM']==selected_cgg_nm]
+        cgg_month1 = cgg_df[cgg_df['month']==month1]
+        cgg_month2 = cgg_df[cgg_df['month']==month2]
 
-        
-        with cols[1]:
-            st.markdown(f"#### {selected_cgg_nm} {month1}월 vs {month2}월 시각화", unsafe_allow_html=True)
+        st.markdown(f"#### {selected_cgg_nm} {month1}월 vs {month2}월 차이 검정 \n")
+        cgg_result = ttest(cgg_month1['THING_AMT'], cgg_month2['THING_AMT'], paired=False)
+        st.dataframe(cgg_result, use_container_width=True)
+        if cgg_result['p-val'].values[0] > 0.05:
+            st.markdown(f"확인 결과 p-value = **{cgg_result['p-val'].values[0]:.4f}** 으로, 유의수준 0.05보다 크므로 귀무가설을 기각할 수 없습니다. \n"
+                        f"→ 따라서 **{selected_cgg_nm}의 {month1}월과 {month2}월 아파트 평균 가격 차이는 통계적으로 유의하지 않습니다.**")
+        else:
+            st.markdown(f"확인 결과 p-value = **{cgg_result['p-val'].values[0]:.4f}** 으로, 유의수준 0.05보다 작으므로 귀무가설을 기각합니다. \n"
+                        f"→ 따라서 **{selected_cgg_nm}의 {month1}월과 {month2}월 아파트 평균 가격 차이는 통계적으로 유의합니다.**")
 
-            fig, ax = plt.subplots(figsize=(10, 3))
-            sns.boxplot(x='month', y='THING_AMT', data=cgg_df, palette="pastel")
-            sns.despine()
-            ax.set_xlabel("월", fontproperties=font_prop, fontsize=12)
-            ax.set_ylabel("아파트 거래가격(만원)", fontproperties=font_prop, fontsize=12)
-            st.pyplot(fig)
-
-            # 월별 통계 요약
-            summary_df = round(cgg_df.groupby('month')['THING_AMT'].agg(['mean', 'std', 'size']), 1)
-            st.dataframe(summary_df, use_container_width=True)
     else:
         st.warning("두 개의 월을 선택해주세요.")
 
