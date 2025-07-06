@@ -195,7 +195,7 @@ def regRession(total_df):
         st.dataframe(mod1.round(2), use_container_width=True)
         
         intercept, slope = mod1['coef'].values[0], mod1['coef'].values[1]
-        st.write("상수:", intercept, "기울기:", slope)
+        st.write("상수:", f'{intercept:.4f}', "기울기:", f'{slope:.4f}')
 
         # Scatter plot with custom font for regression line
         fig, ax = plt.subplots(figsize=(10,6))
