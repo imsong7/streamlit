@@ -182,24 +182,20 @@ def regRession(total_df):
         res = mod1.residuals_
         res = pd.DataFrame(res, columns=['Residuals'])
 
-        # 컬럼 의미 설명 표 추가
-        st.markdown("""
-        | 컬럼명    | 의미                                              |
-        |-----------|---------------------------------------------------|
-        | Residuals | 잔차 (실제값 - 예측값)                             |
-        | W         | Shapiro-Wilk 검정 통계량 (1에 가까울수록 정규성 충족) |
-        | pval      | p-value (0.05 이상이면 정규성 만족)                |
-        | normal    | 정규성 만족 여부 (True/False)                       |
-        """)
-
         # 잔차 히스토그램 그리기
         fig = px.histogram(res, x='Residuals')
         st.plotly_chart(fig)
 
+        st.markdown("""
+        - **W**        : Shapiro-Wilk 검정 통계량 (1에 가까울수록 정규성 충족)
+        - **pval**     : p-value (0.05 이상이면 정규성 만족)
+        - **normal**   : 정규성 만족 여부 (True/False)
+        """)
+
         # Shapiro-Wilk 정규성 검정
         sw = pg.normality(res, method='shapiro')
         st.dataframe(sw, use_container_width=True)
-        
+
     
     with col[1]:
         st.markdown("#### 2) 회귀모형 확인 \n"
