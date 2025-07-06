@@ -139,8 +139,7 @@ def corrRelation(total_df):
     st.markdown("### 📍 데이터 확인 \n"
                 "먼저 추출된 데이터에서 건물면적과 물건금액의 상관관계를 확인해보도록 한다. \n")
     corr_df = apt_df[['CTRT_DAY', 'THING_AMT', 'BLDG_NM', 'ARCH_AREA', 'CGG_NM', 'month']].reset_index(drop=True)
-    cols = ['CTRT_DAY', 'BLDG_NM', 'THING_AMT', 'ARCH_AREA']
-    st.dataframe(corr_df[cols].head())
+    st.dataframe(corr_df.head())
 
     st.markdown("<hr>", unsafe_allow_html=True)
     st.markdown(f"### 📍 아파트 가격 ~ 건물면적 상관관계 분석 \n")
