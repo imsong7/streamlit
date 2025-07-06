@@ -173,22 +173,33 @@ def regRession(total_df):
     col = st.columns((2, 2), gap='medium')
     with col[0]:
         st.markdown("#### 1) 정규성 검정 \n"
-                    "먼저 시각적으로 잔차의 정규성 검정한다.")
-        
+                    "먼저 시각적으로 잔차의 정규성을 확인한다. \n"
+                    "- 히스토그램에서 잔차가 종 모양(정규분포)인지 살펴본다. \n"
+                    "- 비대칭이 심하거나 한쪽으로 쏠린 모양이면 정규성 가정 위반 가능성이 있다.\n")
+
+        # 회귀분석 수행 (Pingouin 사용)
         mod1 = pg.linear_regression(reg_df['ARCH_AREA'], reg_df['THING_AMT'])
         res = mod1.residuals_
         res = pd.DataFrame(res, columns=['Residuals'])
-        
-        # Histogram with custom font
+
+        # 잔차 히스토그램 그리기
         fig = px.histogram(res, x='Residuals')
         st.plotly_chart(fig)
-        
+
+        # Shapiro-Wilk 정규성 검정
         sw = pg.normality(res, method='shapiro')
         st.dataframe(sw, use_container_width=True)
-        
-        st.markdown("- 자치구명을 변경하면 통계적으로 유의하게 나온 것도 잇고, 그렇지 않은 곳도 있다. \n"
-                    "- 만약 p-value가 0.05보다 매우 작으면, 잔차의 정규성은 위반되었기 때문에, 여기에서는 통상적인 회귀의 결괏값을 해석할 필요가 없다. \n"
-                    "- 이런 경우, 극단적인 이상치를 제거해야 하는 과정이 필요하다.")
+
+        # 컬럼 의미 설명 표 추가
+        st.markdown("""
+        | 컬럼명    | 의미                                              |
+        |-----------|---------------------------------------------------|
+        | Residuals | 잔차 (실제값 - 예측값)                             |
+        | W         | Shapiro-Wilk 검정 통계량 (1에 가까울수록 정규성 충족) |
+        | pval      | p-value (0.05 이상이면 정규성 만족)                |
+        | normal    | 정규성 만족 여부 (True/False)                       |
+        """)
+
     
     with col[1]:
         st.markdown("#### 2) 회귀모형 확인 \n"
