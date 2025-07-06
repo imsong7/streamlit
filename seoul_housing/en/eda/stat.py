@@ -15,8 +15,8 @@ import matplotlib.font_manager as fm
 import streamlit as st
 
 def set_english_font():
-    plt.rcParams['font.family'] = 'Arial'  # Or any other English-compatible font
-    plt.rcParams['axes.unicode_minus'] = False  # Prevent minus sign breakage
+    plt.rcParams['font.family'] = 'Arial'  
+    plt.rcParams['axes.unicode_minus'] = False
 
 
 def twoMeans(total_df):
@@ -39,7 +39,6 @@ def twoMeans(total_df):
 
     if len(selected_months) == 2:
         month1, month2 = selected_months
-        # Convert month names back to numbers for filtering the data
         month_map = {'January': 1, 'Feburary': 2, 'March': 3}
         month1, month2 = month_map[month1], month_map[month2]
         st.markdown(f"#### Compare apartment prices for {month_names[month1-1]} and {month_names[month2-1]}")
@@ -173,7 +172,6 @@ def regRession(total_df):
         res = mod1.residuals_
         res = pd.DataFrame(res, columns=['Residuals'])
         
-        # Histogram with custom font
         fig = px.histogram(res, x='Residuals')
         st.plotly_chart(fig)
         
@@ -192,7 +190,6 @@ def regRession(total_df):
         intercept, slope = mod1['coef'].values[0], mod1['coef'].values[1]
         st.write("Intercept:", intercept, "Slope:", slope)
 
-        # Scatter plot with custom font for regression line
         fig, ax = plt.subplots(figsize=(10,6))
         x = np.linspace(0, reg_df['ARCH_AREA'].max())
         

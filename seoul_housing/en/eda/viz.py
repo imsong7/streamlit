@@ -87,7 +87,6 @@ def cntChart(total_df, cgg_nm_en):
         showlegend=True,
         template='plotly_white'
     )
-    # Display the figure
     st.plotly_chart(fig)
 
 def barChart(total_df):

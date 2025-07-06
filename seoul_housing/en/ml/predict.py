@@ -11,11 +11,11 @@ import json
 from prophet.serialize import model_from_json
 
 def set_english_font():
-    plt.rcParams['font.family'] = 'Arial'  # Or any other English-compatible font
-    plt.rcParams['axes.unicode_minus'] = False  # Prevent minus sign breakage
+    plt.rcParams['font.family'] = 'Arial'  
+    plt.rcParams['axes.unicode_minus'] = False  
 
 def predict_plot(total_df, types, periods):
-    set_english_font()  # No need to assign to font_prop as it's not used here
+    set_english_font()  
     
     fig, ax = plt.subplots(figsize=(6,9), ncols=1, nrows=4)
     ax = ax.flatten()  

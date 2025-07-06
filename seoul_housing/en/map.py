@@ -13,7 +13,7 @@ def set_english_font():
     plt.rcParams['axes.unicode_minus'] = False
 
 def mapPlotly(merge_df, month):
-    set_english_font()  # Apply English font settings globally
+    set_english_font() 
 
     with open('seoul_housing/sig_20230729/seoul.geojson') as f:
         seouls = json.load(f)
