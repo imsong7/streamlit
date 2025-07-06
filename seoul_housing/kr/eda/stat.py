@@ -183,7 +183,7 @@ def corrRelation(total_df):
 
     fig, ax = plt.subplots(figsize=(10,6))
     sns.scatterplot(x='ARCH_AREA', y='THING_AMT', data=cgg_df)
-    ax.text(0.95, 0.05, f'상관계수: {corr_coef["r"].values[0]:.2f}',
+    ax.text(0.95, 0.05, f'r = {corr_coef["r"].values[0]:.2f}',
             transform=ax.transAxes, ha='right', fontsize=12)
     ax.set_title('상관관계', fontproperties=font_prop, fontsize=15, weight='bold')
     ax.set_xlabel("건물 면적", fontproperties=font_prop, fontsize=12)
