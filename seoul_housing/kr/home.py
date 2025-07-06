@@ -36,15 +36,15 @@ def run_home(total_df):
             'STDG_NM': '동',
             'BLDG_NM': '건물명',
             'ARCH_AREA': '면적 (㎡)',
-            'THING_AMT': '가격 (만원)'
+            'THING_AMT': '가격 (원)'
         })
 
         # Show top 3 and bottom 3 prices
         st.markdown(f"#### 🏠 {selected_month} {selected_type} 가격 상위 3개")
-        st.dataframe(sorted_df_renamed.sort_values(by='가격 (만원)', ascending=False).head(3).reset_index(drop=True))
+        st.dataframe(sorted_df_renamed.sort_values(by='가격 (원)', ascending=False).head(3).reset_index(drop=True))
 
         st.markdown(f"#### 🏠 {selected_month} {selected_type} 가격 하위 3개")
-        st.dataframe(sorted_df_renamed.sort_values(by='가격 (만원)', ascending=True).head(3).reset_index(drop=True))
+        st.dataframe(sorted_df_renamed.sort_values(by='가격 (원)', ascending=True).head(3).reset_index(drop=True))
 
     with col[1]:
         st.subheader('')
@@ -71,16 +71,16 @@ def run_home(total_df):
 
         with col1:
             st.metric(
-                label=f"{cgg_nm} 최소가격 (만원)", 
+                label=f"{cgg_nm} 최소가격 (원)", 
                 value=f"{min_price:,.0f}", 
-                delta=f"{min_delta:,.0f} 만원"
+                delta=f"{min_delta:,.0f} 원"
             )
 
         with col2:
             st.metric(
-                label=f"{cgg_nm} 최대가격 (만원)", 
+                label=f"{cgg_nm} 최대가격 (원)", 
                 value=f"{max_price:,.0f}", 
-                delta=f"{max_delta:,.0f} 만원"
+                delta=f"{max_delta:,.0f} 원"
             )
 
         st.markdown("<hr>", unsafe_allow_html=True)
@@ -91,15 +91,15 @@ def run_home(total_df):
             'STDG_NM': '동',
             'BLDG_NM': '건물명',
             'ARCH_AREA': '면적 (㎡)',
-            'THING_AMT': '가격 (만원)'
+            'THING_AMT': '가격 (원)'
         })
 
         # Show top 5 and bottom 5 prices for selected district
         st.markdown(f"#### 🏠 {cgg_nm} {selected_type} 가격 상위 5개")
-        st.dataframe(filtered_cgg_nm_renamed.sort_values(by='가격 (만원)', ascending=False).head(5).reset_index(drop=True))
+        st.dataframe(filtered_cgg_nm_renamed.sort_values(by='가격 (원)', ascending=False).head(5).reset_index(drop=True))
 
         st.markdown(f"#### 🏠 {cgg_nm} {selected_type} 가격 하위 5개")
-        st.dataframe(filtered_cgg_nm_renamed.sort_values(by='가격 (만원)', ascending=True).head(5).reset_index(drop=True))
+        st.dataframe(filtered_cgg_nm_renamed.sort_values(by='가격 (원)', ascending=True).head(5).reset_index(drop=True))
 
     st.markdown("<hr>", unsafe_allow_html=True)
     st.caption("출처 : [서울시 부동산 실거래가 정보](https://data.seoul.go.kr/dataList/OA-21275/S/1/datasetView.do)")
