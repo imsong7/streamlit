@@ -156,12 +156,15 @@ def corrRelation(total_df):
         st.pyplot(fig)
 
     with col[1]:
-        st.markdown("#### 상관관계 계수 및 검정 \n")
+        st.markdown("#### 상관관계 계수 및 검정\n")
         seoul_coef = pg.corr(corr_df['ARCH_AREA'], corr_df['THING_AMT'])["r"].values[0] 
-        st.dataframe(pg.corr(corr_df['ARCH_AREA'],  corr_df['THING_AMT']).round(3), use_container_width=True)
-        st.markdown(f"상관계수는 <span style='color:red'>{seoul_coef:.2f}</span> 이며 건물면적이 증가할 때마다, 물건금액도 같이 증가하는 경향성을 보인다. \n"
-                    "그렇다면, 각 자치구별로 상관관계 시각화 및 상관계수는 어떻게 다른지 확인해본다.",  unsafe_allow_html=True)
-    
+        st.dataframe(pg.corr(corr_df['ARCH_AREA'], corr_df['THING_AMT']).round(3), use_container_width=True)
+        st.markdown(
+            f"전체 서울시 데이터 기준으로 건물면적과 아파트 거래금액 간의 상관계수는 <span style='color:red'>{seoul_coef:.2f}</span>입니다. "
+            "이는 건물면적이 증가할수록 아파트 가격도 함께 증가하는 경향이 있음을 의미합니다.<br><br>",
+            unsafe_allow_html=True
+        )
+
     st.markdown("<hr>", unsafe_allow_html=True)
     selected_cgg_nm = st.selectbox("자치구명", sorted(corr_df['CGG_NM'].unique()))
     selected_month = st.selectbox("월", sorted(corr_df['month'].unique()))
