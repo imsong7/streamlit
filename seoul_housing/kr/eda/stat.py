@@ -68,7 +68,6 @@ def twoMeans(total_df):
 
 
         st.markdown("<hr>", unsafe_allow_html=True)
-        st.markdown(f"자치구를 선택하여 {month1}월과 {month2}월의 아파트 평균 차이가 있는지 확인하도록 한다. \n")
         selected_cgg_nm = st.selectbox("자치구명", sorted(total_df["CGG_NM"].unique()))
         cols = st.columns((2, 2), gap='medium')
         with cols[0]:
