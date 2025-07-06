@@ -126,7 +126,6 @@ def twoMeans(total_df):
                 unsafe_allow_html=True
             )
 
-
     else:
         st.warning("두 개의 월을 선택해주세요.")
 
