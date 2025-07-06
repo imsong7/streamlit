@@ -191,6 +191,23 @@ def corrRelation(total_df):
     ax.grid(True, alpha=0.3)
     st.pyplot(fig)
 
+    st.markdown(
+        f"{selected_cgg_nm}의 {selected_month}월 기준 건물면적과 아파트 거래금액 간의 상관계수는 "
+        f"<span style='color:red'>{corr_r:.2f}</span>이며, ",
+        unsafe_allow_html=True
+    )
+
+    if corr_p < 0.05:
+        st.markdown(
+            "이는 통계적으로 유의하여, 건물면적이 증가할수록 아파트 가격도 함께 증가하는 경향이 있음을 의미합니다.<br><br>",
+            unsafe_allow_html=True
+        )
+    else:
+        st.markdown(
+            "그러나 통계적으로 유의하지 않으므로, 건물면적과 아파트 가격 간의 뚜렷한 관계는 확인되지 않습니다.<br><br>",
+            unsafe_allow_html=True
+        )
+
 def regRession(total_df):
     font_prop = set_korean_font() 
     
