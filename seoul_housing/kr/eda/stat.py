@@ -97,10 +97,10 @@ def twoMeans(total_df):
         cgg_result = ttest(cgg_month1['THING_AMT'], cgg_month2['THING_AMT'], paired=False)
         st.dataframe(cgg_result, use_container_width=True)
         if cgg_result['p-val'].values[0] > 0.05:
-            st.markdown(f"확인 결과 p-value = **{cgg_result['p-val'].values[0]:.4f}** 으로, 유의수준 0.05보다 크므로 귀무가설을 기각할 수 없습니다. \n"
+            st.markdown(f"확인 결과 p-value = **{cgg_result['p-val'].values[0]:.4f}** 으로, 유의수준 0.05보다 크므로 귀무가설을 기각할 수 없습니다. <br>"
                         f"→ 따라서 **{selected_cgg_nm}의 {month1}월과 {month2}월 아파트 평균 가격 차이는 통계적으로 유의하지 않습니다.**")
         else:
-            st.markdown(f"확인 결과 p-value = **{cgg_result['p-val'].values[0]:.4f}** 으로, 유의수준 0.05보다 작으므로 귀무가설을 기각합니다. \n"
+            st.markdown(f"확인 결과 p-value = **{cgg_result['p-val'].values[0]:.4f}** 으로, 유의수준 0.05보다 작으므로 귀무가설을 기각합니다. <br>"
                         f"→ 따라서 **{selected_cgg_nm}의 {month1}월과 {month2}월 아파트 평균 가격 차이는 통계적으로 유의합니다.**")
 
     else:
