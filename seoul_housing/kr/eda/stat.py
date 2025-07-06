@@ -209,7 +209,8 @@ def regRession(total_df):
 
         # 계수 소수점 4자리 반올림
         intercept, slope = round(mod1['coef'].values[0], 4), round(mod1['coef'].values[1], 4)
-        st.write(f"상수(절편): {intercept}  |  기울기(회귀계수): {slope}")
+        st.markdown(f"**상수(절편):** {intercept}  <br>  **기울기(회귀계수):** {slope}", unsafe_allow_html=True)
+
 
         # 산점도 및 회귀선 그리기
         fig, ax = plt.subplots(figsize=(10,6))
@@ -217,8 +218,8 @@ def regRession(total_df):
 
         sns.scatterplot(data=reg_df, x='ARCH_AREA', y='THING_AMT', ax=ax)
         ax.set_title("건물면적과 아파트 거래가격 간의 회귀선", fontproperties=font_prop, fontsize=15, weight='bold')
-        ax.set_xlabel("건물면적 (ARCH_AREA)", fontproperties=font_prop, fontsize=12)
-        ax.set_ylabel("아파트 거래가격(만원) (THING_AMT)", fontproperties=font_prop, fontsize=12)
+        ax.set_xlabel("건물면적", fontproperties=font_prop, fontsize=12)
+        ax.set_ylabel("아파트 거래가격(만원)", fontproperties=font_prop, fontsize=12)
         ax.plot(x, slope*x + intercept, color='red')  # 회귀선
         ax.grid(True, alpha=0.3)
 
