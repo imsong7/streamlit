@@ -59,7 +59,7 @@ def twoMeans(total_df):
         #### 가설 설정  
         > - **귀무가설 $H_0$**: {month1}월과 {month2}월의 아파트 평균 가격 차이는 **없다**.  
         > - **대립가설 $H_1$**: {month1}월과 {month2}월의 아파트 평균 가격 차이는 **있다**.  
-        """, unsafe_allow_html=True)
+        """)
 
         # 통계결과 컬럼 설명
         st.markdown("""
