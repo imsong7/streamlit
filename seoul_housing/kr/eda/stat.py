@@ -220,7 +220,7 @@ def regRession(total_df):
     
 def showStat(total_df):
     total_df['CTRT_DAY'] = pd.to_datetime(total_df['CTRT_DAY'], format='%Y-%m-%d')
-    selected = st.sidebar.selectbox("분석 메뉴", ['두 집단간 차이 검정', '상관분석', '회귀분석'])
+    selected = st.selectbox("분석 메뉴", ['두 집단간 차이 검정', '상관분석', '회귀분석'])
     if selected == '두 집단간 차이 검정':
         st.markdown("### 📍 두 집단간 차이 검정 이론 설명 \n"
                     "- t-검정은 두 개의 독립적인 데이터 샘플의 평균 간에 유의미한 차이가 있는지 확인하는데 사용할 수 있는 통계 테스트입니다. \n")
