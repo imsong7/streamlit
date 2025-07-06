@@ -184,9 +184,11 @@ def regRession(total_df):
 
         # 잔차 히스토그램 그리기
         fig = px.histogram(res, x='Residuals')
+        fig.update_layout(title_text='잔차(Residuals) 분포 히스토그램')
         st.plotly_chart(fig)
 
-        st.markdown("""- **W**        : Shapiro-Wilk 검정 통계량 (1에 가까울수록 정규성 충족)
+        st.markdown("""
+        - **W**        : Shapiro-Wilk 검정 통계량 (1에 가까울수록 정규성 충족)
         - **pval**     : p-value (0.05 이상이면 정규성 만족)
         - **normal**   : 정규성 만족 여부 (True/False)
         """)
