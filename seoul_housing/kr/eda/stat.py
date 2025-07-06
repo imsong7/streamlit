@@ -172,14 +172,14 @@ def corrRelation(total_df):
         unsafe_allow_html=True
     )
 
-
     st.markdown("<hr>", unsafe_allow_html=True)
     selected_cgg_nm = st.selectbox("자치구명", sorted(corr_df['CGG_NM'].unique()))
     selected_month = st.selectbox("월", sorted(corr_df['month'].unique()))
     
     cgg_df = corr_df[(corr_df['CGG_NM']==selected_cgg_nm) & (corr_df['month']==selected_month)]
     corr_coef = pg.corr(cgg_df['ARCH_AREA'], cgg_df['THING_AMT'])
-    st.dataframe(corr_coef, use_container_width=True)
+    corr_res_display = ['n', 'r', 'CI95%', 'p-val']
+    st.dataframe(corr_coef[corr_res_display], use_container_width=True)
 
     fig, ax = plt.subplots(figsize=(10,6))
     sns.scatterplot(x='ARCH_AREA', y='THING_AMT', data=cgg_df)
